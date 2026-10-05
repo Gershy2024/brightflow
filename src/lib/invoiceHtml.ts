@@ -15,6 +15,8 @@ interface InvoiceDataOptions {
   clientAddress: string;
   notes: string;
   displayTotal: number;
+  paidAmount?: number;
+  remainingBalance?: number;
   invoiceLang: "en" | "he";
 }
 
@@ -355,16 +357,22 @@ export function generatePrintInvoiceHtml(opts: InvoiceDataOptions): string {
 
       <div class="totals-card">
         <div class="totals-line">
-          <span>${isHe ? "סכום ביניים:" : "Subtotal:"}</span>
-          <span>$${opts.displayTotal.toLocaleString()}</span>
+          <span>${isHe ? "סכום החשבונית:" : "Invoice Subtotal:"}</span>
+          <span style="font-family: monospace; font-weight: 700;">$${opts.displayTotal.toLocaleString()}</span>
         </div>
+        ${(opts.paidAmount !== undefined && opts.paidAmount > 0) ? `
+        <div class="totals-line" style="color: #059669;">
+          <span>${isHe ? "שולם על החשבון:" : "Amount Paid:"}</span>
+          <span style="font-family: monospace; font-weight: 700;">-$${opts.paidAmount.toLocaleString()}</span>
+        </div>
+        ` : ""}
         <div class="totals-line">
           <span>${isHe ? "מס / מע״מ:" : "Tax / VAT:"}</span>
-          <span>$0.00</span>
+          <span style="font-family: monospace;">$0.00</span>
         </div>
         <div class="totals-final">
-          <span>${isHe ? "סה״כ לתשלום:" : "Total Due:"}</span>
-          <span class="totals-amount">$${opts.displayTotal.toLocaleString()}</span>
+          <span>${isHe ? "יתרה לתשלום:" : "Balance Due:"}</span>
+          <span class="totals-amount">$${((opts.remainingBalance !== undefined ? opts.remainingBalance : opts.displayTotal) || 0).toLocaleString()}</span>
         </div>
       </div>
     </div>
@@ -463,11 +471,23 @@ export function generateEmailRichHtml(opts: InvoiceDataOptions): string {
               : `Payment accepted via Bank Transfer, Stripe, Check, or Card. Please reference invoice number <strong>${opts.invoiceNumber}</strong> with payment.`}
           </p>
         </td>
-        <td style="width: 200px; vertical-align: top;">
+        <td style="width: 220px; vertical-align: top;">
           <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 14px; text-align: ${isHe ? "left" : "right"};">
-            <span style="font-size: 11px; font-weight: 700; color: #1e40af; text-transform: uppercase;">${isHe ? "סה״כ לתשלום" : "TOTAL DUE"}</span>
-            <div style="font-size: 24px; font-weight: 900; color: #2563eb; font-family: monospace; margin-top: 4px;">
-              $${opts.displayTotal.toLocaleString()}
+            <div style="font-size: 11px; color: #475569; margin-bottom: 4px;">
+              <span>${isHe ? "סכום החשבונית:" : "Invoice Total:"}</span>
+              <strong style="font-family: monospace; float: ${isHe ? "left" : "right"};">$${opts.displayTotal.toLocaleString()}</strong>
+            </div>
+            ${(opts.paidAmount !== undefined && opts.paidAmount > 0) ? `
+            <div style="font-size: 11px; color: #059669; margin-bottom: 4px;">
+              <span>${isHe ? "שולם:" : "Paid:"}</span>
+              <strong style="font-family: monospace; float: ${isHe ? "left" : "right"};">-$${opts.paidAmount.toLocaleString()}</strong>
+            </div>
+            ` : ""}
+            <div style="border-top: 2px solid #bfdbfe; padding-top: 8px; margin-top: 6px;">
+              <span style="font-size: 11px; font-weight: 800; color: #1e40af; text-transform: uppercase;">${isHe ? "יתרה לתשלום" : "BALANCE DUE"}</span>
+              <div style="font-size: 22px; font-weight: 900; color: #2563eb; font-family: monospace; margin-top: 2px;">
+                $${((opts.remainingBalance !== undefined ? opts.remainingBalance : opts.displayTotal) || 0).toLocaleString()}
+              </div>
             </div>
           </div>
         </td>

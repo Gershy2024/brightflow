@@ -60,6 +60,7 @@ export function InvoiceModal({
   const [clientEmail, setClientEmail] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [clientAddress, setClientAddress] = useState("");
+  const [paidAmount, setPaidAmount] = useState<number | undefined>(undefined);
   const [items, setItems] = useState<InvoiceItem[]>([]);
 
   // Sync state when invoice opens
@@ -82,6 +83,11 @@ export function InvoiceModal({
       setClientEmail(invoice.clientEmail || project.contacts?.[0]?.email || "");
       setClientPhone(invoice.clientPhone || project.contacts?.[0]?.phone || "");
       setClientAddress(invoice.clientAddress || project.organization || "");
+      // Default paid amount from invoice or fallback to project payments if available
+      const initPaid = invoice.paidAmount !== undefined
+        ? invoice.paidAmount
+        : (project.paidAmount && project.paidAmount > 0 ? project.paidAmount : undefined);
+      setPaidAmount(initPaid);
 
       if (invoice.items && invoice.items.length > 0) {
         setItems(invoice.items);
@@ -110,6 +116,8 @@ export function InvoiceModal({
   );
 
   const displayTotal = items.length > 0 ? totalCalculated : invoice.amount;
+  const currentPaid = paidAmount !== undefined ? paidAmount : 0;
+  const remainingBalance = Math.max(0, displayTotal - currentPaid);
 
   const invoiceDataOptions = {
     project,
@@ -125,6 +133,8 @@ export function InvoiceModal({
     clientAddress,
     notes,
     displayTotal,
+    paidAmount: currentPaid,
+    remainingBalance,
     invoiceLang,
   };
 
@@ -159,6 +169,8 @@ export function InvoiceModal({
       ...invoice,
       invoiceNumber,
       amount: displayTotal,
+      paidAmount: currentPaid,
+      remainingBalance,
       issueDate,
       dueDate,
       status,
@@ -530,7 +542,7 @@ BrightFlow - Custom Software. Smart Automation. Personal Support.
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
                 <div>
                   <label className="block text-muted-foreground mb-1 font-medium">Client / Contact Name</label>
                   <Input
@@ -554,6 +566,21 @@ BrightFlow - Custom Software. Smart Automation. Personal Support.
                     onChange={(e) => setClientPhone(e.target.value)}
                     placeholder="+1 (845)..."
                     className="h-8"
+                  />
+                </div>
+                <div>
+                  <label className="block text-emerald-600 dark:text-emerald-400 mb-1 font-bold">
+                    {isHe ? "שולם ע״ח ($)" : "Amount Paid ($)"}
+                  </label>
+                  <Input
+                    type="number"
+                    value={paidAmount !== undefined ? paidAmount : ""}
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      setPaidAmount(v === "" ? undefined : parseFloat(v) || 0);
+                    }}
+                    placeholder="0"
+                    className="h-8 font-mono font-bold text-emerald-600"
                   />
                 </div>
               </div>
@@ -803,13 +830,21 @@ BrightFlow - Custom Software. Smart Automation. Personal Support.
                 )}
               </div>
 
-              <div className="w-full sm:w-64 space-y-2 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+              <div className="w-full sm:w-72 space-y-2 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
                 <div className="flex justify-between text-slate-600">
-                  <span>{isHe ? "סכום ביניים:" : "Subtotal:"}</span>
-                  <span className="font-mono" dir="ltr">
+                  <span>{isHe ? "סכום החשבונית:" : "Invoice Subtotal:"}</span>
+                  <span className="font-mono font-bold" dir="ltr">
                     ${displayTotal.toLocaleString()}
                   </span>
                 </div>
+                {currentPaid > 0 && (
+                  <div className="flex justify-between text-emerald-600 font-medium">
+                    <span>{isHe ? "שולם על החשבון:" : "Amount Paid:"}</span>
+                    <span className="font-mono font-bold" dir="ltr">
+                      -${currentPaid.toLocaleString()}
+                    </span>
+                  </div>
+                )}
                 <div className="flex justify-between text-slate-600">
                   <span>{isHe ? "מס / מע״מ:" : "Tax / VAT:"}</span>
                   <span className="font-mono" dir="ltr">
@@ -817,9 +852,9 @@ BrightFlow - Custom Software. Smart Automation. Personal Support.
                   </span>
                 </div>
                 <div className="border-t border-slate-200 pt-2.5 flex justify-between items-center text-sm font-bold text-slate-950">
-                  <span>{isHe ? "סה״כ לתשלום:" : "Total Due:"}</span>
+                  <span>{isHe ? "יתרה לגבייה:" : "Balance Due:"}</span>
                   <span className="text-xl font-black font-mono text-blue-600" dir="ltr">
-                    ${displayTotal.toLocaleString()}
+                    ${remainingBalance.toLocaleString()}
                   </span>
                 </div>
               </div>

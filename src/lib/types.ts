@@ -63,6 +63,8 @@ export interface InvoiceRecord {
   clientEmail?: string;
   clientPhone?: string;
   clientAddress?: string;
+  paidAmount?: number;
+  remainingBalance?: number;
 }
 
 export interface Project {
