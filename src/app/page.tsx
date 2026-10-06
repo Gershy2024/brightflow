@@ -15,6 +15,8 @@ import { ProjectModal } from "@/components/ProjectModal";
 import { ProjectDetailsSheet } from "@/components/ProjectDetailsSheet";
 import { LocalScannerModal } from "@/components/LocalScannerModal";
 import { ClientInquiriesModal } from "@/components/ClientInquiriesModal";
+import { LoginPage } from "@/components/LoginPage";
+import { useAuth } from "@/lib/authContext";
 import {
   FilterState,
   Language,
@@ -37,6 +39,7 @@ import {
 import { generateId } from "@/lib/utils";
 
 export default function HomePage() {
+  const { isAuthenticated, isLoading: isAuthLoading, logout } = useAuth();
   const [mounted, setMounted] = React.useState(false);
   const [projects, setProjects] = React.useState<Project[]>([]);
   const [lang, setLang] = React.useState<Language>("he");
@@ -394,12 +397,17 @@ export default function HomePage() {
     updateProjects(updated);
   };
 
-  if (!mounted) {
+  if (!mounted || isAuthLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] dark:bg-[#0f111a]">
         <div className="h-8 w-8 rounded-full border-2 border-blue-600 border-t-transparent animate-spin" />
       </div>
     );
+  }
+
+  // If user is not authenticated, show styled LoginPage
+  if (!isAuthenticated) {
+    return <LoginPage lang={lang} />;
   }
 
   const isRtl = lang === "he";
@@ -424,6 +432,7 @@ export default function HomePage() {
         inquiriesCount={inquiries.filter((i) => i.status === "new").length}
         onExportAll={handleExportAll}
         onImportBackup={handleImportBackup}
+        onLogout={logout}
       />
 
       <main className="w-full max-w-[1750px] mx-auto px-6 sm:px-8 lg:px-10 py-6 sm:py-8 space-y-6 sm:space-y-8">

@@ -13,6 +13,7 @@ import {
   Sparkles,
   User,
   MessageSquare,
+  LogOut,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Language } from "@/lib/types";
@@ -30,6 +31,7 @@ interface NavbarProps {
   inquiriesCount?: number;
   onExportAll: () => void;
   onImportBackup: (file: File) => void;
+  onLogout?: () => void;
 }
 
 export function Navbar({
@@ -43,6 +45,7 @@ export function Navbar({
   inquiriesCount = 0,
   onExportAll,
   onImportBackup,
+  onLogout,
 }: NavbarProps) {
   const t = translations[lang];
   const isHe = lang === "he";
@@ -170,7 +173,7 @@ export function Navbar({
             <Download className="h-4 w-4" strokeWidth={2} />
           </Button>
 
-          {/* User Profile Chip */}
+          {/* User Profile Chip & Logout */}
           <div className="flex items-center gap-2 ps-2 border-s border-slate-200 dark:border-white/10">
             <div className="relative">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 text-white font-bold text-xs shadow-sm">
@@ -181,6 +184,18 @@ export function Navbar({
             <span className="text-xs font-bold text-slate-800 dark:text-slate-200 hidden sm:inline">
               גרשי
             </span>
+
+            {onLogout && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={onLogout}
+                className="h-8 w-8 rounded-xl text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 ms-1 transition-colors"
+                title={isHe ? "התנתק מהמערכת" : "Sign Out"}
+              >
+                <LogOut className="h-3.5 w-3.5" />
+              </Button>
+            )}
           </div>
         </div>
       </div>
