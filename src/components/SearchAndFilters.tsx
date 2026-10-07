@@ -88,6 +88,7 @@ export function SearchAndFilters({
         <div className="relative flex-1">
           <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" strokeWidth={2} />
           <input
+            id="projects-search-input"
             type="text"
             value={filters.search}
             onChange={(e) =>

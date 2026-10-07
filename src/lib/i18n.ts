@@ -3,7 +3,7 @@ import { Language, ProjectStatus } from "./types";
 export const translations = {
   he: {
     appTitle: "BrightFlow",
-    appSubtitle: "Custom Software. Smart Automation. Personal Support.",
+    appSubtitle: "פיתוח תוכנה • אוטומציות חכמות • ליווי אישי",
     searchPlaceholder: "חיפוש לפי שם פרויקט, לקוח, טכנולוגיה או קישור...",
     allStatuses: "כל הסטטוסים",
     allDeployments: "כל ספקי האחסון",
@@ -251,7 +251,7 @@ export const translations = {
 
   en: {
     appTitle: "BrightFlow",
-    appSubtitle: "Custom Software. Smart Automation. Personal Support.",
+    appSubtitle: "Custom Software • Smart Automation • Personal Support",
     searchPlaceholder: "Search by project name, client, tech stack, or URL...",
     allStatuses: "All Statuses",
     allDeployments: "All Deployments",
