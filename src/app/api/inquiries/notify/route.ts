@@ -1,12 +1,6 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { transporter, DEFAULT_SENDER, ADMIN_EMAIL } from "@/lib/mailer";
 import { BRIGHTFLOW_LOGO_FULL_DATA_URI } from "@/lib/logoDataUri";
-
-const resendApiKey = process.env.RESEND_API_KEY;
-const resend = new Resend(resendApiKey || "");
-
-const EMAIL_FROM = process.env.EMAIL_FROM || "BrightFlow <office@amudei-haolam-crm.app>";
-const ADMIN_EMAIL = process.env.ADMIN_NOTIFICATION_EMAIL || "gershybraun@gmail.com";
 
 interface NotifyRequestBody {
   inquiryId?: string;
@@ -47,7 +41,7 @@ export async function POST(req: Request) {
       <div dir="rtl" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.04);">
         <!-- Header -->
         <div style="background: #0f172a; padding: 24px; text-align: center;">
-          <img src="${BRIGHTFLOW_LOGO_FULL_DATA_URI}" alt="TheBrightFlow" style="height: 40px; width: auto; margin: 0 auto 10px auto; display: block;" />
+          <img src="${BRIGHTFLOW_LOGO_FULL_DATA_URI}" alt="BrightFlow" style="height: 40px; width: auto; margin: 0 auto 10px auto; display: block;" />
           <h2 style="color: #ffffff; margin: 0; font-size: 19px; font-weight: 800;">התראה: פנייה חדשה מלקוח</h2>
           <p style="color: #94a3b8; margin: 4px 0 0 0; font-size: 12px;">BrightFlow Control Center</p>
         </div>
@@ -68,7 +62,7 @@ export async function POST(req: Request) {
 
           <!-- Message Box -->
           <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; margin-bottom: 22px; font-size: 13.5px; line-height: 1.6; color: #1e293b; white-space: pre-wrap;">
-            ${body.message}
+${body.message}
           </div>
 
           <!-- Sender Details -->
@@ -94,21 +88,16 @@ export async function POST(req: Request) {
       </div>
     `;
 
-    const { data, error } = await resend.emails.send({
-      from: EMAIL_FROM,
+    const info = await transporter.sendMail({
+      from: DEFAULT_SENDER,
       to: ADMIN_EMAIL,
       subject: `[BrightFlow] ${typeInfo.he}: ${body.projectName ? `[${body.projectName}] ` : ""}${body.title}`,
       html: emailHtml,
     });
 
-    if (error) {
-      console.error("Resend send admin notification error:", error);
-      return NextResponse.json({ success: false, error: error.message }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, id: data?.id });
+    return NextResponse.json({ success: true, messageId: info.messageId });
   } catch (err: any) {
-    console.error("Notify admin API error:", err);
+    console.error("Notify admin API error via Gmail SMTP:", err);
     return NextResponse.json({ success: false, error: err.message }, { status: 500 });
   }
 }
