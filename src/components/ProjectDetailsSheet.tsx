@@ -16,7 +16,6 @@ import {
   Check,
   Building,
   Calendar,
-  MessageCircle,
   CreditCard,
   DollarSign,
   CheckCircle2,
@@ -591,15 +590,6 @@ export function ProjectDetailsSheet({
                               className="hover:text-primary transition-colors font-medium"
                             >
                               {contact.phone}
-                            </a>
-                            <a
-                              href={`https://wa.me/${contact.phone.replace(/[^0-9]/g, "")}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-emerald-600 hover:text-emerald-700 p-0.5"
-                              title="WhatsApp"
-                            >
-                              <MessageCircle className="h-3.5 w-3.5" />
                             </a>
                           </div>
                         )}

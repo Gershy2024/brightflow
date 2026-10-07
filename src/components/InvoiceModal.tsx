@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import {
   X,
   Printer,
-  MessageCircle,
   Mail,
   Copy,
   Check,
@@ -266,43 +265,6 @@ Due Date: ${dueDate || "Upon Receipt"}
     setTimeout(() => setCopiedType(null), 3000);
   };
 
-  // WhatsApp send handler
-  const handleSendWhatsApp = () => {
-    const phoneClean = clientPhone ? clientPhone.replace(/[^0-9]/g, "") : "";
-    const isHe = invoiceLang === "he";
-    const message = isHe
-      ? `*חשבונית / דרישת תשלום מ-BrightFlow*
-----------------------------------------
-*פרויקט:* ${project.name}
-*מספר חשבונית:* ${invoiceNumber}
-*תאריך:* ${issueDate}
-${dueDate ? `*לתשלום עד:* ${dueDate}\n` : ""}*סכום לתשלום:* $${displayTotal.toLocaleString()}
-*סטטוס:* ${status === "paid" ? "שולמה ✓" : "ממתינה לתשלום"}
-----------------------------------------
-${items.map((it) => `• ${it.description}: $${((it.quantity || 1) * (it.unitPrice || 0)).toLocaleString()}`).join("\n")}
-
-תודה רבה!
-*BrightFlow - Custom Software. Smart Automation. Personal Support.*`
-      : `*Invoice from BrightFlow*
-----------------------------------------
-*Project:* ${project.name}
-*Invoice #:* ${invoiceNumber}
-*Date:* ${issueDate}
-${dueDate ? `*Due Date:* ${dueDate}\n` : ""}*Total Due:* $${displayTotal.toLocaleString()}
-*Status:* ${status === "paid" ? "Paid ✓" : "Due"}
-----------------------------------------
-${items.map((it) => `• ${it.description}: $${((it.quantity || 1) * (it.unitPrice || 0)).toLocaleString()}`).join("\n")}
-
-Thank you for your business!
-*BrightFlow - Custom Software. Smart Automation. Personal Support.*`;
-
-    const encoded = encodeURIComponent(message);
-    const url = phoneClean
-      ? `https://wa.me/${phoneClean}?text=${encoded}`
-      : `https://wa.me/?text=${encoded}`;
-    window.open(url, "_blank");
-  };
-
   // Email mailto handler
   const handleSendEmail = () => {
     const isHe = invoiceLang === "he";
@@ -435,18 +397,6 @@ BrightFlow - Custom Software. Smart Automation. Personal Support.
                 <Code className="h-3.5 w-3.5" />
               )}
               <span>{copiedType === "html" ? "הועתק קוד!" : "קוד HTML"}</span>
-            </Button>
-
-            {/* WhatsApp */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleSendWhatsApp}
-              className="h-8 gap-1.5 text-xs font-semibold rounded-xl text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800"
-              title="שלח ב-WhatsApp"
-            >
-              <MessageCircle className="h-3.5 w-3.5" />
-              <span>WhatsApp</span>
             </Button>
 
             {/* Print / Save as PDF Button */}

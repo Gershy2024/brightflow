@@ -13,7 +13,6 @@ import {
   Trash2,
   ExternalLink,
   Mail,
-  MessageCircle,
   Phone,
   Copy,
   Check,
@@ -21,6 +20,8 @@ import {
   Plus,
   Send,
   Building,
+  Reply,
+  Loader2,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
@@ -37,6 +38,7 @@ import {
   submitClientInquiry,
   updateInquiryStatus,
   deleteInquiryFromCloud,
+  replyToClientInquiry,
 } from "@/lib/supabaseService";
 
 interface ClientInquiriesModalProps {
@@ -73,6 +75,12 @@ export function ClientInquiriesModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
 
+  // Reply directly to client modal state
+  const [replyingInquiry, setReplyingInquiry] = useState<ClientInquiry | null>(null);
+  const [replyText, setReplyText] = useState("");
+  const [isSendingReply, setIsSendingReply] = useState(false);
+  const [replySuccess, setReplySuccess] = useState(false);
+
   if (!isOpen) return null;
 
   const filteredInquiries = inquiries.filter((inq) => {
@@ -91,6 +99,43 @@ export function ClientInquiriesModal({
     if (window.confirm(lang === "he" ? "האם למחוק פנייה זו?" : "Delete this inquiry?")) {
       await deleteInquiryFromCloud(id);
       onRefreshInquiries();
+    }
+  };
+
+  const handleOpenReply = (inq: ClientInquiry) => {
+    setReplyingInquiry(inq);
+    setReplyText(
+      lang === "he"
+        ? `שלום ${inq.senderName || ""},\nתודה על פנייתך. הבעיה/בקשה נבדקה וטופלה בהצלחה.\n\nבברכה,\nצוות BrightFlow`
+        : `Hi ${inq.senderName || ""},\nThank you for reaching out. The issue has been investigated and resolved successfully.\n\nBest regards,\nBrightFlow Team`
+    );
+    setReplySuccess(false);
+  };
+
+  const handleSendReplySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!replyingInquiry || !replyText.trim() || !replyingInquiry.senderEmail) return;
+
+    setIsSendingReply(true);
+    const success = await replyToClientInquiry({
+      inquiryId: replyingInquiry.id,
+      recipientEmail: replyingInquiry.senderEmail,
+      recipientName: replyingInquiry.senderName,
+      projectName: replyingInquiry.projectName,
+      inquiryTitle: replyingInquiry.title,
+      replyMessage: replyText.trim(),
+    });
+
+    setIsSendingReply(false);
+    if (success) {
+      setReplySuccess(true);
+      setTimeout(() => {
+        setReplyingInquiry(null);
+        setReplySuccess(false);
+        onRefreshInquiries();
+      }, 1200);
+    } else {
+      alert(lang === "he" ? "שגיאה בשליחת המייל דרך Resend" : "Failed to send email via Resend");
     }
   };
 
@@ -407,35 +452,19 @@ export async function sendFeedbackToBrightFlow({
                           )}
                         </div>
 
-                        {/* Reply Buttons */}
+                        {/* Reply Buttons (No WhatsApp - Email Only) */}
                         <div className="flex items-center gap-2">
-                          {inq.senderPhone && (
-                            <a
-                              href={`https://wa.me/${inq.senderPhone.replace(
-                                /[^0-9]/g,
-                                ""
-                              )}?text=${encodeURIComponent(
-                                `שלום ${inq.senderName || ""}, בהמשך לפנייתך מ-BrightFlow בנושא "${inq.title}": `
-                              )}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20 text-xs font-semibold transition-colors"
-                            >
-                              <MessageCircle className="h-3.5 w-3.5" />
-                              <span>השב ב-WhatsApp</span>
-                            </a>
-                          )}
-
                           {inq.senderEmail && (
-                            <a
-                              href={`mailto:${inq.senderEmail}?subject=${encodeURIComponent(
-                                `מענה לפנייתך ב-BrightFlow: ${inq.title}`
-                              )}`}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 text-xs font-semibold transition-colors"
+                            <Button
+                              type="button"
+                              size="sm"
+                              onClick={() => handleOpenReply(inq)}
+                              className="h-7 px-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold gap-1.5 shadow-sm"
+                              title="השב ישירות ללקוח במייל מתוך BrightFlow"
                             >
-                              <Mail className="h-3.5 w-3.5" />
-                              <span>השב במייל</span>
-                            </a>
+                              <Reply className="h-3.5 w-3.5" />
+                              <span>השב ללקוח במייל</span>
+                            </Button>
                           )}
                         </div>
                       </div>
@@ -618,6 +647,98 @@ export async function sendFeedbackToBrightFlow({
                 {copiedCode ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
                 <span>{copiedCode ? "הועתק!" : "העתק קוד"}</span>
               </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Dedicated Reply Dialog Modal */}
+        {replyingInquiry && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in-0">
+            <div className="relative w-full max-w-lg rounded-3xl border border-border bg-card p-6 shadow-2xl space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-border">
+                <div className="flex items-center gap-2.5">
+                  <div className="p-2 rounded-xl bg-blue-500/10 text-blue-600">
+                    <Mail className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-foreground">מענה במייל ללקוח</h3>
+                    <p className="text-xs text-muted-foreground font-mono">{replyingInquiry.senderEmail}</p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setReplyingInquiry(null)}
+                  className="h-8 w-8 rounded-xl"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+
+              <div className="p-3 rounded-xl bg-muted/40 border border-border text-xs space-y-1">
+                <div className="flex justify-between text-muted-foreground">
+                  <span>פרויקט: <strong className="text-foreground">{replyingInquiry.projectName || "פרויקט כללי"}</strong></span>
+                  <span>סוג: <strong className="text-foreground">{replyingInquiry.type}</strong></span>
+                </div>
+                <p className="font-semibold text-foreground pt-1 truncate">
+                  נושא הפנייה: {replyingInquiry.title}
+                </p>
+              </div>
+
+              <form onSubmit={handleSendReplySubmit} className="space-y-4">
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-semibold text-foreground">
+                    תוכן התשובה והמשוב שיישלח ללקוח במייל:
+                  </label>
+                  <textarea
+                    value={replyText}
+                    onChange={(e) => setReplyText(e.target.value)}
+                    rows={6}
+                    required
+                    placeholder="כתוב כאן את התשובה ללקוח..."
+                    className="w-full rounded-xl border border-input bg-background p-3 text-xs leading-relaxed focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between pt-2 border-t border-border">
+                  <p className="text-[11px] text-muted-foreground">
+                    הסטטוס ישונה אוטומטית ל-<strong>טופל ✓</strong>
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setReplyingInquiry(null)}
+                    >
+                      ביטול
+                    </Button>
+                    <Button
+                      type="submit"
+                      size="sm"
+                      disabled={isSendingReply || !replyText.trim()}
+                      className="bg-blue-600 hover:bg-blue-700 text-white gap-1.5 font-bold"
+                    >
+                      {replySuccess ? (
+                        <>
+                          <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                          <span>נשלח בהצלחה!</span>
+                        </>
+                      ) : isSendingReply ? (
+                        <>
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                          <span>שולח מייל...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="h-3.5 w-3.5" />
+                          <span>שלח תשובה ללקוח</span>
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         )}

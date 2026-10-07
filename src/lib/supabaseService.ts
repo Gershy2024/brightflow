@@ -172,9 +172,59 @@ export async function submitClientInquiry(inquiry: Omit<ClientInquiry, "id" | "c
       console.error("Supabase submit inquiry error:", error.message);
       return false;
     }
+
+    // Trigger instant email notification to Gershy in background
+    try {
+      fetch("/api/inquiries/notify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          inquiryId: newId,
+          projectName: inquiry.projectName,
+          projectId: inquiry.projectId,
+          type: inquiry.type,
+          title: inquiry.title,
+          message: inquiry.message,
+          senderName: inquiry.senderName,
+          senderEmail: inquiry.senderEmail,
+          senderPhone: inquiry.senderPhone,
+        }),
+      }).catch((e) => console.warn("Background notify email error:", e));
+    } catch (notifyErr) {
+      console.warn("Could not fire notify email:", notifyErr);
+    }
+
     return true;
   } catch (err) {
     console.error("Failed to submit client inquiry:", err);
+    return false;
+  }
+}
+
+export async function replyToClientInquiry(params: {
+  inquiryId: string;
+  recipientEmail: string;
+  recipientName?: string;
+  projectName?: string;
+  inquiryTitle: string;
+  replyMessage: string;
+}): Promise<boolean> {
+  try {
+    const res = await fetch("/api/inquiries/reply", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(params),
+    });
+    const data = await res.json();
+    if (data.success) {
+      // Automatically mark inquiry as resolved
+      await updateInquiryStatus(params.inquiryId, "resolved");
+      return true;
+    }
+    console.error("Reply error:", data.error);
+    return false;
+  } catch (e) {
+    console.error("Failed to send reply to client:", e);
     return false;
   }
 }
