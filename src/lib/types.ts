@@ -41,6 +41,13 @@ export interface PaymentRecord {
   method?: string; // "Bank Transfer", "Credit Card", "Cash", "Check", "Stripe", "PayPal", "Other"
   reference?: string; // invoice or transaction ref
   notes?: string;
+  clientId?: string;
+  clientName?: string;
+  projectId?: string;
+  projectName?: string;
+  invoiceId?: string;
+  invoiceNumber?: string;
+  createdAt?: string;
 }
 
 export interface InvoiceItem {
@@ -59,12 +66,81 @@ export interface InvoiceRecord {
   status: "draft" | "sent" | "paid" | "overdue";
   notes?: string;
   items?: InvoiceItem[];
+  clientId?: string;
   clientName?: string;
   clientEmail?: string;
   clientPhone?: string;
   clientAddress?: string;
+  projectId?: string;
+  projectName?: string;
   paidAmount?: number;
   remainingBalance?: number;
+  createdAt?: string;
+}
+
+export type ClientStatus = "active" | "lead" | "vip" | "inactive";
+
+export interface Client {
+  id: string;
+  name: string;
+  companyName?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  status: ClientStatus;
+  notes?: string;
+  website?: string;
+  tags?: string[];
+  assignedProjectIds?: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type OrderStatus = "draft" | "quote" | "in_progress" | "completed" | "cancelled";
+
+export interface OrderItem {
+  id: string;
+  description: string;
+  quantity: number;
+  unitPrice: number;
+}
+
+export interface Order {
+  id: string;
+  orderNumber: string;
+  title: string;
+  clientId: string;
+  clientName: string;
+  projectId?: string;
+  projectName?: string;
+  amount: number;
+  status: OrderStatus;
+  items: OrderItem[];
+  orderDate: string;
+  dueDate?: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type PortalTab =
+  | "dashboard"
+  | "clients"
+  | "projects"
+  | "orders"
+  | "finances"
+  | "inquiries"
+  | "settings";
+
+export interface BusinessProfile {
+  name: string;
+  tagline: string;
+  email: string;
+  phone: string;
+  address: string;
+  businessNumber: string; // ח.פ / ע.מ
+  currency: string;
+  vatRate: number; // e.g. 17 or 18%
 }
 
 export interface Project {
@@ -83,6 +159,7 @@ export interface Project {
   techStack: string[];
   ownerName: string;
   organization?: string;
+  clientId?: string;
   contacts: Contact[];
   estimatedValue?: number;
   paidAmount?: number;

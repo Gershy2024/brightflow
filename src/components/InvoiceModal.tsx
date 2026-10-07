@@ -30,7 +30,7 @@ import { generatePrintInvoiceHtml, generateEmailRichHtml } from "@/lib/invoiceHt
 interface InvoiceModalProps {
   isOpen: boolean;
   onClose: () => void;
-  project: Project;
+  project?: Project | null;
   invoice: InvoiceRecord | null;
   onUpdateInvoice?: (updatedInvoice: InvoiceRecord) => void;
   lang?: Language;
@@ -39,11 +39,28 @@ interface InvoiceModalProps {
 export function InvoiceModal({
   isOpen,
   onClose,
-  project,
+  project: propProject,
   invoice,
   onUpdateInvoice,
   lang = "he",
 }: InvoiceModalProps) {
+  const project: Project = React.useMemo(() => {
+    if (propProject) return propProject;
+    return {
+      id: "prj_general",
+      name: "שירותי תוכנה ופיתוח",
+      description: "פיתוח מערכת והטמעה",
+      status: "live",
+      deploymentProvider: "Vercel",
+      databaseType: "Supabase",
+      techStack: [],
+      ownerName: invoice?.clientName || "לקוח",
+      contacts: [],
+      orderIndex: 0,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+  }, [propProject, invoice]);
   const [copiedType, setCopiedType] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   // Default to English as explicitly requested: "גם יהא באנגלית"
@@ -78,28 +95,29 @@ export function InvoiceModal({
             ? "תודה על שבחרתם ב-BrightFlow. נשמח לעמוד לשירותכם בכל עת."
             : "Thank you for your business. Please remit payment via Bank Transfer, Stripe, Check, or Card.")
       );
-      setClientName(invoice.clientName || project.ownerName || "");
-      setClientEmail(invoice.clientEmail || project.contacts?.[0]?.email || "");
-      setClientPhone(invoice.clientPhone || project.contacts?.[0]?.phone || "");
-      setClientAddress(invoice.clientAddress || project.organization || "");
+      setClientName(invoice.clientName || project?.ownerName || "");
+      setClientEmail(invoice.clientEmail || project?.contacts?.[0]?.email || "");
+      setClientPhone(invoice.clientPhone || project?.contacts?.[0]?.phone || "");
+      setClientAddress(invoice.clientAddress || project?.organization || "");
       // Default paid amount from invoice or fallback to project payments if available
       const initPaid = invoice.paidAmount !== undefined
         ? invoice.paidAmount
-        : (project.paidAmount && project.paidAmount > 0 ? project.paidAmount : undefined);
+        : (project?.paidAmount && project.paidAmount > 0 ? project.paidAmount : undefined);
       setPaidAmount(initPaid);
 
       if (invoice.items && invoice.items.length > 0) {
         setItems(invoice.items);
       } else {
+        const projectName = project?.name || "שירותי תוכנה ופיתוח";
         setItems([
           {
             id: "item_1",
             description:
               invoiceLang === "he"
-                ? `פיתוח והטמעת מערכת: ${project.name}`
-                : `Custom Software Development & Implementation: ${project.name}`,
+                ? `פיתוח והטמעת מערכת: ${projectName}`
+                : `Custom Software Development & Implementation: ${projectName}`,
             quantity: 1,
-            unitPrice: invoice.amount || project.estimatedValue || 0,
+            unitPrice: invoice.amount || project?.estimatedValue || 0,
           },
         ]);
       }

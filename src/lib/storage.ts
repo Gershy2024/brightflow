@@ -497,3 +497,193 @@ export function saveProjectsToStorage(projects: Project[]): void {
     console.error("Failed to save projects to storage:", err);
   }
 }
+
+// ================= CRM CLIENTS, ORDERS & PROFILE STORAGE =================
+
+export const STORAGE_CLIENTS_KEY = "brightflow_crm_clients_v2";
+export const STORAGE_ORDERS_KEY = "brightflow_crm_orders_v2";
+export const STORAGE_PROFILE_KEY = "brightflow_crm_profile_v2";
+
+export const DEFAULT_BUSINESS_PROFILE: import("./types").BusinessProfile = {
+  name: "BrightFlow",
+  tagline: "Custom Software • Smart Automation • Personal Support",
+  email: "contact@brightflow.cloud",
+  phone: "+1 (845) 300-1234",
+  address: "Monsey, NY / Jerusalem",
+  businessNumber: "BF-8930412",
+  currency: "$",
+  vatRate: 0,
+};
+
+export function extractClientsFromProjects(projects: import("./types").Project[]): import("./types").Client[] {
+  const clientMap = new Map<string, import("./types").Client>();
+
+  projects.forEach((p, idx) => {
+    const rawName = (p.ownerName || p.organization || "לקוח כללי").trim();
+    if (!rawName) return;
+
+    const existing = clientMap.get(rawName);
+    const primaryContact = p.contacts?.[0];
+
+    if (existing) {
+      if (!existing.assignedProjectIds?.includes(p.id)) {
+        existing.assignedProjectIds = [...(existing.assignedProjectIds || []), p.id];
+      }
+      if (!existing.email && primaryContact?.email) existing.email = primaryContact.email;
+      if (!existing.phone && primaryContact?.phone) existing.phone = primaryContact.phone;
+      if (!existing.companyName && p.organization) existing.companyName = p.organization;
+    } else {
+      const clientId = `client_${idx + 1}_${encodeURIComponent(rawName).slice(0, 10)}`;
+      clientMap.set(rawName, {
+        id: clientId,
+        name: rawName,
+        companyName: p.organization || rawName,
+        email: primaryContact?.email || "",
+        phone: primaryContact?.phone || "",
+        address: "",
+        status: p.status === "archived" ? "inactive" : "active",
+        notes: `לקוח עבור: ${p.name}`,
+        website: p.liveUrl || "",
+        tags: p.techStack && p.techStack.length > 0 ? p.techStack.slice(0, 2) : ["Web"],
+        assignedProjectIds: [p.id],
+        createdAt: p.createdAt || new Date().toISOString(),
+        updatedAt: p.updatedAt || new Date().toISOString(),
+      });
+    }
+  });
+
+  return Array.from(clientMap.values());
+}
+
+export function extractOrdersFromProjects(
+  projects: import("./types").Project[],
+  clients: import("./types").Client[]
+): import("./types").Order[] {
+  return projects.map((p, idx) => {
+    const matchedClient = clients.find(
+      (c) => c.name === p.ownerName || c.assignedProjectIds?.includes(p.id)
+    );
+    const orderStatus: import("./types").OrderStatus =
+      p.status === "live"
+        ? "completed"
+        : p.status === "in_development"
+        ? "in_progress"
+        : p.status === "archived"
+        ? "cancelled"
+        : "quote";
+
+    return {
+      id: `ord_${p.id}`,
+      orderNumber: `ORD-${new Date().getFullYear()}-${String(101 + idx).padStart(3, "0")}`,
+      title: `פיתוח והטמעת מערכת: ${p.name}`,
+      clientId: matchedClient?.id || `client_gen_${idx}`,
+      clientName: matchedClient?.name || p.ownerName || "לקוח כללי",
+      projectId: p.id,
+      projectName: p.name,
+      amount: p.estimatedValue || 3500,
+      status: orderStatus,
+      items: [
+        {
+          id: `item_${idx}_1`,
+          description: `אפיון, פיתוח, ממשק משתמש ואירוח ענן - ${p.name}`,
+          quantity: 1,
+          unitPrice: p.estimatedValue || 3500,
+        },
+      ],
+      orderDate: p.createdAt ? p.createdAt.split("T")[0] : new Date().toISOString().split("T")[0],
+      dueDate: p.updatedAt ? p.updatedAt.split("T")[0] : new Date().toISOString().split("T")[0],
+      notes: p.notes || "הזמנת שירות ופיתוח תוכנה מותאמת אישית",
+      createdAt: p.createdAt || new Date().toISOString(),
+      updatedAt: p.updatedAt || new Date().toISOString(),
+    };
+  });
+}
+
+export function loadClientsFromStorage(projects?: import("./types").Project[]): import("./types").Client[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(STORAGE_CLIENTS_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.warn("Failed to load clients:", e);
+  }
+
+  // Fallback: seed from projects
+  const effectiveProjects = projects || INITIAL_PROJECTS;
+  const seeded = extractClientsFromProjects(effectiveProjects);
+  saveClientsToStorage(seeded);
+  return seeded;
+}
+
+export function saveClientsToStorage(clients: import("./types").Client[]): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(STORAGE_CLIENTS_KEY, JSON.stringify(clients));
+  } catch (err) {
+    console.error("Failed to save clients to storage:", err);
+  }
+}
+
+export function loadOrdersFromStorage(
+  projects?: import("./types").Project[],
+  clients?: import("./types").Client[]
+): import("./types").Order[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(STORAGE_ORDERS_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.warn("Failed to load orders:", e);
+  }
+
+  // Fallback: seed from projects & clients
+  const effectiveProjects = projects || INITIAL_PROJECTS;
+  const effectiveClients = clients || loadClientsFromStorage(effectiveProjects);
+  const seeded = extractOrdersFromProjects(effectiveProjects, effectiveClients);
+  saveOrdersToStorage(seeded);
+  return seeded;
+}
+
+export function saveOrdersToStorage(orders: import("./types").Order[]): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(STORAGE_ORDERS_KEY, JSON.stringify(orders));
+  } catch (err) {
+    console.error("Failed to save orders to storage:", err);
+  }
+}
+
+export function loadBusinessProfileFromStorage(): import("./types").BusinessProfile {
+  if (typeof window === "undefined") return DEFAULT_BUSINESS_PROFILE;
+  try {
+    const raw = localStorage.getItem(STORAGE_PROFILE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.name) {
+        return { ...DEFAULT_BUSINESS_PROFILE, ...parsed };
+      }
+    }
+  } catch (e) {
+    console.warn("Failed to load business profile:", e);
+  }
+  return DEFAULT_BUSINESS_PROFILE;
+}
+
+export function saveBusinessProfileToStorage(profile: import("./types").BusinessProfile): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(STORAGE_PROFILE_KEY, JSON.stringify(profile));
+  } catch (err) {
+    console.error("Failed to save business profile:", err);
+  }
+}

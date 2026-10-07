@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/lib/authContext";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
-  title: "BrightFlow | Custom Software. Smart Automation. Personal Support.",
+  title: "BrightFlow | Business Portal & CRM",
   description:
-    "BrightFlow - Custom Software, Smart Automation, and Personal Support for all your business applications, databases, and clients.",
+    "BrightFlow - Business Portal, CRM, Project Vault, Invoicing & Cash Flow Management.",
 };
 
 export default function RootLayout({
@@ -16,7 +17,10 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl" suppressHydrationWarning>
       <body className="antialiased font-sans">
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          {children}
+          <Toaster richColors position="top-center" closeButton />
+        </AuthProvider>
       </body>
     </html>
   );
