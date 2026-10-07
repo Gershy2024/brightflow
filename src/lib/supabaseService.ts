@@ -208,7 +208,7 @@ export async function replyToClientInquiry(params: {
   projectName?: string;
   inquiryTitle: string;
   replyMessage: string;
-}): Promise<boolean> {
+}): Promise<{ success: boolean; error?: string }> {
   try {
     const res = await fetch("/api/inquiries/reply", {
       method: "POST",
@@ -219,13 +219,13 @@ export async function replyToClientInquiry(params: {
     if (data.success) {
       // Automatically mark inquiry as resolved
       await updateInquiryStatus(params.inquiryId, "resolved");
-      return true;
+      return { success: true };
     }
     console.error("Reply error:", data.error);
-    return false;
-  } catch (e) {
+    return { success: false, error: data.error || "Failed to send email" };
+  } catch (e: any) {
     console.error("Failed to send reply to client:", e);
-    return false;
+    return { success: false, error: e.message || "Network error" };
   }
 }
 

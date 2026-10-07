@@ -5,7 +5,7 @@ import { BRIGHTFLOW_LOGO_FULL_DATA_URI } from "@/lib/logoDataUri";
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = new Resend(resendApiKey || "");
 
-const EMAIL_FROM = process.env.EMAIL_FROM || "BrightFlow <onboarding@resend.dev>";
+const EMAIL_FROM = process.env.EMAIL_FROM || "BrightFlow <office@amudei-haolam-crm.app>";
 const ADMIN_EMAIL = process.env.ADMIN_NOTIFICATION_EMAIL || "gershybraun@gmail.com";
 
 interface NotifyRequestBody {

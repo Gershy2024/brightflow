@@ -117,7 +117,7 @@ export function ClientInquiriesModal({
     if (!replyingInquiry || !replyText.trim() || !replyingInquiry.senderEmail) return;
 
     setIsSendingReply(true);
-    const success = await replyToClientInquiry({
+    const result = await replyToClientInquiry({
       inquiryId: replyingInquiry.id,
       recipientEmail: replyingInquiry.senderEmail,
       recipientName: replyingInquiry.senderName,
@@ -127,7 +127,7 @@ export function ClientInquiriesModal({
     });
 
     setIsSendingReply(false);
-    if (success) {
+    if (result.success) {
       setReplySuccess(true);
       setTimeout(() => {
         setReplyingInquiry(null);
@@ -135,7 +135,7 @@ export function ClientInquiriesModal({
         onRefreshInquiries();
       }, 1200);
     } else {
-      alert(lang === "he" ? "שגיאה בשליחת המייל דרך Resend" : "Failed to send email via Resend");
+      alert((lang === "he" ? "שגיאה בשליחת המייל: " : "Failed to send email: ") + (result.error || ""));
     }
   };
 
