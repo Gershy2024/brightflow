@@ -123,11 +123,11 @@ export function FinancesView({
             <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight font-mono">
               ${totalInvoiced.toLocaleString()}
             </div>
-            <span className="text-[11px] font-bold text-blue-600">
+            <span className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400">
               {invoices.length} {isHe ? "חשבוניות הופקו" : "invoices"}
             </span>
           </div>
-          <div className="h-12 w-12 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+          <div className="h-12 w-12 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
             <Receipt className="h-6 w-6" />
           </div>
         </div>
@@ -197,7 +197,7 @@ export function FinancesView({
             className={cn(
               "flex-1 md:flex-none px-4 py-1.5 rounded-xl text-xs font-bold transition-all",
               activeTab === "invoices"
-                ? "bg-white dark:bg-[#1a1d2e] shadow-xs text-blue-600"
+                ? "bg-white dark:bg-[#1a1d2e] shadow-xs text-indigo-600 dark:text-indigo-400"
                 : "text-slate-400 hover:text-slate-600"
             )}
           >
@@ -244,7 +244,7 @@ export function FinancesView({
 
           <Button
             onClick={() => onOpenInvoiceModal()}
-            className="rounded-2xl h-9 px-3.5 text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/20 gap-1.5"
+            className="rounded-2xl h-9 px-3.5 text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-500/20 gap-1.5"
           >
             <Receipt className="h-4 w-4" />
             <span>{isHe ? "הפק חשבונית" : "Create Invoice"}</span>
@@ -312,7 +312,7 @@ export function FinancesView({
                             inv.status === "paid"
                               ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
                               : inv.status === "sent"
-                              ? "bg-blue-500/10 text-blue-600 border-blue-500/20"
+                              ? "bg-sky-500/10 text-sky-600 border-sky-500/20"
                               : inv.status === "overdue"
                               ? "bg-rose-500/10 text-rose-600 border-rose-500/20"
                               : "bg-slate-500/10 text-slate-500 border-slate-500/20"
@@ -324,7 +324,7 @@ export function FinancesView({
                               inv.status === "paid"
                                 ? "bg-emerald-500"
                                 : inv.status === "sent"
-                                ? "bg-blue-500"
+                                ? "bg-sky-500"
                                 : inv.status === "overdue"
                                 ? "bg-rose-500"
                                 : "bg-slate-400"
@@ -344,7 +344,7 @@ export function FinancesView({
                           variant="ghost"
                           size="sm"
                           onClick={() => onOpenInvoiceModal(inv)}
-                          className="rounded-xl h-8 px-2.5 text-xs font-bold gap-1 text-blue-600"
+                          className="rounded-xl h-8 px-2.5 text-xs font-bold gap-1 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30"
                         >
                           <Printer className="h-3.5 w-3.5" />
                           <span>{isHe ? "צפה / הדפס" : "View"}</span>

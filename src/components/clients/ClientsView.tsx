@@ -146,12 +146,12 @@ export function ClientsView({
             <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               {clients.length}
             </div>
-            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-600 dark:text-blue-400">
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-sky-600 dark:text-sky-400">
               <Users className="h-3 w-3" />
               {isHe ? "ספר כתובות פעיל" : "CRM Directory"}
             </span>
           </div>
-          <div className="h-12 w-12 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+          <div className="h-12 w-12 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
             <Building className="h-6 w-6" />
           </div>
         </div>
@@ -254,7 +254,7 @@ export function ClientsView({
               onClick={() => setViewMode("table")}
               className={cn(
                 "px-2.5 py-1 rounded-xl text-xs font-bold transition-all",
-                viewMode === "table" ? "bg-white dark:bg-[#1a1d2e] shadow-xs text-blue-600" : "text-slate-400"
+                viewMode === "table" ? "bg-white dark:bg-[#1a1d2e] shadow-xs text-indigo-600 dark:text-indigo-400" : "text-slate-400"
               )}
             >
               {isHe ? "טבלה" : "Table"}
@@ -264,7 +264,7 @@ export function ClientsView({
               onClick={() => setViewMode("cards")}
               className={cn(
                 "px-2.5 py-1 rounded-xl text-xs font-bold transition-all",
-                viewMode === "cards" ? "bg-white dark:bg-[#1a1d2e] shadow-xs text-blue-600" : "text-slate-400"
+                viewMode === "cards" ? "bg-white dark:bg-[#1a1d2e] shadow-xs text-indigo-600 dark:text-indigo-400" : "text-slate-400"
               )}
             >
               {isHe ? "כרטיסים" : "Cards"}
@@ -274,7 +274,7 @@ export function ClientsView({
           {/* Add Client Button */}
           <Button
             onClick={onAddClient}
-            className="rounded-2xl h-10 px-4 text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/20 gap-1.5"
+            className="rounded-2xl h-10 px-4 text-xs font-bold bg-gradient-to-r from-sky-600 via-indigo-600 to-indigo-700 hover:from-sky-700 hover:to-indigo-800 text-white shadow-md shadow-indigo-600/20 gap-1.5"
           >
             <UserPlus className="h-4 w-4" />
             <span>{isHe ? "הוסף לקוח" : "New Client"}</span>
@@ -286,7 +286,7 @@ export function ClientsView({
       {selectedIds.length > 0 && (
         <div className="sticky top-20 z-20 p-3 rounded-2xl bg-slate-900 text-white shadow-xl flex items-center justify-between gap-3 animate-in fade-in-0 duration-200">
           <div className="flex items-center gap-2 ps-2 text-xs font-bold">
-            <CheckSquare className="h-4 w-4 text-blue-400" />
+            <CheckSquare className="h-4 w-4 text-sky-400" />
             <span>
               {isHe ? `${selectedIds.length} לקוחות נבחרו` : `${selectedIds.length} clients selected`}
             </span>
@@ -342,7 +342,7 @@ export function ClientsView({
                       className="text-slate-400 hover:text-slate-600"
                     >
                       {allPageSelected ? (
-                        <CheckSquare className="h-4 w-4 text-blue-600" />
+                        <CheckSquare className="h-4 w-4 text-indigo-600" />
                       ) : (
                         <Square className="h-4 w-4" />
                       )}
@@ -378,7 +378,7 @@ export function ClientsView({
                         key={client.id}
                         className={cn(
                           "hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors group cursor-pointer",
-                          isSelected && "bg-blue-50/40 dark:bg-blue-950/20"
+                          isSelected && "bg-indigo-50/40 dark:bg-indigo-950/20"
                         )}
                         onClick={() => onViewClientProfile(client)}
                       >
@@ -390,10 +390,10 @@ export function ClientsView({
                           <button
                             type="button"
                             onClick={() => handleToggleSelect(client.id)}
-                            className="text-slate-400 hover:text-blue-600"
+                            className="text-slate-400 hover:text-indigo-600"
                           >
                             {isSelected ? (
-                              <CheckSquare className="h-4 w-4 text-blue-600" />
+                              <CheckSquare className="h-4 w-4 text-indigo-600" />
                             ) : (
                               <Square className="h-4 w-4" />
                             )}
@@ -403,7 +403,7 @@ export function ClientsView({
                         {/* Name & Org */}
                         <td className="p-4">
                           <div className="flex items-center gap-3">
-                            <div className="h-9 w-9 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 font-extrabold text-xs flex items-center justify-center shrink-0">
+                            <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0 shadow-xs">
                               {client.name.charAt(0)}
                             </div>
                             <div className="min-w-0">
@@ -448,7 +448,7 @@ export function ClientsView({
                                 : client.status === "vip"
                                 ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20"
                                 : client.status === "lead"
-                                ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20"
+                                ? "bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20"
                                 : "bg-slate-500/10 text-slate-600 border-slate-500/20"
                             )}
                           >
@@ -460,7 +460,7 @@ export function ClientsView({
                                   : client.status === "vip"
                                   ? "bg-amber-500"
                                   : client.status === "lead"
-                                  ? "bg-blue-500"
+                                  ? "bg-sky-500"
                                   : "bg-slate-400"
                               )}
                             />
@@ -514,7 +514,7 @@ export function ClientsView({
                               variant="ghost"
                               size="icon"
                               onClick={() => onEditClient(client)}
-                              className="h-7 w-7 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40"
+                              className="h-7 w-7 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/40"
                               title={isHe ? "ערוך" : "Edit"}
                             >
                               <Edit className="h-3.5 w-3.5" />
@@ -553,11 +553,11 @@ export function ClientsView({
               <div
                 key={client.id}
                 onClick={() => onViewClientProfile(client)}
-                className="p-5 rounded-3xl bg-white dark:bg-[#1a1d2e] border border-slate-100 dark:border-white/10 hover:border-blue-300 dark:hover:border-blue-700 transition-all shadow-xs hover:shadow-md cursor-pointer space-y-4"
+                className="p-5 rounded-3xl bg-white dark:bg-[#1a1d2e] border border-slate-100 dark:border-white/10 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all shadow-xs hover:shadow-md cursor-pointer space-y-4"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-extrabold flex items-center justify-center">
+                    <div className="h-10 w-10 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 text-white font-extrabold flex items-center justify-center shadow-xs">
                       {client.name.charAt(0)}
                     </div>
                     <div>
@@ -577,7 +577,9 @@ export function ClientsView({
                       "text-[10px] font-bold px-2 py-0.5 rounded-full border",
                       client.status === "active"
                         ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
-                        : "bg-blue-500/10 text-blue-600 border-blue-500/20"
+                        : client.status === "vip"
+                        ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
+                        : "bg-sky-500/10 text-sky-600 border-sky-500/20"
                     )}
                   >
                     {client.status}

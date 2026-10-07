@@ -162,13 +162,13 @@ export function OrderModal({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-                <User className="h-3.5 w-3.5 text-blue-600" />
+                <User className="h-3.5 w-3.5 text-sky-600 dark:text-sky-400" />
                 <span>{isHe ? "לקוח מקושר *" : "Client *"}</span>
               </label>
               <select
                 value={clientId}
                 onChange={(e) => setClientId(e.target.value)}
-                className="w-full h-10 px-3 rounded-xl border border-input bg-background text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500/20"
+                className="w-full h-10 px-3 rounded-xl border border-input bg-background text-sm focus:outline-hidden focus:ring-2 focus:ring-amber-500/20"
               >
                 {clients.map((c) => (
                   <option key={c.id} value={c.id}>
@@ -186,7 +186,7 @@ export function OrderModal({
               <select
                 value={projectId}
                 onChange={(e) => setProjectId(e.target.value)}
-                className="w-full h-10 px-3 rounded-xl border border-input bg-background text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500/20"
+                className="w-full h-10 px-3 rounded-xl border border-input bg-background text-sm focus:outline-hidden focus:ring-2 focus:ring-amber-500/20"
               >
                 <option value="">{isHe ? "-- ללא שיוך לפרויקט --" : "-- None --"}</option>
                 {projects.map((p) => (

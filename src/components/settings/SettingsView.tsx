@@ -66,7 +66,7 @@ export function SettingsView({
       {/* 1. Header */}
       <div className="p-6 rounded-3xl bg-white dark:bg-[#1a1d2e] border border-slate-100 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.02)] flex items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="h-12 w-12 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+          <div className="h-12 w-12 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
             <Settings className="h-6 w-6" />
           </div>
           <div>
@@ -89,7 +89,7 @@ export function SettingsView({
       {/* 2. Business Profile Form */}
       <form onSubmit={handleSubmit} className="p-6 rounded-3xl bg-white dark:bg-[#1a1d2e] border border-slate-100 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.02)] space-y-5">
         <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-white/5 pb-3">
-          <Building className="h-4 w-4 text-blue-600" />
+          <Building className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
           <span>{isHe ? "פרטי העסק לחשבוניות והצעות מחיר" : "Business Identity for Invoices"}</span>
         </h3>
 
@@ -196,7 +196,7 @@ export function SettingsView({
         <div className="pt-2 flex justify-end">
           <Button
             type="submit"
-            className="rounded-2xl h-10 px-5 text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/20"
+            className="rounded-2xl h-10 px-5 text-xs font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white shadow-md shadow-indigo-500/20"
           >
             <Check className="h-4 w-4 me-1.5" />
             {isHe ? "שמור הגדרות עסק" : "Save Settings"}
@@ -242,7 +242,7 @@ export function SettingsView({
             onClick={() => fileInputRef.current?.click()}
             className="rounded-2xl h-10 px-4 text-xs font-bold gap-2"
           >
-            <Upload className="h-4 w-4 text-blue-600" />
+            <Upload className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
             <span>{isHe ? "שחזר מגיבוי (JSON)" : "Restore Backup"}</span>
           </Button>
 

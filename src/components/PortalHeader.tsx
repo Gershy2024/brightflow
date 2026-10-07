@@ -120,7 +120,7 @@ export function PortalHeader({
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder={isHe ? "חיפוש מהיר בכל המערכת..." : "Search anything..."}
-              className="w-full ps-9 pe-4 py-1.5 rounded-2xl bg-slate-100/80 dark:bg-[#1a1d2e] border border-slate-200/70 dark:border-white/10 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-xs"
+              className="w-full ps-9 pe-4 py-1.5 rounded-2xl bg-slate-100/80 dark:bg-[#1a1d2e] border border-slate-200/70 dark:border-white/10 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-xs"
             />
           </div>
         </div>
@@ -132,7 +132,7 @@ export function PortalHeader({
             <DropdownMenuTrigger asChild>
               <Button
                 size="sm"
-                className="h-9 px-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white shadow-[0_4px_14px_rgba(37,99,235,0.25)] font-bold text-xs gap-1.5 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="h-9 px-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white shadow-md shadow-indigo-600/25 font-bold text-xs gap-1.5 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 <Plus className="h-4 w-4" strokeWidth={2.5} />
                 <span className="hidden sm:inline">{isHe ? "חדש" : "New"}</span>
@@ -144,7 +144,7 @@ export function PortalHeader({
                 onClick={() => onQuickAction("client")}
                 className="flex items-center gap-2.5 px-3 py-2 text-xs rounded-xl cursor-pointer"
               >
-                <Building className="h-4 w-4 text-blue-600" />
+                <Building className="h-4 w-4 text-sky-600" />
                 <span>{isHe ? "לקוח חדש" : "New Client"}</span>
               </DropdownMenuItem>
               <DropdownMenuItem

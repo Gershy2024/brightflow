@@ -345,7 +345,7 @@ BrightFlow - Custom Software. Smart Automation. Personal Support.
                       ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-bold"
                       : status === "overdue"
                       ? "bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300 font-bold"
-                      : "bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 font-bold"
+                      : "bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300 font-bold"
                   }
                 >
                   {status === "paid"
@@ -371,7 +371,7 @@ BrightFlow - Custom Software. Smart Automation. Personal Support.
               className="h-8 gap-1.5 text-xs font-semibold rounded-xl bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-white/10"
               title="שנה שפת חשבונית"
             >
-              <Languages className="h-3.5 w-3.5 text-blue-600" />
+              <Languages className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
               <span>{invoiceLang === "en" ? "🇺🇸 English" : "🇮🇱 עברית"}</span>
             </Button>
 
@@ -422,7 +422,7 @@ BrightFlow - Custom Software. Smart Automation. Personal Support.
               variant="default"
               size="sm"
               onClick={handlePrint}
-              className="h-8 gap-1.5 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+              className="h-8 gap-1.5 text-xs font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm"
               title="פתח חלון הדפסה ושמירה כ-PDF ללא שיבושים"
             >
               <Printer className="h-3.5 w-3.5" />

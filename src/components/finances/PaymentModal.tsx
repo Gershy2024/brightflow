@@ -138,7 +138,7 @@ export function PaymentModal({
           <div className="space-y-3">
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-                <User className="h-3.5 w-3.5 text-blue-600" />
+                <User className="h-3.5 w-3.5 text-sky-600 dark:text-sky-400" />
                 <span>{isHe ? "לקוח משלם *" : "Client *"}</span>
               </label>
               <select

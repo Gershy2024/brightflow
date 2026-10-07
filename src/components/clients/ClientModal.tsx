@@ -90,7 +90,7 @@ export function ClientModal({
         {/* Header */}
         <div className="px-6 py-5 border-b border-slate-100 dark:border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+            <div className="h-10 w-10 rounded-2xl bg-gradient-to-tr from-sky-500/15 to-indigo-500/15 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 flex items-center justify-center">
               <Building className="h-5 w-5" />
             </div>
             <div>
@@ -116,7 +116,7 @@ export function ClientModal({
           {/* Client Name */}
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-              <User className="h-3.5 w-3.5 text-blue-600" />
+              <User className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
               <span>{isHe ? "שם הלקוח / איש קשר עיקרי *" : "Client Name / Primary Contact *"}</span>
             </label>
             <Input
@@ -150,7 +150,7 @@ export function ClientModal({
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as ClientStatus)}
-                className="w-full h-10 px-3 rounded-xl border border-input bg-background text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500/20"
+                className="w-full h-10 px-3 rounded-xl border border-input bg-background text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500/20"
               >
                 <option value="active">{isHe ? "פעיל" : "Active"}</option>
                 <option value="lead">{isHe ? "ליד / מתעניין" : "Lead"}</option>
@@ -245,7 +245,7 @@ export function ClientModal({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder={isHe ? "דגשים לגבי הלקוח, העדפות תקשורת, היסטוריה..." : "Client context, preferences..."}
-              className="w-full p-3 rounded-xl border border-input bg-background text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 resize-none"
+              className="w-full p-3 rounded-xl border border-input bg-background text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500/20 resize-none"
             />
           </div>
 
@@ -261,7 +261,7 @@ export function ClientModal({
             </Button>
             <Button
               type="submit"
-              className="rounded-xl h-10 px-5 text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/20"
+              className="rounded-xl h-10 px-5 text-xs font-bold bg-gradient-to-r from-sky-600 via-indigo-600 to-indigo-700 hover:from-sky-700 hover:to-indigo-800 text-white shadow-md shadow-indigo-600/20"
             >
               <Check className="h-4 w-4 me-1.5" />
               {isHe ? "שמור לקוח" : "Save Client"}

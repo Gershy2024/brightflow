@@ -42,7 +42,7 @@ interface OrdersViewProps {
 }
 
 const PIPELINE_COLUMNS: Array<{ id: OrderStatus; labelHe: string; labelEn: string; color: string; badge: string }> = [
-  { id: "quote", labelHe: "הצעת מחיר", labelEn: "Quote", color: "border-blue-400", badge: "bg-blue-500/10 text-blue-600" },
+  { id: "quote", labelHe: "הצעת מחיר", labelEn: "Quote", color: "border-sky-400", badge: "bg-sky-500/10 text-sky-600" },
   { id: "in_progress", labelHe: "בביצוע", labelEn: "In Progress", color: "border-amber-400", badge: "bg-amber-500/10 text-amber-600" },
   { id: "completed", labelHe: "הושלם", labelEn: "Completed", color: "border-emerald-400", badge: "bg-emerald-500/10 text-emerald-600" },
   { id: "draft", labelHe: "טיוטה", labelEn: "Draft", color: "border-slate-300", badge: "bg-slate-500/10 text-slate-500" },
@@ -151,14 +151,14 @@ export function OrdersView({
             <span className="text-xs font-bold text-slate-400">
               {isHe ? "הצעות מחיר פתוחות" : "Open Quotes"}
             </span>
-            <div className="text-2xl sm:text-3xl font-extrabold text-blue-600 tracking-tight font-mono">
+            <div className="text-2xl sm:text-3xl font-extrabold text-sky-600 dark:text-sky-400 tracking-tight font-mono">
               ${quoteOrders.reduce((s, o) => s + (Number(o.amount) || 0), 0).toLocaleString()}
             </div>
-            <span className="text-[11px] font-bold text-blue-600">
+            <span className="text-[11px] font-bold text-sky-600 dark:text-sky-400">
               {quoteOrders.length} {isHe ? "הצעות ממתינות" : "quotes"}
             </span>
           </div>
-          <div className="h-12 w-12 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+          <div className="h-12 w-12 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
             <TrendingUp className="h-6 w-6" />
           </div>
         </div>
@@ -296,7 +296,7 @@ export function OrdersView({
 
                         <div className="space-y-1 text-[11px] text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-100 dark:border-white/5">
                           <div className="flex items-center gap-1.5 truncate">
-                            <User className="h-3 w-3 text-blue-500 shrink-0" />
+                            <User className="h-3 w-3 text-sky-500 shrink-0" />
                             <span className="truncate font-semibold text-slate-700 dark:text-slate-300">
                               {ord.clientName}
                             </span>
@@ -331,7 +331,7 @@ export function OrdersView({
                               variant="ghost"
                               size="icon"
                               onClick={() => onEditOrder(ord)}
-                              className="h-6 w-6 text-slate-400 hover:text-blue-600"
+                              className="h-6 w-6 text-slate-400 hover:text-indigo-600"
                             >
                               <Edit className="h-3 w-3" />
                             </Button>
@@ -420,7 +420,7 @@ export function OrdersView({
                             size="sm"
                             variant="outline"
                             onClick={() => onConvertToInvoice(ord)}
-                            className="rounded-xl h-7 px-2.5 text-xs text-emerald-600 border-emerald-200 hover:bg-emerald-50"
+                            className="rounded-xl h-7 px-2.5 text-xs text-emerald-600 border-emerald-200 dark:border-emerald-800/40 bg-emerald-50/50 dark:bg-emerald-950/20 hover:bg-emerald-100/60"
                           >
                             <Receipt className="h-3 w-3 me-1" />
                             {isHe ? "חשבונית" : "Invoice"}
@@ -429,7 +429,7 @@ export function OrdersView({
                             variant="ghost"
                             size="icon"
                             onClick={() => onEditOrder(ord)}
-                            className="h-7 w-7 text-slate-400 hover:text-blue-600"
+                            className="h-7 w-7 text-slate-400 hover:text-indigo-600"
                           >
                             <Edit className="h-3.5 w-3.5" />
                           </Button>

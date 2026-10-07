@@ -94,20 +94,20 @@ export function DashboardCRMView({
   return (
     <div className="space-y-6">
       {/* 1. Personalized Greeting Banner */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white shadow-xl shadow-blue-500/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
-        {/* Subtle decorative circles */}
-        <div className="absolute -top-12 -end-12 w-48 h-48 rounded-full bg-white/10 blur-2xl pointer-events-none" />
-        <div className="absolute -bottom-12 -start-12 w-48 h-48 rounded-full bg-indigo-500/20 blur-2xl pointer-events-none" />
+      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-950 via-[#15193c] to-[#0b0e1c] text-white shadow-2xl shadow-indigo-950/20 border border-indigo-500/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+        {/* Subtle decorative aurora glows */}
+        <div className="absolute -top-16 -end-16 w-64 h-64 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-16 -start-16 w-64 h-64 rounded-full bg-indigo-500/25 blur-3xl pointer-events-none" />
 
         <div className="space-y-1.5 z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-xs font-bold text-white/95 mb-1">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/10 backdrop-blur-md text-xs font-bold text-white/95 mb-1">
             <Sparkles className="h-3.5 w-3.5 text-amber-300" />
             <span>BrightFlow Executive Portal</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
             {isHe ? "שלום גרשי 👋" : "Hello Gershy 👋"}
           </h2>
-          <p className="text-xs sm:text-sm text-blue-100 max-w-xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-indigo-100/80 max-w-xl leading-relaxed">
             {isHe
               ? `כל העסק והלקוחות במקום אחד: ${clients.length} לקוחות, ${projects.length} פרויקטים ו-$${totalCollected.toLocaleString()} נגבו עד כה.`
               : `Your entire business in one place: ${clients.length} clients, ${projects.length} projects, and $${totalCollected.toLocaleString()} collected.`}
@@ -118,25 +118,25 @@ export function DashboardCRMView({
         <div className="flex items-center gap-2.5 z-10 flex-wrap">
           <Button
             onClick={() => onQuickAction("client")}
-            className="rounded-2xl h-10 px-4 text-xs font-bold bg-white text-blue-700 hover:bg-blue-50 shadow-md gap-1.5"
+            className="rounded-2xl h-10 px-4 text-xs font-bold bg-white text-slate-900 hover:bg-slate-100 shadow-md gap-1.5"
           >
-            <Users className="h-4 w-4" />
+            <Users className="h-4 w-4 text-sky-600" />
             <span>{isHe ? "+ לקוח חדש" : "+ New Client"}</span>
           </Button>
 
           <Button
             onClick={() => onQuickAction("order")}
-            className="rounded-2xl h-10 px-4 text-xs font-bold bg-white/20 hover:bg-white/30 text-white border border-white/20 backdrop-blur-md gap-1.5"
+            className="rounded-2xl h-10 px-4 text-xs font-bold bg-white/15 hover:bg-white/25 text-white border border-white/20 backdrop-blur-md gap-1.5"
           >
-            <ShoppingBag className="h-4 w-4" />
+            <ShoppingBag className="h-4 w-4 text-amber-300" />
             <span>{isHe ? "+ הזמנה" : "+ New Order"}</span>
           </Button>
 
           <Button
             onClick={onOpenScanner}
-            className="rounded-2xl h-10 px-4 text-xs font-bold bg-white/20 hover:bg-white/30 text-white border border-white/20 backdrop-blur-md gap-1.5"
+            className="rounded-2xl h-10 px-4 text-xs font-bold bg-white/15 hover:bg-white/25 text-white border border-white/20 backdrop-blur-md gap-1.5"
           >
-            <FolderSearch className="h-4 w-4" />
+            <FolderSearch className="h-4 w-4 text-sky-300" />
             <span>{isHe ? "סורק תיקיות" : "Scanner"}</span>
           </Button>
         </div>
@@ -147,21 +147,21 @@ export function DashboardCRMView({
         {/* Active Clients */}
         <div
           onClick={() => onNavigateTab("clients")}
-          className="p-5 rounded-3xl bg-white dark:bg-[#1a1d2e] border border-slate-100 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-blue-300 dark:hover:border-blue-700 transition-all cursor-pointer flex items-center justify-between group"
+          className="p-5 rounded-3xl bg-white dark:bg-[#141724] border border-slate-200/70 dark:border-white/[0.08] shadow-[0_4px_20px_rgba(15,23,42,0.02)] hover:border-sky-300 dark:hover:border-sky-700 transition-all cursor-pointer flex items-center justify-between group"
         >
           <div className="space-y-1">
-            <span className="text-xs font-bold text-slate-400 group-hover:text-blue-600 transition-colors">
+            <span className="text-xs font-bold text-slate-400 group-hover:text-sky-600 transition-colors">
               {isHe ? "מאגר לקוחות פעיל" : "Active Clients"}
             </span>
             <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               {clients.length}
             </div>
-            <span className="text-[11px] font-bold text-blue-600 inline-flex items-center gap-1">
+            <span className="text-[11px] font-bold text-sky-600 dark:text-sky-400 inline-flex items-center gap-1">
               <span>{isHe ? "צפה ברשימת לקוחות" : "View directory"}</span>
               <ArrowUpRight className="h-3 w-3" />
             </span>
           </div>
-          <div className="h-12 w-12 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+          <div className="h-12 w-12 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
             <Users className="h-6 w-6" />
           </div>
         </div>
@@ -169,21 +169,21 @@ export function DashboardCRMView({
         {/* Live Systems & Projects */}
         <div
           onClick={() => onNavigateTab("projects")}
-          className="p-5 rounded-3xl bg-white dark:bg-[#1a1d2e] border border-slate-100 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-indigo-300 dark:hover:border-indigo-700 transition-all cursor-pointer flex items-center justify-between group"
+          className="p-5 rounded-3xl bg-white dark:bg-[#141724] border border-slate-200/70 dark:border-white/[0.08] shadow-[0_4px_20px_rgba(15,23,42,0.02)] hover:border-indigo-300 dark:hover:border-indigo-700 transition-all cursor-pointer flex items-center justify-between group"
         >
           <div className="space-y-1">
             <span className="text-xs font-bold text-slate-400 group-hover:text-indigo-600 transition-colors">
               {isHe ? "פרויקטים ומערכות קוד" : "Projects & Apps"}
             </span>
-            <div className="text-2xl sm:text-3xl font-extrabold text-indigo-600 tracking-tight">
+            <div className="text-2xl sm:text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 tracking-tight">
               {projects.length}
             </div>
-            <span className="text-[11px] font-bold text-indigo-600 inline-flex items-center gap-1">
+            <span className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 inline-flex items-center gap-1">
               <span>{projects.filter((p) => p.status === "live").length} {isHe ? "פעילים באוויר" : "live in prod"}</span>
               <ArrowUpRight className="h-3 w-3" />
             </span>
           </div>
-          <div className="h-12 w-12 rounded-2xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+          <div className="h-12 w-12 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
             <FolderKanban className="h-6 w-6" />
           </div>
         </div>
@@ -191,21 +191,21 @@ export function DashboardCRMView({
         {/* Orders in Pipeline */}
         <div
           onClick={() => onNavigateTab("orders")}
-          className="p-5 rounded-3xl bg-white dark:bg-[#1a1d2e] border border-slate-100 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-amber-300 dark:hover:border-amber-700 transition-all cursor-pointer flex items-center justify-between group"
+          className="p-5 rounded-3xl bg-white dark:bg-[#141724] border border-slate-200/70 dark:border-white/[0.08] shadow-[0_4px_20px_rgba(15,23,42,0.02)] hover:border-amber-300 dark:hover:border-amber-700 transition-all cursor-pointer flex items-center justify-between group"
         >
           <div className="space-y-1">
             <span className="text-xs font-bold text-slate-400 group-hover:text-amber-600 transition-colors">
               {isHe ? "עסקאות בצנרת" : "Pipeline Orders"}
             </span>
-            <div className="text-2xl sm:text-3xl font-extrabold text-amber-600 tracking-tight">
+            <div className="text-2xl sm:text-3xl font-extrabold text-amber-600 dark:text-amber-400 tracking-tight">
               {activeOrders.length}
             </div>
-            <span className="text-[11px] font-bold text-amber-600 inline-flex items-center gap-1">
+            <span className="text-[11px] font-bold text-amber-600 dark:text-amber-400 inline-flex items-center gap-1">
               <span>${activeOrders.reduce((s, o) => s + (Number(o.amount) || 0), 0).toLocaleString()} {isHe ? "בצנרת" : "in pipeline"}</span>
               <ArrowUpRight className="h-3 w-3" />
             </span>
           </div>
-          <div className="h-12 w-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+          <div className="h-12 w-12 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
             <ShoppingBag className="h-6 w-6" />
           </div>
         </div>
@@ -213,21 +213,21 @@ export function DashboardCRMView({
         {/* Total Collected */}
         <div
           onClick={() => onNavigateTab("finances")}
-          className="p-5 rounded-3xl bg-white dark:bg-[#1a1d2e] border border-slate-100 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-emerald-300 dark:hover:border-emerald-700 transition-all cursor-pointer flex items-center justify-between group"
+          className="p-5 rounded-3xl bg-white dark:bg-[#141724] border border-slate-200/70 dark:border-white/[0.08] shadow-[0_4px_20px_rgba(15,23,42,0.02)] hover:border-emerald-300 dark:hover:border-emerald-700 transition-all cursor-pointer flex items-center justify-between group"
         >
           <div className="space-y-1">
             <span className="text-xs font-bold text-slate-400 group-hover:text-emerald-600 transition-colors">
               {isHe ? "שולם ונגבה בפועל" : "Total Collected"}
             </span>
-            <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600 tracking-tight font-mono">
+            <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight font-mono">
               ${totalCollected.toLocaleString()}
             </div>
-            <span className="text-[11px] font-bold text-emerald-600 inline-flex items-center gap-1">
+            <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 inline-flex items-center gap-1">
               <span>${totalPending.toLocaleString()} {isHe ? "יתרה לגבייה" : "pending"}</span>
               <ArrowUpRight className="h-3 w-3" />
             </span>
           </div>
-          <div className="h-12 w-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+          <div className="h-12 w-12 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
             <CreditCard className="h-6 w-6" />
           </div>
         </div>
@@ -236,7 +236,7 @@ export function DashboardCRMView({
       {/* 3. Analytics Charts (Curved Splines Area Chart & Donut Chart - Rule #2) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Revenue Performance Spline Chart */}
-        <div className="lg:col-span-2 p-6 rounded-3xl bg-white dark:bg-[#1a1d2e] border border-slate-100 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.02)] space-y-4">
+        <div className="lg:col-span-2 p-6 rounded-3xl bg-white dark:bg-[#141724] border border-slate-200/70 dark:border-white/[0.08] shadow-[0_4px_20px_rgba(15,23,42,0.02)] space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-sm font-bold text-slate-900 dark:text-white">
@@ -246,7 +246,7 @@ export function DashboardCRMView({
                 {isHe ? "גרף מצטבר של שווי וגביית תשלומים" : "Cumulative collections"}
               </p>
             </div>
-            <span className="text-xs font-extrabold font-mono text-emerald-600">
+            <span className="text-xs font-extrabold font-mono text-emerald-600 dark:text-emerald-400">
               ${totalCollected.toLocaleString()}
             </span>
           </div>
@@ -256,17 +256,17 @@ export function DashboardCRMView({
               <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#2563EB" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#2563EB" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#6366F1" stopOpacity={0.35} />
+                    <stop offset="95%" stopColor="#6366F1" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <XAxis dataKey="name" stroke="#94A3B8" fontSize={11} tickLine={false} axisLine={false} />
                 <YAxis stroke="#94A3B8" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(v) => `$${v}`} />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#1e293b",
+                    backgroundColor: "#0f172a",
                     borderRadius: "16px",
-                    border: "none",
+                    border: "1px solid rgba(255,255,255,0.1)",
                     color: "#fff",
                     fontSize: "12px",
                   }}
@@ -275,7 +275,7 @@ export function DashboardCRMView({
                 <Area
                   type="natural"
                   dataKey="value"
-                  stroke="#2563EB"
+                  stroke="#6366F1"
                   strokeWidth={3}
                   fillOpacity={1}
                   fill="url(#colorRevenue)"

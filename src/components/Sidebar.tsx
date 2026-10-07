@@ -73,35 +73,35 @@ export function Sidebar({
       label: t.portal?.tabClients || "לקוחות (CRM)",
       icon: Users,
       badge: counts.clients,
-      badgeColor: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+      badgeColor: "bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20",
     },
     {
       id: "projects",
       label: t.portal?.tabProjects || "פרויקטים ומערכות",
       icon: FolderKanban,
       badge: counts.projects,
-      badgeColor: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
+      badgeColor: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20",
     },
     {
       id: "orders",
       label: t.portal?.tabOrders || "הזמנות ועסקאות",
       icon: ShoppingBag,
       badge: counts.orders,
-      badgeColor: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+      badgeColor: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20",
     },
     {
       id: "finances",
       label: t.portal?.tabFinances || "כספים וחשבוניות",
       icon: Receipt,
       badge: counts.unpaidInvoices > 0 ? counts.unpaidInvoices : undefined,
-      badgeColor: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+      badgeColor: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20",
     },
     {
       id: "inquiries",
       label: t.portal?.tabInquiries || "פניות שירות",
       icon: MessageSquareText,
       badge: counts.inquiries > 0 ? counts.inquiries : undefined,
-      badgeColor: "bg-rose-500 text-white animate-pulse",
+      badgeColor: "bg-rose-500 text-white animate-pulse shadow-xs",
     },
     {
       id: "settings",
@@ -114,7 +114,7 @@ export function Sidebar({
     <aside
       className={cn(
         "h-screen sticky top-0 z-40 flex flex-col justify-between transition-all duration-300 ease-in-out border-e shrink-0 select-none",
-        "bg-white dark:bg-[#13151f] border-slate-200/80 dark:border-white/10 shadow-[4px_0_24px_rgba(0,0,0,0.02)]",
+        "bg-white dark:bg-[#0e1220] border-slate-200/80 dark:border-white/[0.08] shadow-[4px_0_24px_rgba(15,23,42,0.02)]",
         collapsed ? "w-20" : "w-64 xl:w-72"
       )}
     >
@@ -128,7 +128,7 @@ export function Sidebar({
             )}
             onClick={() => onSelectTab("dashboard")}
           >
-            <div className="relative flex items-center justify-center h-10 w-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-black shadow-md shadow-blue-500/20 shrink-0">
+            <div className="relative flex items-center justify-center h-10 w-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-violet-700 text-white font-black shadow-md shadow-indigo-600/25 shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/brightflow-logo.png"
@@ -147,7 +147,7 @@ export function Sidebar({
                   <span className="font-extrabold text-base tracking-tight text-slate-900 dark:text-white truncate">
                     BrightFlow
                   </span>
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 shrink-0">
+                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 shrink-0">
                     CRM
                   </span>
                 </div>
@@ -181,7 +181,7 @@ export function Sidebar({
               <button
                 type="button"
                 onClick={() => onQuickAction("client")}
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 transition-all hover:scale-[1.01] active:scale-[0.98]"
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-700 hover:from-indigo-700 hover:to-violet-800 text-white font-bold text-xs shadow-md shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/30 transition-all hover:scale-[1.01] active:scale-[0.98]"
               >
                 <div className="flex items-center gap-2">
                   <Plus className="h-4 w-4" strokeWidth={2.5} />
@@ -196,7 +196,7 @@ export function Sidebar({
             <button
               type="button"
               onClick={() => onQuickAction("client")}
-              className="w-12 h-12 mx-auto flex items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md shadow-blue-500/25 hover:bg-blue-700 transition-all"
+              className="w-12 h-12 mx-auto flex items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-md shadow-indigo-600/25 hover:bg-indigo-700 transition-all"
               title={isHe ? "פעולה חדשה" : "New Action"}
             >
               <Plus className="h-5 w-5" strokeWidth={2.5} />
@@ -218,8 +218,8 @@ export function Sidebar({
                 className={cn(
                   "w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all relative group",
                   isActive
-                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
-                    : "text-slate-600 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-white",
+                    ? "bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-600/25"
+                    : "text-slate-600 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-white/[0.06] hover:text-slate-900 dark:hover:text-white",
                   collapsed && "justify-center px-0 h-11 w-11 mx-auto"
                 )}
                 title={collapsed ? item.label : undefined}
@@ -227,7 +227,7 @@ export function Sidebar({
                 <Icon
                   className={cn(
                     "h-4 w-4 shrink-0 transition-transform group-hover:scale-110",
-                    isActive ? "text-white" : "text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400"
+                    isActive ? "text-white" : "text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400"
                   )}
                   strokeWidth={2}
                 />

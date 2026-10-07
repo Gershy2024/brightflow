@@ -136,7 +136,7 @@ export function ClientProfileDrawer({
         {/* Drawer Header */}
         <div className="p-6 border-b border-slate-100 dark:border-white/10 bg-slate-50/50 dark:bg-slate-900/40 flex items-start justify-between gap-4">
           <div className="flex items-start gap-4 flex-1 min-w-0">
-            <div className="h-14 w-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-extrabold text-xl flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
+            <div className="h-14 w-14 rounded-2xl bg-gradient-to-tr from-sky-500 via-indigo-600 to-indigo-700 text-white font-extrabold text-xl flex items-center justify-center shadow-md shadow-indigo-600/25 shrink-0">
               {client.name.charAt(0)}
             </div>
             <div className="space-y-1 min-w-0 flex-1">
@@ -256,7 +256,7 @@ export function ClientProfileDrawer({
             className={cn(
               "py-3 text-xs font-bold border-b-2 transition-all",
               activeTab === "overview"
-                ? "border-blue-600 text-blue-600 dark:text-blue-400"
+                ? "border-indigo-600 text-indigo-600 dark:text-indigo-400"
                 : "border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
             )}
           >
@@ -268,7 +268,7 @@ export function ClientProfileDrawer({
             className={cn(
               "py-3 text-xs font-bold border-b-2 transition-all flex items-center gap-1.5",
               activeTab === "projects"
-                ? "border-blue-600 text-blue-600 dark:text-blue-400"
+                ? "border-indigo-600 text-indigo-600 dark:text-indigo-400"
                 : "border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
             )}
           >
@@ -283,7 +283,7 @@ export function ClientProfileDrawer({
             className={cn(
               "py-3 text-xs font-bold border-b-2 transition-all flex items-center gap-1.5",
               activeTab === "orders"
-                ? "border-blue-600 text-blue-600 dark:text-blue-400"
+                ? "border-amber-600 text-amber-600 dark:text-amber-400"
                 : "border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
             )}
           >
@@ -298,7 +298,7 @@ export function ClientProfileDrawer({
             className={cn(
               "py-3 text-xs font-bold border-b-2 transition-all flex items-center gap-1.5",
               activeTab === "finances"
-                ? "border-blue-600 text-blue-600 dark:text-blue-400"
+                ? "border-emerald-600 text-emerald-600 dark:text-emerald-400"
                 : "border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
             )}
           >
@@ -345,7 +345,7 @@ export function ClientProfileDrawer({
                         href={client.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-bold text-blue-600 dark:text-blue-400 inline-flex items-center gap-1 hover:underline"
+                        className="font-bold text-sky-600 dark:text-sky-400 inline-flex items-center gap-1 hover:underline"
                       >
                         {client.website.replace(/^https?:\/\//, "")}
                         <ExternalLink className="h-3 w-3" />
@@ -367,7 +367,7 @@ export function ClientProfileDrawer({
                         client.tags.map((t, i) => (
                           <span
                             key={i}
-                            className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400"
+                            className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 border border-sky-200/50 dark:border-sky-800/30"
                           >
                             {t}
                           </span>
@@ -396,7 +396,7 @@ export function ClientProfileDrawer({
               <div className="pt-2 flex items-center gap-3 flex-wrap">
                 <Button
                   onClick={() => onNewProjectForClient(client)}
-                  className="rounded-xl text-xs font-bold h-9 bg-blue-600 hover:bg-blue-700 text-white gap-1.5"
+                  className="rounded-xl text-xs font-bold h-9 bg-indigo-600 hover:bg-indigo-700 text-white gap-1.5 shadow-xs"
                 >
                   <FolderKanban className="h-4 w-4" />
                   <span>{isHe ? "פתח פרויקט ללקוח" : "New Project"}</span>
@@ -404,7 +404,7 @@ export function ClientProfileDrawer({
                 <Button
                   variant="outline"
                   onClick={() => onNewOrderForClient(client)}
-                  className="rounded-xl text-xs font-bold h-9 gap-1.5"
+                  className="rounded-xl text-xs font-bold h-9 gap-1.5 border-amber-200 dark:border-amber-900/50 bg-amber-50/50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-300 hover:bg-amber-100/60"
                 >
                   <ShoppingBag className="h-4 w-4 text-amber-600" />
                   <span>{isHe ? "צור הזמנה" : "New Order"}</span>
@@ -412,7 +412,7 @@ export function ClientProfileDrawer({
                 <Button
                   variant="outline"
                   onClick={() => onNewInvoiceForClient(client)}
-                  className="rounded-xl text-xs font-bold h-9 gap-1.5"
+                  className="rounded-xl text-xs font-bold h-9 gap-1.5 border-emerald-200 dark:border-emerald-900/50 bg-emerald-50/50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100/60"
                 >
                   <Receipt className="h-4 w-4 text-emerald-600" />
                   <span>{isHe ? "הפק חשבונית" : "Create Invoice"}</span>
@@ -431,7 +431,7 @@ export function ClientProfileDrawer({
                 <Button
                   size="sm"
                   onClick={() => onNewProjectForClient(client)}
-                  className="rounded-xl h-8 text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white gap-1"
+                  className="rounded-xl h-8 text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white gap-1 shadow-xs"
                 >
                   <Plus className="h-3.5 w-3.5" />
                   <span>{isHe ? "הוסף פרויקט" : "Add Project"}</span>
@@ -447,7 +447,7 @@ export function ClientProfileDrawer({
                   {clientProjects.map((p) => (
                     <div
                       key={p.id}
-                      className="p-4 rounded-2xl bg-white dark:bg-[#13151f] border border-slate-200/70 dark:border-white/10 hover:border-blue-300 dark:hover:border-blue-700 transition-all shadow-xs flex items-center justify-between gap-4"
+                      className="p-4 rounded-2xl bg-white dark:bg-[#13151f] border border-slate-200/70 dark:border-white/10 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all shadow-xs flex items-center justify-between gap-4"
                     >
                       <div className="min-w-0 flex-1 space-y-1">
                         <div className="flex items-center gap-2">
@@ -464,7 +464,7 @@ export function ClientProfileDrawer({
                           {p.description || "—"}
                         </p>
                         <div className="flex items-center gap-2 text-[10px] text-slate-400 pt-1">
-                          <span className="font-semibold text-blue-600 dark:text-blue-400">
+                          <span className="font-semibold text-indigo-600 dark:text-indigo-400">
                             {p.deploymentProvider}
                           </span>
                           <span>•</span>
