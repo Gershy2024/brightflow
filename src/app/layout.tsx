@@ -4,9 +4,9 @@ import { AuthProvider } from "@/lib/authContext";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
-  title: "BrightFlow | Business Portal & CRM",
+  title: "BrightFlow | Intelligent Business Automation & Client Hub",
   description:
-    "BrightFlow - Business Portal, CRM, Project Vault, Invoicing & Cash Flow Management.",
+    "Put your business on autopilot. Bespoke workflow automation, CRM pipelines, instant quote-to-cash invoicing, and smart telephony.",
 };
 
 export default function RootLayout({
@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="he" dir="rtl" suppressHydrationWarning>
+    <html lang="en" dir="ltr" suppressHydrationWarning>
       <body className="antialiased font-sans">
         <AuthProvider>
           {children}

@@ -309,6 +309,17 @@ export function Sidebar({
           )}
         </div>
 
+        {/* Link back to marketing website */}
+        {!collapsed && (
+          <a
+            href="/"
+            className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50/60 dark:bg-blue-950/30 hover:bg-blue-100/80 dark:hover:bg-blue-900/40 transition-colors"
+          >
+            <ExternalLink className="h-3.5 w-3.5" />
+            <span>{isHe ? "חזרה לאתר הראשי" : "Back to Website"}</span>
+          </a>
+        )}
+
         {/* System toggles */}
         {!collapsed && (
           <div className="flex items-center justify-between px-2 pt-1 text-[11px] text-slate-400">

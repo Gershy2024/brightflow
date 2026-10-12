@@ -14,6 +14,7 @@ import {
   ShoppingBag,
   Receipt,
   FileSpreadsheet,
+  Globe,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { PortalTab, Language } from "@/lib/types";
@@ -199,6 +200,16 @@ export function PortalHeader({
               </span>
             )}
           </Button>
+
+          {/* Website Link */}
+          <a
+            href="/"
+            className="inline-flex items-center gap-1.5 text-xs h-9 px-3 rounded-2xl border border-blue-200 dark:border-blue-900/60 bg-blue-50/80 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60 font-semibold shadow-xs transition-colors"
+            title={isHe ? "עבור לאתר הראשי" : "Go to Main Website"}
+          >
+            <Globe className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+            <span className="hidden xl:inline">{isHe ? "האתר הראשי" : "Main Website"}</span>
+          </a>
 
           {/* Backup Button */}
           <Button
