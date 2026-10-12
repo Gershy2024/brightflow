@@ -2,10 +2,26 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { BrightFlowLogoIcon } from "@/components/BrightFlowLogo";
-import { ShieldCheck, ArrowRight, Lock, Heart, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, ArrowRight, Lock, CheckCircle2, Server, KeyRound } from "lucide-react";
 
 export function PublicFooter() {
+  const router = useRouter();
+  const [shieldClicks, setShieldClicks] = React.useState(0);
+
+  // Hidden admin shortcut via footer shield: triple click
+  const handleShieldClick = () => {
+    const next = shieldClicks + 1;
+    if (next >= 3) {
+      setShieldClicks(0);
+      router.push("/admin");
+    } else {
+      setShieldClicks(next);
+      setTimeout(() => setShieldClicks(0), 1200);
+    }
+  };
+
   return (
     <footer className="bg-slate-900 dark:bg-[#07090F] text-slate-400 text-xs py-16 border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -46,13 +62,23 @@ export function PublicFooter() {
                 </a>
               </li>
               <li>
+                <a href="#speed-race" className="hover:text-white transition-colors">
+                  Speed Race Test
+                </a>
+              </li>
+              <li>
                 <a href="#comparison" className="hover:text-white transition-colors">
                   Manual vs. Automated
                 </a>
               </li>
               <li>
                 <a href="#pipeline" className="hover:text-white transition-colors">
-                  Interactive Pipeline Simulator
+                  Live Pipeline Simulator
+                </a>
+              </li>
+              <li>
+                <a href="#telephony-demo" className="hover:text-white transition-colors">
+                  Voice & IVR Simulator
                 </a>
               </li>
               <li>
@@ -61,39 +87,51 @@ export function PublicFooter() {
                 </a>
               </li>
               <li>
-                <a href="#solutions" className="hover:text-white transition-colors">
-                  Core Solutions
+                <a href="#quiz" className="hover:text-white transition-colors">
+                  Automation Quiz
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Business & Portal Access */}
+          {/* Enterprise Reliability & Data Security */}
           <div className="md:col-span-4 space-y-3">
             <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-              Administration & Access
+              Security & Architecture
             </h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Authorized administrators can access the business vault, CRM dashboard, finances, and live scanner directly through the private portal.
+              Every system is engineered on zero-trust architectures with Row Level Security (RLS), real-time encrypted database backups, and dedicated cloud instances.
             </p>
 
-            <div className="pt-1">
-              <Link
-                href="/admin"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs border border-slate-700 hover:border-slate-600 transition-colors group"
-              >
-                <Lock className="h-3.5 w-3.5 text-indigo-400" />
-                <span>Sign In to Admin Portal</span>
-                <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
-              </Link>
+            <div className="space-y-2 pt-1 text-[11px] text-slate-400">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-3.5 w-3.5 text-cyan-400" />
+                <span>Isolated Client Data Vaults</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-3.5 w-3.5 text-cyan-400" />
+                <span>SOC-2 & GDPR Compatible Cloud Storage</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-3.5 w-3.5 text-cyan-400" />
+                <span>Zero-Downtime Microservice Pipelines</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar with Rule #12 & Rule #18 */}
+        {/* Bottom Bar */}
         <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-cyan-400/80" />
+            {/* Secret Easter egg: triple clicking this shield navigates to /admin */}
+            <button
+              type="button"
+              onClick={handleShieldClick}
+              className="text-cyan-400/80 hover:text-cyan-400 transition-colors p-0.5 cursor-default focus:outline-none"
+              title="BrightFlow Security"
+            >
+              <ShieldCheck className="h-4 w-4" />
+            </button>
             <span>© {new Date().getFullYear()} The Bright Flow. All rights reserved.</span>
           </div>
 

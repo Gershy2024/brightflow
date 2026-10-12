@@ -3,10 +3,14 @@
 import * as React from "react";
 import { PublicNavbar } from "@/components/public/PublicNavbar";
 import { HeroSection } from "@/components/public/HeroSection";
+import { SpeedRaceSection } from "@/components/public/SpeedRaceSection";
 import { BeforeAfterSection } from "@/components/public/BeforeAfterSection";
 import { PipelineSimulatorSection } from "@/components/public/PipelineSimulatorSection";
+import { TelephonySimulator } from "@/components/public/TelephonySimulator";
 import { RoiCalculatorSection } from "@/components/public/RoiCalculatorSection";
 import { SolutionsBento } from "@/components/public/SolutionsBento";
+import { AutomationQuiz } from "@/components/public/AutomationQuiz";
+import { FaqSection } from "@/components/public/FaqSection";
 import { InquirySection } from "@/components/public/InquirySection";
 import { PublicFooter } from "@/components/public/PublicFooter";
 
@@ -48,7 +52,7 @@ export default function BrightFlowPublicWebsite() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B0E17] text-slate-900 dark:text-slate-100 selection:bg-indigo-500/20 selection:text-indigo-600 font-sans transition-colors duration-200">
-      {/* 1. Sticky Navigation */}
+      {/* 1. Sticky Navigation (Admin Portal hidden from regular visitors) */}
       <PublicNavbar
         darkMode={darkMode}
         onToggleDarkMode={handleToggleDarkMode}
@@ -58,23 +62,35 @@ export default function BrightFlowPublicWebsite() {
         {/* 2. Hero Section with Live Micro-Automation Sandbox */}
         <HeroSection />
 
-        {/* 3. Reality Check: Before vs. After Interactive Comparison */}
+        {/* 3. Live Benchmark Speed Race (Human vs. BrightFlow Engine) */}
+        <SpeedRaceSection />
+
+        {/* 4. Reality Check: Before vs. After Interactive Comparison */}
         <BeforeAfterSection />
 
-        {/* 4. Interactive Live Visual Pipeline Simulator */}
+        {/* 5. Interactive Live Visual Pipeline Simulator */}
         <PipelineSimulatorSection />
 
-        {/* 5. Interactive ROI & Time-Saved Calculator */}
+        {/* 6. Interactive Smartphone Telephony & Call Screening Simulator */}
+        <TelephonySimulator />
+
+        {/* 7. Interactive ROI & Time-Saved Calculator */}
         <RoiCalculatorSection />
 
-        {/* 6. Core Solutions Bento Grid */}
+        {/* 8. Core Solutions Bento Grid */}
         <SolutionsBento />
 
-        {/* 7. Live Inquiry & Automation Discovery Form */}
+        {/* 9. 60-Second Automation Health Score Diagnostic Quiz */}
+        <AutomationQuiz />
+
+        {/* 10. Frequently Asked Questions Accordion */}
+        <FaqSection />
+
+        {/* 11. Live Inquiry & Automation Discovery Form */}
         <InquirySection />
       </main>
 
-      {/* 8. Footer */}
+      {/* 12. Footer with Discreet Security & Architecture Focus */}
       <PublicFooter />
     </div>
   );
