@@ -5,6 +5,31 @@ import * as React from "react";
 const AUTH_STORAGE_KEY = "brightflow_auth_session";
 const MASTER_PASSWORD_HASH = "all@1";
 
+// Protect React DOM reconciliation from Google Translate & browser extension DOM mutations
+if (typeof window !== "undefined" && typeof Node === "function" && Node.prototype) {
+  const originalRemoveChild = Node.prototype.removeChild;
+  Node.prototype.removeChild = function <T extends Node>(child: T): T {
+    if (child.parentNode !== this) {
+      return child;
+    }
+    return originalRemoveChild.apply(this, arguments as unknown as [Node]) as T;
+  };
+
+  const originalInsertBefore = Node.prototype.insertBefore;
+  Node.prototype.insertBefore = function <T extends Node>(
+    newNode: T,
+    referenceNode: Node | null
+  ): T {
+    if (referenceNode && referenceNode.parentNode !== this) {
+      return newNode;
+    }
+    return originalInsertBefore.apply(
+      this,
+      arguments as unknown as [Node, Node | null]
+    ) as T;
+  };
+}
+
 interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
@@ -35,7 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed.authenticated) {
+        if (parsed && typeof parsed === "object" && parsed.authenticated) {
           setIsAuthenticated(true);
           setUser({ name: "גרשי", email: "gershy@brightflow.io" });
         }

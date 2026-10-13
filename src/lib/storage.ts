@@ -440,13 +440,13 @@ export function loadProjectsFromStorage(): Project[] {
             const initMatch = INITIAL_PROJECTS.find((ip) => ip.id === p.id);
 
             // Filter out any mock dummy test payments
-            const cleanPayments = (p.payments || []).filter(
-              (pay) => !DUMMY_PAYMENT_IDS.has(pay.id) && !pay.id.startsWith("dummy_")
+            const cleanPayments = (Array.isArray(p.payments) ? p.payments : []).filter(
+              (pay) => pay && pay.id && !DUMMY_PAYMENT_IDS.has(pay.id) && !String(pay.id).startsWith("dummy_")
             );
 
             // Filter out any mock dummy test invoices
-            const cleanInvoices = (p.invoices || []).filter(
-              (inv) => !DUMMY_INVOICE_IDS.has(inv.id) && !inv.id.startsWith("dummy_")
+            const cleanInvoices = (Array.isArray(p.invoices) ? p.invoices : []).filter(
+              (inv) => inv && inv.id && !DUMMY_INVOICE_IDS.has(inv.id) && !String(inv.id).startsWith("dummy_")
             );
 
             // Calculate paidAmount strictly from authentic user payment records
@@ -458,11 +458,22 @@ export function loadProjectsFromStorage(): Project[] {
             return {
               ...initMatch,
               ...p,
+              id: String(p.id || initMatch?.id || `prj_${Math.random().toString(36).slice(2, 8)}`),
+              name: String(p.name || initMatch?.name || "פרויקט"),
+              description: String(p.description ?? initMatch?.description ?? ""),
+              status: p.status || initMatch?.status || "live",
+              deploymentProvider: p.deploymentProvider || initMatch?.deploymentProvider || "Vercel",
+              databaseType: p.databaseType || initMatch?.databaseType || "None",
+              techStack: Array.isArray(p.techStack) ? p.techStack.filter(Boolean).map(String) : initMatch?.techStack || [],
+              ownerName: String(p.ownerName ?? initMatch?.ownerName ?? "כללי"),
+              contacts: Array.isArray(p.contacts) ? p.contacts.filter(Boolean) : initMatch?.contacts || [],
               // Strictly preserve user's genuine estimatedValue
-              estimatedValue: p.estimatedValue !== undefined ? p.estimatedValue : initMatch?.estimatedValue,
+              estimatedValue: p.estimatedValue !== undefined ? Number(p.estimatedValue) || 0 : initMatch?.estimatedValue || 0,
               paidAmount: calculatedPaid,
               payments: cleanPayments,
               invoices: cleanInvoices,
+              createdAt: p.createdAt || initMatch?.createdAt || new Date().toISOString(),
+              updatedAt: p.updatedAt || initMatch?.updatedAt || new Date().toISOString(),
             };
           });
 
@@ -519,7 +530,7 @@ export function extractClientsFromProjects(projects: import("./types").Project[]
   const clientMap = new Map<string, import("./types").Client>();
 
   projects.forEach((p, idx) => {
-    const rawName = (p.ownerName || p.organization || "לקוח כללי").trim();
+    const rawName = String(p.ownerName || p.organization || "לקוח כללי").trim();
     if (!rawName) return;
 
     const existing = clientMap.get(rawName);
@@ -544,7 +555,7 @@ export function extractClientsFromProjects(projects: import("./types").Project[]
         status: p.status === "archived" ? "inactive" : "active",
         notes: `לקוח עבור: ${p.name}`,
         website: p.liveUrl || "",
-        tags: p.techStack && p.techStack.length > 0 ? p.techStack.slice(0, 2) : ["Web"],
+        tags: Array.isArray(p.techStack) && p.techStack.length > 0 ? p.techStack.slice(0, 2) : ["Web"],
         assignedProjectIds: [p.id],
         createdAt: p.createdAt || new Date().toISOString(),
         updatedAt: p.updatedAt || new Date().toISOString(),
@@ -580,18 +591,18 @@ export function extractOrdersFromProjects(
       clientName: matchedClient?.name || p.ownerName || "לקוח כללי",
       projectId: p.id,
       projectName: p.name,
-      amount: p.estimatedValue || 3500,
+      amount: Number(p.estimatedValue) || 3500,
       status: orderStatus,
       items: [
         {
           id: `item_${idx}_1`,
           description: `אפיון, פיתוח, ממשק משתמש ואירוח ענן - ${p.name}`,
           quantity: 1,
-          unitPrice: p.estimatedValue || 3500,
+          unitPrice: Number(p.estimatedValue) || 3500,
         },
       ],
-      orderDate: p.createdAt ? p.createdAt.split("T")[0] : new Date().toISOString().split("T")[0],
-      dueDate: p.updatedAt ? p.updatedAt.split("T")[0] : new Date().toISOString().split("T")[0],
+      orderDate: p.createdAt ? String(p.createdAt).split("T")[0] : new Date().toISOString().split("T")[0],
+      dueDate: p.updatedAt ? String(p.updatedAt).split("T")[0] : new Date().toISOString().split("T")[0],
       notes: p.notes || "הזמנת שירות ופיתוח תוכנה מותאמת אישית",
       createdAt: p.createdAt || new Date().toISOString(),
       updatedAt: p.updatedAt || new Date().toISOString(),
@@ -606,7 +617,16 @@ export function loadClientsFromStorage(projects?: import("./types").Project[]): 
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+        return parsed.filter(Boolean).map((c, idx) => ({
+          ...c,
+          id: String(c.id || `client_${idx}`),
+          name: String(c.name || "לקוח"),
+          status: c.status || "active",
+          tags: Array.isArray(c.tags) ? c.tags.filter(Boolean).map(String) : [],
+          assignedProjectIds: Array.isArray(c.assignedProjectIds) ? c.assignedProjectIds.filter(Boolean) : [],
+          createdAt: c.createdAt || new Date().toISOString(),
+          updatedAt: c.updatedAt || new Date().toISOString(),
+        }));
       }
     }
   } catch (e) {
@@ -639,7 +659,20 @@ export function loadOrdersFromStorage(
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+        return parsed.filter(Boolean).map((o, idx) => ({
+          ...o,
+          id: String(o.id || `ord_${idx}`),
+          orderNumber: String(o.orderNumber || `ORD-${new Date().getFullYear()}-${100 + idx}`),
+          title: String(o.title || "הזמנת עבודה"),
+          clientId: String(o.clientId || ""),
+          clientName: String(o.clientName || "לקוח"),
+          amount: Number(o.amount) || 0,
+          status: o.status || "in_progress",
+          items: Array.isArray(o.items) ? o.items : [],
+          orderDate: String(o.orderDate || new Date().toISOString().split("T")[0]),
+          createdAt: o.createdAt || new Date().toISOString(),
+          updatedAt: o.updatedAt || new Date().toISOString(),
+        }));
       }
     }
   } catch (e) {

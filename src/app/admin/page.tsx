@@ -63,7 +63,7 @@ import {
 import { generateId } from "@/lib/utils";
 import { toast } from "sonner";
 
-export default function BusinessPortalHomePage() {
+function BusinessPortalContent() {
   const { isAuthenticated, isLoading: isAuthLoading, logout } = useAuth();
   const [mounted, setMounted] = React.useState(false);
 
@@ -138,8 +138,10 @@ export default function BusinessPortalHomePage() {
     setBusinessProfile(loadedProfile);
 
     // Read language & theme preference
-    const savedLang = localStorage.getItem("preferred_lang") as Language;
-    if (savedLang) setLang(savedLang);
+    const savedLang = localStorage.getItem("preferred_lang");
+    if (savedLang === "he" || savedLang === "en") {
+      setLang(savedLang);
+    }
 
     const savedTheme = localStorage.getItem("preferred_theme");
     if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
@@ -265,12 +267,16 @@ export default function BusinessPortalHomePage() {
   const allInvoices: InvoiceRecord[] = React.useMemo(() => {
     const invMap = new Map<string, InvoiceRecord>();
     projects.forEach((p) => {
-      (p.invoices || []).forEach((inv) => {
+      (Array.isArray(p.invoices) ? p.invoices : []).forEach((inv) => {
+        if (!inv || !inv.id) return;
         invMap.set(inv.id, {
           ...inv,
+          invoiceNumber: String(inv.invoiceNumber || "INV-000"),
+          amount: Number(inv.amount) || 0,
+          items: Array.isArray(inv.items) ? inv.items : [],
           projectId: p.id,
           projectName: p.name,
-          clientName: inv.clientName || p.ownerName,
+          clientName: inv.clientName || p.ownerName || "לקוח",
         });
       });
     });
@@ -281,16 +287,19 @@ export default function BusinessPortalHomePage() {
   const allPayments: PaymentRecord[] = React.useMemo(() => {
     const payList: PaymentRecord[] = [];
     projects.forEach((p) => {
-      (p.payments || []).forEach((pay) => {
+      (Array.isArray(p.payments) ? p.payments : []).forEach((pay) => {
+        if (!pay || !pay.id) return;
         payList.push({
           ...pay,
+          amount: Number(pay.amount) || 0,
+          date: String(pay.date || ""),
           projectId: p.id,
           projectName: p.name,
-          clientName: pay.clientName || p.ownerName,
+          clientName: pay.clientName || p.ownerName || "לקוח",
         });
       });
     });
-    return payList.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+    return payList.sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
   }, [projects]);
 
   // Handle Save Payment
@@ -437,13 +446,16 @@ export default function BusinessPortalHomePage() {
   // Filtered Projects for Projects Tab
   const filteredProjects = React.useMemo(() => {
     return projects.filter((p) => {
-      const q = (globalSearch || filters.search).toLowerCase().trim();
+      if (!p) return false;
+      const q = (globalSearch || filters.search || "").toLowerCase().trim();
       if (q) {
-        const matchesName = p.name.toLowerCase().includes(q);
-        const matchesDesc = (p.description || "").toLowerCase().includes(q);
-        const matchesOwner = p.ownerName.toLowerCase().includes(q);
-        const matchesTech = (p.techStack || []).some((t) => t.toLowerCase().includes(q));
-        const matchesUrl = (p.liveUrl || "").toLowerCase().includes(q);
+        const matchesName = String(p.name || "").toLowerCase().includes(q);
+        const matchesDesc = String(p.description || "").toLowerCase().includes(q);
+        const matchesOwner = String(p.ownerName || "").toLowerCase().includes(q);
+        const matchesTech = (Array.isArray(p.techStack) ? p.techStack : []).some((t) =>
+          String(t || "").toLowerCase().includes(q)
+        );
+        const matchesUrl = String(p.liveUrl || "").toLowerCase().includes(q);
         if (!matchesName && !matchesDesc && !matchesOwner && !matchesTech && !matchesUrl) {
           return false;
         }
@@ -557,20 +569,28 @@ export default function BusinessPortalHomePage() {
 
   if (!mounted || isAuthLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] dark:bg-[#0f111a]">
+      <div
+        key="admin-loading"
+        className="min-h-screen flex items-center justify-center bg-[#F8FAFC] dark:bg-[#0f111a]"
+      >
         <div className="h-8 w-8 rounded-full border-2 border-blue-600 border-t-transparent animate-spin" />
       </div>
     );
   }
 
   if (!isAuthenticated) {
-    return <LoginPage lang={lang} />;
+    return (
+      <div key="admin-login">
+        <LoginPage lang={lang} />
+      </div>
+    );
   }
 
   const isRtl = lang === "he";
 
   return (
     <div
+      key="admin-portal"
       dir={isRtl ? "rtl" : "ltr"}
       className="flex min-h-screen bg-[#F8FAFC] dark:bg-[#0f111a] text-foreground transition-colors selection:bg-blue-500/20 selection:text-blue-600 font-sans"
     >
@@ -665,7 +685,7 @@ export default function BusinessPortalHomePage() {
                 onViewModeChange={setViewMode}
                 availableDeployments={Array.from(new Set(projects.map((p) => p.deploymentProvider).filter(Boolean)))}
                 availableDatabases={Array.from(new Set(projects.map((p) => p.databaseType).filter((d) => d && d !== "None")))}
-                availableOwners={Array.from(new Set(projects.map((p) => p.ownerName.trim()).filter(Boolean)))}
+                availableOwners={Array.from(new Set(projects.map((p) => String(p.ownerName || "").trim()).filter(Boolean)))}
                 lang={lang}
               />
 
@@ -1169,3 +1189,98 @@ export default function BusinessPortalHomePage() {
     </div>
   );
 }
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  errorMessage: string;
+}
+
+class AdminErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  ErrorBoundaryState
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false, errorMessage: "" };
+  }
+
+  static getDerivedStateFromError(error: unknown): ErrorBoundaryState {
+    const msg = error instanceof Error ? error.message : String(error);
+    return { hasError: true, errorMessage: msg };
+  }
+
+  componentDidCatch(error: unknown, info: React.ErrorInfo) {
+    console.error("Admin Portal Error Caught:", error, info);
+  }
+
+  handleResetAndReload = () => {
+    try {
+      const keysToClear = [
+        "brightflow_projects_v1",
+        "brightflow_clients_v1",
+        "brightflow_orders_v1",
+        "brightflow_business_profile_v1",
+        "brightflow_lang",
+      ];
+      keysToClear.forEach((k) => window.localStorage.removeItem(k));
+    } catch {
+      // ignore
+    }
+    window.location.reload();
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div
+          dir="rtl"
+          translate="no"
+          className="notranslate min-h-screen bg-[#070913] text-white flex items-center justify-center p-6 font-sans"
+        >
+          <div className="max-w-md w-full rounded-3xl bg-[#111528] border border-white/10 p-8 shadow-2xl text-center space-y-5">
+            <div className="w-14 h-14 rounded-2xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center mx-auto text-2xl">
+              ⚡
+            </div>
+            <h2 className="text-xl font-black">רענון נתוני מערכת הניהול</h2>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              זוהתה התנגשות זמנית בזיכרון הדפדפן או בתוסף תרגום אוטומטי. לחץ למטה כדי לסנכרן מחדש את הנתונים מהענן ולהמשיך לעבוד.
+            </p>
+            {this.state.errorMessage && (
+              <div
+                dir="ltr"
+                className="p-3 rounded-xl bg-black/40 border border-white/5 text-[11px] font-mono text-rose-300 truncate"
+              >
+                {this.state.errorMessage}
+              </div>
+            )}
+            <div className="flex flex-col gap-2.5 pt-2">
+              <button
+                onClick={this.handleResetAndReload}
+                className="w-full py-3 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all cursor-pointer shadow-lg shadow-indigo-600/25"
+              >
+                סנכרן וטען מחדש את מערכת הניהול
+              </button>
+              <button
+                onClick={() => this.setState({ hasError: false, errorMessage: "" })}
+                className="w-full py-2.5 px-5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-semibold text-xs transition-all cursor-pointer"
+              >
+                נסה שוב ללא איפוס מטמון
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+export default function BusinessPortalHomePage() {
+  return (
+    <AdminErrorBoundary>
+      <BusinessPortalContent />
+    </AdminErrorBoundary>
+  );
+}
+

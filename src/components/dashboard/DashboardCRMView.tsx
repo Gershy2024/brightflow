@@ -382,7 +382,7 @@ export function DashboardCRMView({
 
                 <div className="text-end shrink-0">
                   <span className="font-mono font-extrabold text-slate-900 dark:text-white block text-sm">
-                    ${ord.amount.toLocaleString()}
+                    ${(Number(ord.amount) || 0).toLocaleString()}
                   </span>
                   <span className="text-[10px] font-bold text-amber-600 block">
                     {ord.status}
@@ -432,7 +432,7 @@ export function DashboardCRMView({
                 <div className="text-end shrink-0">
                   {p.estimatedValue ? (
                     <span className="font-mono font-extrabold text-emerald-600 block text-sm">
-                      ${p.estimatedValue.toLocaleString()}
+                      ${(Number(p.estimatedValue) || 0).toLocaleString()}
                     </span>
                   ) : null}
                   <span className="text-[10px] font-bold text-slate-400 block uppercase">
