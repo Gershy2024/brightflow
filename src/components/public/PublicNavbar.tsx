@@ -79,17 +79,29 @@ export function PublicNavbar({ darkMode, onToggleDarkMode }: PublicNavbarProps) 
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Logo with secret triple-click to /admin */}
-        <Link href="/" onClick={handleLogoClick} className="flex items-center gap-3 group select-none">
-          <div className="relative">
-            <BrightFlowLogoIcon size={38} className="transition-transform duration-300 group-hover:scale-105" />
-            <div className="absolute -inset-1 rounded-2xl bg-cyan-500/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+        <Link href="/" onClick={handleLogoClick} className="flex items-center gap-3.5 group select-none">
+          <div className="relative flex items-center justify-center">
+            <BrightFlowLogoIcon
+              size={42}
+              className="transition-all duration-300 group-hover:scale-105 group-hover:-rotate-2 drop-shadow-[0_4px_14px_rgba(6,182,212,0.28)]"
+            />
+            <div className="absolute -inset-1.5 rounded-2xl bg-gradient-to-tr from-cyan-500/25 via-indigo-500/20 to-purple-500/25 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
           </div>
           <div className="flex flex-col">
-            <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-800 dark:from-white dark:via-slate-100 dark:to-cyan-200 bg-clip-text text-transparent">
-              The Bright Flow
-            </span>
-            <span className="text-[10px] font-semibold tracking-wider uppercase text-indigo-600 dark:text-cyan-400">
-              Automation Systems
+            <div className="flex items-center gap-1 leading-none">
+              <span className="text-[10px] font-extrabold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500 mr-0.5">
+                The
+              </span>
+              <span className="font-black text-xl tracking-tight text-slate-900 dark:text-white">
+                Bright
+              </span>
+              <span className="font-black text-xl tracking-tight bg-gradient-to-r from-cyan-500 via-indigo-500 to-purple-500 dark:from-cyan-300 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+                Flow
+              </span>
+              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] ml-0.5" />
+            </div>
+            <span className="text-[9.5px] font-bold tracking-[0.22em] uppercase text-indigo-600/90 dark:text-cyan-400/90 mt-1">
+              Automation Architecture
             </span>
           </div>
         </Link>

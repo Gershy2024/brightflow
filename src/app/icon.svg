@@ -1,0 +1,49 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bf-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="45%" stop-color="#1E1B4B" />
+      <stop offset="100%" stop-color="#090D16" />
+    </linearGradient>
+    <radialGradient id="bf-aurora" cx="75%" cy="25%" r="75%">
+      <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.38" />
+      <stop offset="45%" stop-color="#6366F1" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="bf-border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.75" />
+      <stop offset="50%" stop-color="#818CF8" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#C084FC" stop-opacity="0.65" />
+    </linearGradient>
+    <linearGradient id="bf-top" x1="15%" y1="15%" x2="95%" y2="55%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="35%" stop-color="#67E8F9" />
+      <stop offset="100%" stop-color="#3B82F6" />
+    </linearGradient>
+    <linearGradient id="bf-mid" x1="15%" y1="45%" x2="95%" y2="75%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#6366F1" />
+      <stop offset="100%" stop-color="#A855F7" />
+    </linearGradient>
+    <linearGradient id="bf-bot" x1="20%" y1="60%" x2="90%" y2="95%">
+      <stop offset="0%" stop-color="#818CF8" />
+      <stop offset="55%" stop-color="#22D3EE" />
+      <stop offset="100%" stop-color="#ECFEFF" />
+    </linearGradient>
+    <linearGradient id="bf-pillar" x1="0%" y1="15%" x2="0%" y2="90%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="50%" stop-color="#BAE6FD" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="112" height="112" rx="30" fill="url(#bf-bg)" />
+  <rect x="4" y="4" width="112" height="112" rx="30" fill="url(#bf-aurora)" />
+  <rect x="5" y="5" width="110" height="110" rx="29" stroke="url(#bf-border)" stroke-width="2" />
+  <rect x="26" y="24" width="12" height="72" rx="6" fill="url(#bf-pillar)" />
+  <path d="M 32 30 H 68 C 81 30, 89 37, 89 46 C 89 55, 81 60, 66 60 H 46" stroke="url(#bf-top)" stroke-width="11.5" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 44 60 H 71 C 85 60, 93 67, 93 77 C 93 87, 84 90, 66 90 H 32" stroke="url(#bf-bot)" stroke-width="11.5" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 26 60 H 74" stroke="url(#bf-mid)" stroke-width="11.5" stroke-linecap="round" />
+  <path d="M 94 20 L 96.2 26.8 L 103 29 L 96.2 31.2 L 94 38 L 91.8 31.2 L 85 29 L 91.8 26.8 Z" fill="#67E8F9" />
+  <circle cx="94" cy="29" r="2.2" fill="#FFFFFF" />
+  <circle cx="32" cy="60" r="3.5" fill="#FFFFFF" />
+</svg>

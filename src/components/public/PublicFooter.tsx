@@ -28,13 +28,28 @@ export function PublicFooter() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           {/* Brand Info */}
           <div className="md:col-span-5 space-y-4">
-            <Link href="/" className="flex items-center gap-3">
-              <BrightFlowLogoIcon size={36} />
+            <Link href="/" className="inline-flex items-center gap-3.5 group">
+              <div className="relative flex items-center justify-center">
+                <BrightFlowLogoIcon
+                  size={40}
+                  className="transition-all duration-300 group-hover:scale-105 group-hover:-rotate-2"
+                />
+                <div className="absolute -inset-1 rounded-2xl bg-cyan-500/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+              </div>
               <div className="flex flex-col">
-                <span className="font-extrabold text-lg text-white tracking-tight">
-                  The Bright Flow
-                </span>
-                <span className="text-[10px] uppercase font-semibold text-cyan-400 tracking-wider">
+                <div className="flex items-center gap-1 leading-none">
+                  <span className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-400 mr-0.5">
+                    The
+                  </span>
+                  <span className="font-black text-lg text-white tracking-tight">
+                    Bright
+                  </span>
+                  <span className="font-black text-lg bg-gradient-to-r from-cyan-300 via-indigo-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
+                    Flow
+                  </span>
+                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] ml-0.5" />
+                </div>
+                <span className="text-[9.5px] uppercase font-bold text-cyan-400/90 tracking-[0.2em] mt-1">
                   Automation Infrastructure
                 </span>
               </div>

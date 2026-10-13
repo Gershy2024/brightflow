@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/lib/authContext";
 import { Language } from "@/lib/types";
+import { BrightFlowLogoIcon } from "@/components/BrightFlowLogo";
 
 interface LoginPageProps {
   lang?: Language;
@@ -54,13 +55,12 @@ export function LoginPage({ lang = "he", onSuccess }: LoginPageProps) {
       <div className="relative w-full max-w-md bg-white/95 dark:bg-[#1a1d2e]/95 backdrop-blur-xl rounded-3xl border border-slate-200/80 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] p-8 sm:p-10 animate-in fade-in-0 zoom-in-95 duration-300">
         {/* Brand Header */}
         <div className="flex flex-col items-center text-center space-y-3 mb-8">
-          <div className="p-3 rounded-2xl bg-white dark:bg-white/95 shadow-sm border border-slate-200/80 dark:border-white/10">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/brightflow-logo.png"
-              alt="TheBrightFlow"
-              className="h-10 w-auto object-contain"
+          <div className="relative flex items-center justify-center">
+            <BrightFlowLogoIcon
+              size={60}
+              className="drop-shadow-[0_8px_24px_rgba(6,182,212,0.3)]"
             />
+            <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-cyan-500/20 via-indigo-500/15 to-purple-500/20 blur-xl pointer-events-none" />
           </div>
 
           <div>

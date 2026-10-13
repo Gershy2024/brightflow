@@ -22,6 +22,7 @@ import {
 import { PortalTab, Language } from "@/lib/types";
 import { translations } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
+import { BrightFlowLogoIcon } from "@/components/BrightFlowLogo";
 
 interface SidebarProps {
   activeTab: PortalTab;
@@ -128,24 +129,21 @@ export function Sidebar({
             )}
             onClick={() => onSelectTab("dashboard")}
           >
-            <div className="relative flex items-center justify-center h-10 w-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-violet-700 text-white font-black shadow-md shadow-indigo-600/25 shrink-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/brightflow-logo.png"
-                alt="BrightFlow"
-                className="h-6 w-auto object-contain brightness-0 invert"
-                onError={(e) => {
-                  (e.target as HTMLElement).style.display = "none";
-                }}
+            <div className="relative flex items-center justify-center shrink-0">
+              <BrightFlowLogoIcon
+                size={42}
+                className="drop-shadow-[0_4px_12px_rgba(6,182,212,0.25)] transition-transform duration-300 hover:scale-105"
               />
-              <span className="text-base font-extrabold tracking-tight">BF</span>
             </div>
 
             {!collapsed && (
               <div className="flex flex-col leading-tight min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-base tracking-tight text-slate-900 dark:text-white truncate">
-                    BrightFlow
+                  <span className="font-black text-base tracking-tight text-slate-900 dark:text-white truncate">
+                    Bright
+                  </span>
+                  <span className="font-black text-base tracking-tight bg-gradient-to-r from-cyan-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent -ms-1">
+                    Flow
                   </span>
                   <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 shrink-0">
                     CRM
