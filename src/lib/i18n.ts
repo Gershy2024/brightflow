@@ -17,10 +17,11 @@ export const translations = {
     status: {
       live: "פעיל באוויר",
       in_development: "בפיתוח",
+      "in-development": "בפיתוח",
       maintenance: "בתחזוקה",
       paused: "מושהה",
       archived: "בארכיון",
-    },
+    } as Record<string, string>,
 
     // View Modes
     views: {
@@ -347,10 +348,11 @@ export const translations = {
     status: {
       live: "Live in Production",
       in_development: "In Development",
+      "in-development": "In Development",
       maintenance: "Maintenance",
       paused: "Paused",
       archived: "Archived",
-    },
+    } as Record<string, string>,
 
     // View Modes
     views: {
@@ -662,14 +664,20 @@ export const translations = {
   },
 };
 
-export function getStatusBadgeVariant(status: ProjectStatus): {
+export function getStatusBadgeVariant(status: ProjectStatus | string): {
   color: string;
   bg: string;
   border: string;
   dot: string;
 } {
-  switch (status) {
+  const normalized = String(status || "")
+    .trim()
+    .toLowerCase()
+    .replace(/-/g, "_");
+  switch (normalized) {
     case "live":
+    case "active":
+    case "production":
       return {
         color: "text-emerald-700 dark:text-emerald-300",
         bg: "bg-emerald-50 dark:bg-emerald-950/60",
@@ -677,6 +685,8 @@ export function getStatusBadgeVariant(status: ProjectStatus): {
         dot: "bg-emerald-500",
       };
     case "in_development":
+    case "development":
+    case "dev":
       return {
         color: "text-amber-700 dark:text-amber-300",
         bg: "bg-amber-50 dark:bg-amber-950/60",
@@ -691,6 +701,7 @@ export function getStatusBadgeVariant(status: ProjectStatus): {
         dot: "bg-sky-500",
       };
     case "paused":
+    case "on_hold":
       return {
         color: "text-orange-700 dark:text-orange-300",
         bg: "bg-orange-50 dark:bg-orange-950/60",
@@ -698,11 +709,19 @@ export function getStatusBadgeVariant(status: ProjectStatus): {
         dot: "bg-orange-500",
       };
     case "archived":
+    case "completed":
       return {
         color: "text-slate-600 dark:text-slate-400",
         bg: "bg-slate-100 dark:bg-slate-900/60",
         border: "border-slate-300 dark:border-slate-800",
         dot: "bg-slate-400",
+      };
+    default:
+      return {
+        color: "text-amber-700 dark:text-amber-300",
+        bg: "bg-amber-50 dark:bg-amber-950/60",
+        border: "border-amber-200 dark:border-amber-800",
+        dot: "bg-amber-500",
       };
   }
 }

@@ -31,12 +31,22 @@ export function projectToRow(p: Project) {
   };
 }
 
+export function normalizeProjectStatus(raw: unknown): Project["status"] {
+  const s = String(raw || "").trim().toLowerCase().replace(/-/g, "_");
+  if (s === "live" || s === "active" || s === "production" || s === "deployed") return "live";
+  if (s === "in_development" || s === "development" || s === "dev") return "in_development";
+  if (s === "maintenance") return "maintenance";
+  if (s === "paused" || s === "on_hold") return "paused";
+  if (s === "archived" || s === "completed") return "archived";
+  return "in_development";
+}
+
 export function rowToProject(row: any): Project {
   return {
     id: row.id,
     name: row.name,
     description: row.description || "",
-    status: row.status || "live",
+    status: normalizeProjectStatus(row.status),
     liveUrl: row.live_url || undefined,
     githubUrl: row.github_url || undefined,
     stagingUrl: row.staging_url || undefined,

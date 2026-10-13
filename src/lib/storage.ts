@@ -461,7 +461,11 @@ export function loadProjectsFromStorage(): Project[] {
               id: String(p.id || initMatch?.id || `prj_${Math.random().toString(36).slice(2, 8)}`),
               name: String(p.name || initMatch?.name || "פרויקט"),
               description: String(p.description ?? initMatch?.description ?? ""),
-              status: p.status || initMatch?.status || "live",
+              status: (["live", "in_development", "maintenance", "paused", "archived"].includes(
+                String(p.status || "").replace(/-/g, "_")
+              )
+                ? String(p.status).replace(/-/g, "_")
+                : initMatch?.status || "in_development") as Project["status"],
               deploymentProvider: p.deploymentProvider || initMatch?.deploymentProvider || "Vercel",
               databaseType: p.databaseType || initMatch?.databaseType || "None",
               techStack: Array.isArray(p.techStack) ? p.techStack.filter(Boolean).map(String) : initMatch?.techStack || [],
