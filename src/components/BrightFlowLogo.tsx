@@ -29,96 +29,66 @@ export function BrightFlowLogoIcon({
       className={className}
     >
       <defs>
-        {/* Deep Obsidian-Indigo Luxury Background */}
+        {/* Deep Obsidian-Indigo Luxury Squircle Background */}
         <linearGradient id={`bf-bg-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#0F172A" />
-          <stop offset="45%" stopColor="#1E1B4B" />
-          <stop offset="100%" stopColor="#090D16" />
+          <stop offset="0%" stopColor="#090D1A" />
+          <stop offset="50%" stopColor="#131B38" />
+          <stop offset="100%" stopColor="#070A14" />
         </linearGradient>
 
-        {/* Ambient Inner Aurora Glow */}
-        <radialGradient id={`bf-aurora-${uid}`} cx="75%" cy="25%" r="75%">
-          <stop offset="0%" stopColor="#06B6D4" stopOpacity="0.38" />
-          <stop offset="45%" stopColor="#6366F1" stopOpacity="0.22" />
-          <stop offset="100%" stopColor="#0F172A" stopOpacity="0" />
+        {/* Ambient Inner Aurora Mesh */}
+        <radialGradient id={`bf-aurora-${uid}`} cx="80%" cy="20%" r="80%">
+          <stop offset="0%" stopColor="#22D3EE" stopOpacity="0.32" />
+          <stop offset="45%" stopColor="#6366F1" stopOpacity="0.2" />
+          <stop offset="100%" stopColor="#090D1A" stopOpacity="0" />
         </radialGradient>
 
-        {/* Luminous Glass Border Gradient */}
+        {/* Luminous Glass Rim */}
         <linearGradient id={`bf-border-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.75" />
-          <stop offset="50%" stopColor="#818CF8" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="#C084FC" stopOpacity="0.65" />
+          <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.7" />
+          <stop offset="50%" stopColor="#818CF8" stopOpacity="0.25" />
+          <stop offset="100%" stopColor="#C084FC" stopOpacity="0.6" />
         </linearGradient>
 
-        {/* Top Aerodynamic Ribbon — Electric Cyan to Indigo */}
-        <linearGradient id={`bf-top-${uid}`} x1="15%" y1="15%" x2="95%" y2="55%">
+        {/* Upper Continuous Ribbon of the "B" — Pure White -> Electric Cyan -> Sky */}
+        <linearGradient id={`bf-upper-${uid}`} x1="28" y1="22" x2="90" y2="62" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#FFFFFF" />
-          <stop offset="35%" stopColor="#67E8F9" />
-          <stop offset="100%" stopColor="#3B82F6" />
+          <stop offset="45%" stopColor="#67E8F9" />
+          <stop offset="100%" stopColor="#38BDF8" />
         </linearGradient>
 
-        {/* Middle Kinetic Stream — Cyan to Violet */}
-        <linearGradient id={`bf-mid-${uid}`} x1="15%" y1="45%" x2="95%" y2="75%">
+        {/* Lower Continuous Ribbon of the "B" — Electric Cyan -> Indigo -> Violet */}
+        <linearGradient id={`bf-lower-${uid}`} x1="30" y1="50" x2="96" y2="98" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#38BDF8" />
-          <stop offset="50%" stopColor="#6366F1" />
+          <stop offset="45%" stopColor="#6366F1" />
           <stop offset="100%" stopColor="#A855F7" />
         </linearGradient>
 
-        {/* Lower Flow Wave — Indigo to Bright Cyan */}
-        <linearGradient id={`bf-bot-${uid}`} x1="20%" y1="60%" x2="90%" y2="95%">
-          <stop offset="0%" stopColor="#818CF8" />
-          <stop offset="55%" stopColor="#22D3EE" />
-          <stop offset="100%" stopColor="#ECFEFF" />
-        </linearGradient>
-
-        {/* Left Pillar Gradient */}
-        <linearGradient id={`bf-pillar-${uid}`} x1="0%" y1="15%" x2="0%" y2="90%">
-          <stop offset="0%" stopColor="#FFFFFF" />
-          <stop offset="50%" stopColor="#BAE6FD" />
-          <stop offset="100%" stopColor="#6366F1" />
-        </linearGradient>
-
-        {/* Soft Neon Drop Glow */}
+        {/* Soft 3D Layer Shadow */}
         <filter
-          id={`bf-glow-${uid}`}
+          id={`bf-shadow-${uid}`}
           x="-20%"
           y="-20%"
           width="140%"
           height="140%"
           filterUnits="userSpaceOnUse"
         >
-          <feDropShadow dx="0" dy="3" stdDeviation="4" floodColor="#06B6D4" floodOpacity="0.35" />
+          <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#020617" floodOpacity="0.55" />
         </filter>
       </defs>
 
-      {/* Outer Squircle Base */}
-      <rect
-        x="4"
-        y="4"
-        width="112"
-        height="112"
-        rx="30"
-        fill={`url(#bf-bg-${uid})`}
-      />
+      {/* 1. Squircle Base */}
+      <rect x="4" y="4" width="112" height="112" rx="30" fill={`url(#bf-bg-${uid})`} />
+      <rect x="4" y="4" width="112" height="112" rx="30" fill={`url(#bf-aurora-${uid})`} />
 
-      {/* Ambient Aurora Mesh Layer */}
-      <rect
-        x="4"
-        y="4"
-        width="112"
-        height="112"
-        rx="30"
-        fill={`url(#bf-aurora-${uid})`}
-      />
-
-      {/* Subtle Top Glass Specular Highlight */}
+      {/* Subtle Top Specular Reflection */}
       <path
-        d="M 34 6 H 86 C 101 6 112 17 112 32 V 42 C 92 26 62 20 8 34 V 32 C 8 17 19 6 34 6 Z"
+        d="M 34 6 H 86 C 101 6 112 17 112 32 V 40 C 90 24 58 18 8 32 C 8 17 19 6 34 6 Z"
         fill="#FFFFFF"
-        fillOpacity="0.04"
+        fillOpacity="0.045"
       />
 
-      {/* Glowing Inner Rim */}
+      {/* Glowing Inner Border */}
       <rect
         x="5"
         y="5"
@@ -129,54 +99,27 @@ export function BrightFlowLogoIcon({
         strokeWidth="2"
       />
 
-      {/* === 3D FLUID GEOMETRIC "BF" + AUTOMATION STREAM === */}
-      <g filter={`url(#bf-glow-${uid})`}>
-        {/* Vertical Structural Spine */}
-        <rect
-          x="26"
-          y="24"
-          width="12"
-          height="72"
-          rx="6"
-          fill={`url(#bf-pillar-${uid})`}
-        />
-
-        {/* Top Wing / Upper B-F Loop (Sweeps right and curves into center) */}
+      {/* === PRECISION 2-RIBBON INTERLOCKING GEOMETRIC "B" === */}
+      <g transform="skewX(-5) translate(4, 0)" filter={`url(#bf-shadow-${uid})`}>
+        {/* Ribbon 2 (Lower Loop + Lower Spine with diagonal negative-space speed cut) */}
         <path
-          d="M 32 30 H 68 C 81 30, 89 37, 89 46 C 89 55, 81 60, 66 60 H 46"
-          stroke={`url(#bf-top-${uid})`}
-          strokeWidth="11.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          d="M 48 50 H 67 C 84.5 50 95 58.8 95 74 C 95 89.2 84.5 98 67 98 H 36 C 32.5 98 30 95.5 30 92 V 67 L 44 59 V 86 H 66 C 75.2 86 81 81.5 81 74 C 81 66.5 75.2 62 66 62 H 48 V 50 Z"
+          fill={`url(#bf-lower-${uid})`}
         />
 
-        {/* Lower B Loop & Forward Flow Wave */}
+        {/* Ribbon 1 (Upper Spine + Upper Loop wrapping cleanly into the center waist) */}
         <path
-          d="M 44 60 H 71 C 85 60, 93 67, 93 77 C 93 87, 84 90, 66 90 H 32"
-          stroke={`url(#bf-bot-${uid})`}
-          strokeWidth="11.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          d="M 36 22 H 64 C 80 22 90 29.8 90 42 C 90 54.2 80 62 64 62 H 48 V 50 H 63 C 71.2 50 76 46.8 76 42 C 76 37.2 71.2 34 63 34 H 44 V 53.5 L 30 61.5 V 28 C 30 24.5 32.5 22 36 22 Z"
+          fill={`url(#bf-upper-${uid})`}
         />
-
-        {/* Dynamic Mid-Stream Connector (Creates the interlocking 3D ribbon effect) */}
-        <path
-          d="M 26 60 H 74"
-          stroke={`url(#bf-mid-${uid})`}
-          strokeWidth="11.5"
-          strokeLinecap="round"
-        />
-
-        {/* Radiant AI / Automation Spark Star at Top-Right Apex */}
-        <path
-          d="M 94 20 L 96.2 26.8 L 103 29 L 96.2 31.2 L 94 38 L 91.8 31.2 L 85 29 L 91.8 26.8 Z"
-          fill="#67E8F9"
-        />
-        <circle cx="94" cy="29" r="2.2" fill="#FFFFFF" />
-
-        {/* Luminous Node Dot on Spine */}
-        <circle cx="32" cy="60" r="3.5" fill="#FFFFFF" />
       </g>
+
+      {/* Luminous AI Spark Node at Top-Right */}
+      <path
+        d="M 97 19 L 98.8 24.2 L 104 26 L 98.8 27.8 L 97 33 L 95.2 27.8 L 90 26 L 95.2 24.2 Z"
+        fill="#67E8F9"
+      />
+      <circle cx="97" cy="26" r="1.8" fill="#FFFFFF" />
     </svg>
   );
 }
@@ -226,31 +169,25 @@ export function BrightFlowLogo({
 export const BRIGHTFLOW_SVG_STRING = `<svg width="48" height="48" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="ebf-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0F172A" />
-      <stop offset="50%" stop-color="#1E1B4B" />
-      <stop offset="100%" stop-color="#090D16" />
+      <stop offset="0%" stop-color="#090D1A" />
+      <stop offset="50%" stop-color="#131B38" />
+      <stop offset="100%" stop-color="#070A14" />
     </linearGradient>
-    <linearGradient id="ebf-top" x1="15%" y1="15%" x2="95%" y2="55%">
+    <linearGradient id="ebf-upper" x1="28" y1="22" x2="90" y2="62" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="40%" stop-color="#67E8F9" />
-      <stop offset="100%" stop-color="#3B82F6" />
+      <stop offset="45%" stop-color="#67E8F9" />
+      <stop offset="100%" stop-color="#38BDF8" />
     </linearGradient>
-    <linearGradient id="ebf-mid" x1="15%" y1="45%" x2="95%" y2="75%">
+    <linearGradient id="ebf-lower" x1="30" y1="50" x2="96" y2="98" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#38BDF8" />
-      <stop offset="50%" stop-color="#6366F1" />
+      <stop offset="45%" stop-color="#6366F1" />
       <stop offset="100%" stop-color="#A855F7" />
     </linearGradient>
-    <linearGradient id="ebf-bot" x1="20%" y1="60%" x2="90%" y2="95%">
-      <stop offset="0%" stop-color="#818CF8" />
-      <stop offset="55%" stop-color="#22D3EE" />
-      <stop offset="100%" stop-color="#ECFEFF" />
-    </linearGradient>
   </defs>
-  <rect x="4" y="4" width="112" height="112" rx="30" fill="url(#ebf-bg)" stroke="#38BDF8" stroke-width="2" stroke-opacity="0.4" />
-  <rect x="26" y="24" width="12" height="72" rx="6" fill="#FFFFFF" />
-  <path d="M 32 30 H 68 C 81 30, 89 37, 89 46 C 89 55, 81 60, 66 60 H 46" stroke="url(#ebf-top)" stroke-width="11.5" stroke-linecap="round" stroke-linejoin="round" />
-  <path d="M 44 60 H 71 C 85 60, 93 67, 93 77 C 93 87, 84 90, 66 90 H 32" stroke="url(#ebf-bot)" stroke-width="11.5" stroke-linecap="round" stroke-linejoin="round" />
-  <path d="M 26 60 H 74" stroke="url(#ebf-mid)" stroke-width="11.5" stroke-linecap="round" />
-  <path d="M 94 20 L 96.2 26.8 L 103 29 L 96.2 31.2 L 94 38 L 91.8 31.2 L 85 29 L 91.8 26.8 Z" fill="#67E8F9" />
-  <circle cx="32" cy="60" r="3.5" fill="#FFFFFF" />
+  <rect x="4" y="4" width="112" height="112" rx="30" fill="url(#ebf-bg)" stroke="#38BDF8" stroke-width="2" stroke-opacity="0.45" />
+  <g transform="skewX(-5) translate(4, 0)">
+    <path d="M 48 50 H 67 C 84.5 50 95 58.8 95 74 C 95 89.2 84.5 98 67 98 H 36 C 32.5 98 30 95.5 30 92 V 67 L 44 59 V 86 H 66 C 75.2 86 81 81.5 81 74 C 81 66.5 75.2 62 66 62 H 48 V 50 Z" fill="url(#ebf-lower)" />
+    <path d="M 36 22 H 64 C 80 22 90 29.8 90 42 C 90 54.2 80 62 64 62 H 48 V 50 H 63 C 71.2 50 76 46.8 76 42 C 76 37.2 71.2 34 63 34 H 44 V 53.5 L 30 61.5 V 28 C 30 24.5 32.5 22 36 22 Z" fill="url(#ebf-upper)" />
+  </g>
+  <path d="M 97 19 L 98.8 24.2 L 104 26 L 98.8 27.8 L 97 33 L 95.2 27.8 L 90 26 L 95.2 24.2 Z" fill="#67E8F9" />
 </svg>`;
