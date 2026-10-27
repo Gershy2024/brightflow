@@ -60,6 +60,7 @@ import {
   deleteProjectFromCloud,
   fetchInquiriesFromCloud,
 } from "@/lib/supabaseService";
+import { supabase } from "@/lib/supabase";
 import { generateId } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -174,6 +175,30 @@ function BusinessPortalContent() {
     };
 
     initCloud();
+
+    // Subscribe to realtime inquiry updates
+    const channel = supabase
+      .channel("admin-inquiries-realtime")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "brightflow_inquiries" },
+        async (payload) => {
+          const cloudInquiries = await fetchInquiriesFromCloud();
+          setInquiries(cloudInquiries);
+          if (payload.eventType === "INSERT") {
+            const row = payload.new as any;
+            toast.info(`פנייה חדשה התקבלה: ${row.title || "פנייה מלקוח"}`, {
+              description: `מאת ${row.sender_name || "לקוח"}`,
+              duration: 8000,
+            });
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   // Update handlers

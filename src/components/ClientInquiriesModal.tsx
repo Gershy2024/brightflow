@@ -34,11 +34,13 @@ import {
   Project,
 } from "@/lib/types";
 import { translations } from "@/lib/i18n";
+import { toast } from "sonner";
 import {
   submitClientInquiry,
   updateInquiryStatus,
   deleteInquiryFromCloud,
   replyToClientInquiry,
+  triggerInquiryEmailNotification,
 } from "@/lib/supabaseService";
 
 interface ClientInquiriesModalProps {
@@ -191,13 +193,13 @@ export function ClientInquiriesModal({
     }
   };
 
-  // Sample Embed code snippet for client apps
+  // Sample Embed code snippet for client apps (Supabase DB + Instant Email notification)
   const embedCodeSnippet = `// BrightFlow Client Feedback Widget (Embed in any Next.js / React app)
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   "https://piztrhqoihaekujrclyt.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." // anon key
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpenRyaHFvaWhhZWt1anJjbHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTExNDk2OTQsImV4cCI6MjEwNjcyNTY5NH0.aQrpU19jHleyg8DWOE2B171IZIz6SPOwW0V9Ha22P4g"
 );
 
 export async function sendFeedbackToBrightFlow({
@@ -208,19 +210,53 @@ export async function sendFeedbackToBrightFlow({
   senderName,
   senderEmail,
   senderPhone,
+}: {
+  projectId?: string;
+  type?: string;
+  title: string;
+  message: string;
+  senderName?: string;
+  senderEmail?: string;
+  senderPhone?: string;
 }) {
-  return await supabase.from("brightflow_inquiries").insert({
-    id: "inq_" + Date.now(),
+  const newId = "inq_" + Date.now() + "_" + Math.random().toString(36).substring(2, 7);
+
+  // 1. Save directly to central BrightFlow database
+  const dbRes = await supabase.from("brightflow_inquiries").insert({
+    id: newId,
     project_id: projectId,
     type,
     title,
     message,
-    sender_name: senderName,
-    sender_email: senderEmail,
-    sender_phone: senderPhone,
+    sender_name: senderName || null,
+    sender_email: senderEmail || null,
+    sender_phone: senderPhone || null,
     status: "new",
+    created_at: new Date().toISOString(),
   });
-}`;
+
+  // 2. Trigger instant email alert to Gershy at gershybraun@gmail.com
+  try {
+    await fetch("https://brightflow-pi.vercel.app/api/inquiries/notify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        inquiryId: newId,
+        projectId,
+        type,
+        title,
+        message,
+        senderName,
+        senderEmail,
+        senderPhone,
+      }),
+    });
+  } catch (notifyErr) {
+    console.warn("BrightFlow email alert notification warning:", notifyErr);
+  }
+
+  return dbRes;
+};`;
 
   const copyEmbedCode = () => {
     navigator.clipboard.writeText(embedCodeSnippet);
@@ -452,8 +488,38 @@ export async function sendFeedbackToBrightFlow({
                           )}
                         </div>
 
-                        {/* Reply Buttons (No WhatsApp - Email Only) */}
+                        {/* Action Buttons */}
                         <div className="flex items-center gap-2">
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="outline"
+                            onClick={async () => {
+                              toast.info("שולח התראה למייל שלך...");
+                              const ok = await triggerInquiryEmailNotification({
+                                inquiryId: inq.id,
+                                projectId: inq.projectId,
+                                projectName: inq.projectName || projectName,
+                                type: inq.type,
+                                title: inq.title,
+                                message: inq.message,
+                                senderName: inq.senderName,
+                                senderEmail: inq.senderEmail,
+                                senderPhone: inq.senderPhone,
+                              });
+                              if (ok) {
+                                toast.success("התראת מייל נשלחה בהצלחה ל-gershybraun@gmail.com!");
+                              } else {
+                                toast.error("שגיאה בשליחת המייל");
+                              }
+                            }}
+                            className="h-7 px-2.5 rounded-lg text-xs font-medium gap-1 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-slate-800"
+                            title="שלח התראת מייל על פנייה זו ל-gershybraun@gmail.com"
+                          >
+                            <Mail className="h-3.5 w-3.5 text-indigo-500" />
+                            <span>שלח לי למייל</span>
+                          </Button>
+
                           {inq.senderEmail && (
                             <Button
                               type="button"

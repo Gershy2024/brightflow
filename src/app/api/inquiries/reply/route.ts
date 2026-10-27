@@ -12,6 +12,22 @@ interface ReplyRequestBody {
   adminName?: string;
 }
 
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      ...CORS_HEADERS,
+      "Access-Control-Max-Age": "86400",
+    },
+  });
+}
+
 export async function POST(req: Request) {
   try {
     const body: ReplyRequestBody = await req.json();
@@ -19,7 +35,7 @@ export async function POST(req: Request) {
     if (!body.recipientEmail || !body.replyMessage) {
       return NextResponse.json(
         { error: "recipientEmail and replyMessage are required" },
-        { status: 400 }
+        { status: 400, headers: CORS_HEADERS }
       );
     }
 
@@ -72,9 +88,9 @@ ${body.replyMessage}
       html: emailHtml,
     });
 
-    return NextResponse.json({ success: true, messageId: info.messageId });
+    return NextResponse.json({ success: true, messageId: info.messageId }, { headers: CORS_HEADERS });
   } catch (err: any) {
     console.error("Reply API error via Gmail SMTP:", err);
-    return NextResponse.json({ success: false, error: err.message }, { status: 500 });
+    return NextResponse.json({ success: false, error: err.message }, { status: 500, headers: CORS_HEADERS });
   }
 }

@@ -162,6 +162,31 @@ export async function fetchInquiriesFromCloud(): Promise<ClientInquiry[]> {
   }
 }
 
+export async function triggerInquiryEmailNotification(params: {
+  inquiryId?: string;
+  projectName?: string;
+  projectId?: string;
+  type?: string;
+  title: string;
+  message: string;
+  senderName?: string;
+  senderEmail?: string;
+  senderPhone?: string;
+}): Promise<boolean> {
+  try {
+    const notifyUrl = typeof window !== "undefined" ? "/api/inquiries/notify" : "https://brightflow-pi.vercel.app/api/inquiries/notify";
+    const res = await fetch(notifyUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(params),
+    });
+    return res.ok;
+  } catch (err) {
+    console.warn("Failed to trigger inquiry email notification:", err);
+    return false;
+  }
+}
+
 export async function submitClientInquiry(inquiry: Omit<ClientInquiry, "id" | "createdAt">): Promise<boolean> {
   try {
     const newId = `inq_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
@@ -184,25 +209,17 @@ export async function submitClientInquiry(inquiry: Omit<ClientInquiry, "id" | "c
     }
 
     // Trigger instant email notification to Gershy in background
-    try {
-      fetch("/api/inquiries/notify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          inquiryId: newId,
-          projectName: inquiry.projectName,
-          projectId: inquiry.projectId,
-          type: inquiry.type,
-          title: inquiry.title,
-          message: inquiry.message,
-          senderName: inquiry.senderName,
-          senderEmail: inquiry.senderEmail,
-          senderPhone: inquiry.senderPhone,
-        }),
-      }).catch((e) => console.warn("Background notify email error:", e));
-    } catch (notifyErr) {
-      console.warn("Could not fire notify email:", notifyErr);
-    }
+    triggerInquiryEmailNotification({
+      inquiryId: newId,
+      projectName: inquiry.projectName,
+      projectId: inquiry.projectId,
+      type: inquiry.type,
+      title: inquiry.title,
+      message: inquiry.message,
+      senderName: inquiry.senderName,
+      senderEmail: inquiry.senderEmail,
+      senderPhone: inquiry.senderPhone,
+    }).catch((e) => console.warn("Background notify email error:", e));
 
     return true;
   } catch (err) {
