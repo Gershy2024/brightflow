@@ -64,9 +64,9 @@ export function WorkSection() {
 
               <div className="space-y-4">
                 <div className="rounded-xl bg-white dark:bg-[#1A1D2B] p-4 border border-amber-900/10 dark:border-white/5 shadow-xs">
-                  <div className="text-xs text-slate-400 font-normal">אברך מוקצה ללימוד</div>
-                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-0.5">הרב ישראל כהן</div>
-                  <div className="text-xs text-amber-800 dark:text-amber-300 mt-1">מסכת בבא בתרא</div>
+                  <div className="text-xs text-slate-400 font-normal">חלק לימוד מוקצה</div>
+                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-0.5">סדר בבא בתרא • כולל עיון</div>
+                  <div className="text-xs text-amber-800 dark:text-amber-300 mt-1">אברך מוקצה מתוך המאגר</div>
                 </div>
                 <div className="rounded-xl bg-white dark:bg-[#1A1D2B] p-4 border border-amber-900/10 dark:border-white/5 shadow-xs">
                   <div className="text-xs text-slate-400 font-normal">סטטוס מסמך</div>

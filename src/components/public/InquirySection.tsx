@@ -114,7 +114,7 @@ export function InquirySection() {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g. David Cohen"
+                    placeholder="Your name or organization"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm font-normal focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-slate-400"
                   />
                 </div>
