@@ -1,15 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Send,
-  CheckCircle2,
-  Mail,
-  User,
-  Layout,
-  MessageSquare,
-  ArrowRight,
-} from "lucide-react";
+import { CheckCircle2, Mail, User, Layout, MessageSquare, ArrowRight } from "lucide-react";
 import { submitClientInquiry } from "@/lib/supabaseService";
 import { toast } from "sonner";
 
@@ -43,7 +35,7 @@ export function InquirySection() {
     }`;
 
     try {
-      const ok = await submitClientInquiry({
+      await submitClientInquiry({
         title: `Project Inquiry: ${name} (${projectType})`,
         message: fullMessage,
         type: "question",
@@ -68,18 +60,17 @@ export function InquirySection() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Header */}
-        <div className="text-center space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/50 border border-blue-200/80 dark:border-blue-900/60 text-blue-600 dark:text-blue-400 text-xs font-semibold uppercase tracking-wider">
-            <Mail className="h-3.5 w-3.5" />
-            <span>Start A Conversation</span>
+        <div className="text-center space-y-2">
+          <div className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wide">
+            Contact
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white">
-            Ready to build something exceptional?
+            Tell us about your project.
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-lg mx-auto">
-            Tell us about your organization and what you’d like to build. We’ll get back to you within 24 hours with ideas and a straightforward plan.
+          <p className="text-base text-slate-600 dark:text-slate-400 font-normal max-w-md mx-auto">
+            Share what you’d like to build. We’ll get back to you within 24 hours with ideas and next steps.
           </p>
         </div>
 
@@ -87,13 +78,13 @@ export function InquirySection() {
         <div className="max-w-2xl mx-auto rounded-2xl bg-[#FAFAFA] dark:bg-[#121520] border border-slate-200 dark:border-white/10 p-7 sm:p-10 shadow-xs">
           {isSuccess ? (
             <div className="text-center py-10 space-y-4">
-              <div className="w-14 h-14 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto border border-emerald-200 dark:border-emerald-900/60">
-                <CheckCircle2 className="h-7 w-7" />
+              <div className="w-12 h-12 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto border border-emerald-200 dark:border-emerald-900/60">
+                <CheckCircle2 className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                Message Received!
+                Message Received
               </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
+              <p className="text-sm text-slate-600 dark:text-slate-400 font-normal max-w-md mx-auto">
                 Thank you, <strong>{name}</strong>. We’re reviewing your project notes and will reach out to <strong>{email}</strong> shortly.
               </p>
               <button
@@ -104,7 +95,7 @@ export function InquirySection() {
                   setEmail("");
                   setMessage("");
                 }}
-                className="mt-4 px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold"
+                className="mt-4 px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-medium"
               >
                 Send Another Note
               </button>
@@ -115,9 +106,8 @@ export function InquirySection() {
               {/* Name & Email Fields */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div className="space-y-1.5 text-left">
-                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                    <User className="h-3.5 w-3.5 text-slate-400" />
-                    <span>Your Name</span>
+                  <label className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                    Your Name
                   </label>
                   <input
                     type="text"
@@ -125,14 +115,13 @@ export function InquirySection() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. David Cohen"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-slate-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm font-normal focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-slate-400"
                   />
                 </div>
 
                 <div className="space-y-1.5 text-left">
-                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                    <Mail className="h-3.5 w-3.5 text-slate-400" />
-                    <span>Email Address</span>
+                  <label className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                    Email Address
                   </label>
                   <input
                     type="email"
@@ -140,16 +129,15 @@ export function InquirySection() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="david@company.com"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-slate-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm font-normal focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-slate-400"
                   />
                 </div>
               </div>
 
               {/* Project Type Selector */}
               <div className="space-y-2 text-left">
-                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                  <Layout className="h-3.5 w-3.5 text-slate-400" />
-                  <span>Type of Website / Platform</span>
+                <label className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                  Type of Website / Platform
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {projectTypes.map((type) => {
@@ -174,16 +162,15 @@ export function InquirySection() {
 
               {/* Project Summary */}
               <div className="space-y-1.5 text-left">
-                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                  <MessageSquare className="h-3.5 w-3.5 text-slate-400" />
-                  <span>Tell us a bit about your project</span>
+                <label className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                  Tell us a bit about your project
                 </label>
                 <textarea
                   rows={3}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="What is the goal of the site? Do you need custom client logins, donor features, or telephony?"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-slate-400 resize-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm font-normal focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-slate-400 resize-none"
                 />
               </div>
 
@@ -191,7 +178,7 @@ export function InquirySection() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-3.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-xs"
               >
                 {isSubmitting ? (
                   <span>Sending notes...</span>
@@ -203,8 +190,8 @@ export function InquirySection() {
                 )}
               </button>
 
-              <div className="text-center text-[11px] text-slate-400">
-                Direct reply within 24 business hours • No spam or endless sales calls
+              <div className="text-center text-[11px] text-slate-400 font-normal">
+                Direct reply within 24 business hours • No spam or sales pressure
               </div>
 
             </form>
