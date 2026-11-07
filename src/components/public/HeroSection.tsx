@@ -1,295 +1,185 @@
 "use client";
 
 import * as React from "react";
-import {
-  Sparkles,
-  Zap,
-  ArrowRight,
-  CheckCircle2,
-  Clock,
-  RotateCcw,
-  ShieldCheck,
-  FileText,
-  MessageSquare,
-  Users,
-  Play,
-  TrendingUp,
-} from "lucide-react";
+import { ArrowRight, ExternalLink, Sparkles, Laptop, Smartphone } from "lucide-react";
 
 export function HeroSection() {
-  // Live micro-automation sandbox state
-  const [isRunning, setIsRunning] = React.useState(false);
-  const [currentStep, setCurrentStep] = React.useState(0);
-  const [isCompleted, setIsCompleted] = React.useState(false);
-  const [runTimeMs, setRunTimeMs] = React.useState(385);
-
-  const steps = [
-    {
-      title: "Lead Captured & AI-Parsed",
-      detail: "Inquiry received from web form, qualified & extracted",
-      icon: MessageSquare,
-      color: "text-blue-500",
-      time: "85ms",
-    },
-    {
-      title: "CRM Profile & Vault Created",
-      detail: "Synced to Supabase database, tagged & assigned",
-      icon: Users,
-      color: "text-indigo-500",
-      time: "140ms",
-    },
-    {
-      title: "Branded Invoice & Pay Link Built",
-      detail: "PDF generated, itemized line items, Stripe linked",
-      icon: FileText,
-      color: "text-emerald-500",
-      time: "260ms",
-    },
-    {
-      title: "Confirmation Dispatched",
-      detail: "WhatsApp & email sent with trackable receipt",
-      icon: Zap,
-      color: "text-cyan-500",
-      time: "385ms",
-    },
-  ];
-
-  const handleRunDemo = () => {
-    if (isRunning) return;
-    setIsRunning(true);
-    setIsCompleted(false);
-    setCurrentStep(1);
-
-    const randomMs = Math.floor(340 + Math.random() * 80);
-    setRunTimeMs(randomMs);
-
-    setTimeout(() => setCurrentStep(2), 250);
-    setTimeout(() => setCurrentStep(3), 500);
-    setTimeout(() => setCurrentStep(4), 750);
-    setTimeout(() => {
-      setIsRunning(false);
-      setIsCompleted(true);
-    }, 950);
-  };
-
-  const handleReset = () => {
-    setCurrentStep(0);
-    setIsCompleted(false);
-    setIsRunning(false);
-  };
-
   return (
-    <section id="overview" className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden">
-      {/* Dynamic ambient background glow meshes */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-indigo-500/15 via-blue-500/15 to-cyan-400/15 blur-[120px] rounded-full pointer-events-none -z-10" />
-      <div className="absolute top-1/3 left-10 w-96 h-96 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none -z-10" />
-
+    <section className="relative pt-32 pb-16 sm:pt-40 sm:pb-24 overflow-hidden bg-[#FAFAFA] dark:bg-[#0B0E14] border-b border-slate-200/70 dark:border-white/5 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Vision & Value Proposition */}
-          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-            {/* Super-badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200/80 dark:border-indigo-800/60 shadow-xs">
-              <span className="flex h-2 w-2 rounded-full bg-cyan-500 animate-pulse" />
-              <span className="text-xs font-bold tracking-wide uppercase bg-gradient-to-r from-indigo-600 to-cyan-600 dark:from-indigo-400 dark:to-cyan-300 bg-clip-text text-transparent">
-                Next-Gen Business Automation
-              </span>
-              <Sparkles className="h-3.5 w-3.5 text-indigo-500 dark:text-cyan-400" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+          
+          {/* Left Column: Clear, punchy headline & actions */}
+          <div className="lg:col-span-6 space-y-6 text-left">
+            {/* Subtle Studio Label */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/50 border border-blue-200/80 dark:border-blue-900/60 text-blue-600 dark:text-blue-400 text-xs font-semibold tracking-wide">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-blue-400" />
+              <span>Independent Design & Development Studio</span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.12]">
-              Put Your Business On{" "}
-              <span className="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 bg-clip-text text-transparent">
-                Autopilot.
-              </span>
+            {/* Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black tracking-tight text-slate-900 dark:text-white leading-[1.12]">
+              Custom websites.
               <br />
-              Make Complex Work{" "}
-              <span className="underline decoration-indigo-400/40 decoration-wavy decoration-2">
-                Effortless.
+              <span className="text-blue-600 dark:text-blue-400">
+                Built around your business.
               </span>
             </h1>
 
-            {/* Sub-headline */}
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
-              Stop wasting hours manually copy-pasting customer details, chasing overdue invoices, and untangling messy spreadsheets.
-              <strong className="text-slate-900 dark:text-white font-semibold"> The Bright Flow</strong> builds intelligent, custom automation pipelines that handle your daily operations in milliseconds.
+            {/* Sub-headline: 1 clear sentence */}
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
+              We engineer bespoke websites, member portals, and business platforms for ambitious organizations — crafted from initial concept to high-performance code.
             </p>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2">
+            {/* Two Action Buttons */}
+            <div className="flex flex-wrap items-center gap-4 pt-2">
               <a
-                href="#pipeline"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold text-sm shadow-lg shadow-indigo-600/25 hover:shadow-indigo-600/40 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                href="#work"
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
               >
-                <span>Explore Live Pipelines</span>
+                <span>View Our Work</span>
                 <ArrowRight className="h-4 w-4" />
               </a>
 
               <a
-                href="#calculator"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-white dark:bg-white/[0.06] text-slate-800 dark:text-white font-bold text-sm border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/10 transition-all shadow-xs"
+                href="#contact"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white dark:bg-white/[0.05] text-slate-800 dark:text-white font-semibold text-sm border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/10 transition-all shadow-xs"
               >
-                <TrendingUp className="h-4 w-4 text-emerald-500" />
-                <span>Calculate Your ROI</span>
+                <span>Let’s Talk</span>
               </a>
             </div>
 
-            {/* Trust points strip */}
-            <div className="pt-4 grid grid-cols-3 gap-4 max-w-lg mx-auto lg:mx-0 border-t border-slate-200/80 dark:border-white/10 text-left">
-              <div>
-                <div className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">99.4%</div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Faster execution</div>
-              </div>
-              <div>
-                <div className="text-2xl font-black text-indigo-600 dark:text-cyan-400 tracking-tight">20+ hrs</div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Saved per week</div>
-              </div>
-              <div>
-                <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400 tracking-tight">0 errors</div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Human copy-paste loss</div>
+            {/* Short proof note */}
+            <div className="pt-4 flex items-center gap-6 text-xs text-slate-500 dark:text-slate-400">
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-slate-800 dark:text-slate-200">100% Custom Code</span>
+                <span>•</span>
+                <span>No Templates</span>
+                <span>•</span>
+                <span>Direct Engineer Access</span>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Interactive Micro-Automation Sandbox Card */}
-          <div className="lg:col-span-5">
-            <div className="relative rounded-3xl p-1 bg-gradient-to-br from-indigo-500/30 via-blue-500/20 to-cyan-500/30 shadow-2xl shadow-indigo-500/10">
-              <div className="rounded-[22px] bg-white dark:bg-[#141724] border border-slate-200/90 dark:border-white/10 p-6 sm:p-7 space-y-6">
-                {/* Sandbox Header */}
-                <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-4">
-                  <div className="flex items-center gap-2.5">
-                    <div className="h-3 w-3 rounded-full bg-rose-500/80" />
-                    <div className="h-3 w-3 rounded-full bg-amber-500/80" />
-                    <div className="h-3 w-3 rounded-full bg-emerald-500/80" />
-                    <span className="text-xs font-mono font-bold text-slate-400 dark:text-slate-400 ml-1">
-                      sandbox.brightflow.run
-                    </span>
+          {/* Right Column: Visual Showcase (Desktop Laptop + Floating Mobile Screen) */}
+          <div className="lg:col-span-6 relative">
+            <div className="relative mx-auto max-w-xl lg:max-w-none">
+              
+              {/* Desktop Browser / Laptop Window */}
+              <div className="relative rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-2xl shadow-slate-900/10 overflow-hidden transition-all">
+                {/* Browser Header Bar */}
+                <div className="px-4 py-3 bg-slate-100/80 dark:bg-slate-800/80 border-b border-slate-200/80 dark:border-slate-700/80 flex items-center gap-3">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
                   </div>
-                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800/40">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
-                    Active Engine
-                  </span>
+                  <div className="flex-1 max-w-xs mx-auto bg-white dark:bg-slate-900 rounded-md px-3 py-1 text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-center gap-1.5 border border-slate-200/60 dark:border-slate-700 font-mono shadow-2xs">
+                    <span className="text-slate-400">https://</span>
+                    <span className="text-slate-800 dark:text-slate-200 font-medium">amudei-haolam.com/portal</span>
+                  </div>
                 </div>
 
-                {/* Subtitle description */}
-                <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-amber-500 fill-amber-500" />
-                    <span>Experience The 1-Click Speed</span>
-                  </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    See what normally takes an employee 25 minutes happen in 0.4 seconds.
-                  </p>
-                </div>
-
-                {/* Step Timeline */}
-                <div className="space-y-3">
-                  {steps.map((st, idx) => {
-                    const stepNum = idx + 1;
-                    const isDone = currentStep >= stepNum;
-                    const isCurrent = currentStep === stepNum && isRunning;
-                    const Icon = st.icon;
-
-                    return (
-                      <div
-                        key={st.title}
-                        className={`flex items-start gap-3 p-2.5 rounded-2xl transition-all duration-300 border ${
-                          isDone
-                            ? "bg-slate-50/80 dark:bg-white/[0.04] border-slate-200/80 dark:border-white/10"
-                            : isCurrent
-                            ? "bg-indigo-50/50 dark:bg-indigo-950/30 border-indigo-300 dark:border-indigo-700 shadow-sm"
-                            : "opacity-40 border-transparent"
-                        }`}
-                      >
-                        <div
-                          className={`mt-0.5 p-1.5 rounded-xl transition-colors ${
-                            isDone
-                              ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                              : "bg-slate-200/80 dark:bg-white/10 text-slate-500"
-                          }`}
-                        >
-                          {isDone ? (
-                            <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                          ) : (
-                            <Icon className={`h-4 w-4 ${st.color}`} />
-                          )}
-                        </div>
-
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">
-                              {st.title}
-                            </span>
-                            {isDone && (
-                              <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
-                                {st.time}
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
-                            {st.detail}
-                          </p>
-                        </div>
+                {/* Desktop Mockup Preview Content */}
+                <div className="p-5 sm:p-6 bg-[#FCFAF6] dark:bg-[#11131A] space-y-4 select-none">
+                  {/* Mock Site Navbar */}
+                  <div className="flex items-center justify-between border-b border-amber-900/10 dark:border-white/5 pb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-md bg-[#C99B48] flex items-center justify-center text-slate-950 font-bold text-xs">
+                        ע
                       </div>
-                    );
-                  })}
-                </div>
-
-                {/* Trigger Button & Status Summary */}
-                <div className="pt-2 border-t border-slate-100 dark:border-white/5 space-y-3">
-                  {!isCompleted ? (
-                    <button
-                      type="button"
-                      onClick={handleRunDemo}
-                      disabled={isRunning}
-                      className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-700 to-blue-600 text-white font-bold text-xs shadow-md shadow-indigo-600/25 hover:shadow-indigo-600/40 active:scale-[0.99] transition-all disabled:opacity-60 cursor-pointer"
-                    >
-                      {isRunning ? (
-                        <>
-                          <div className="h-3.5 w-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          <span>Executing Pipeline in Real-Time...</span>
-                        </>
-                      ) : (
-                        <>
-                          <Play className="h-3.5 w-3.5 fill-white" />
-                          <span>Run Live Automation Trigger</span>
-                        </>
-                      )}
-                    </button>
-                  ) : (
-                    <div className="space-y-2.5">
-                      <div className="flex items-center justify-between p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/40">
-                        <div className="flex items-center gap-2">
-                          <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                          <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">
-                            Flow Completed in {runTimeMs}ms!
-                          </span>
-                        </div>
-                        <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
-                          100% Automated
-                        </span>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={handleReset}
-                        className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
-                      >
-                        <RotateCcw className="h-3 w-3" />
-                        <span>Reset & Run Again</span>
-                      </button>
+                      <span className="font-serif font-bold text-sm text-[#7A4B0E] dark:text-[#E8BA60]">
+                        עמודי העולם • פורטל תומכים
+                      </span>
                     </div>
-                  )}
+                    <div className="hidden sm:flex items-center gap-3 text-[11px] text-slate-500 font-medium">
+                      <span>לוח תרומות</span>
+                      <span>שטרי יששכר וזבולון</span>
+                      <span className="px-2 py-0.5 rounded-md bg-[#C99B48]/15 text-[#8C5D19] font-bold border border-[#C99B48]/30">
+                        אזור אישי
+                      </span>
+                    </div>
+                  </div>
 
-                  <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
-                    <Clock className="h-3 w-3" />
-                    <span>Average manual equivalent: 25 minutes saved</span>
+                  {/* Mock Site Hero Card */}
+                  <div className="rounded-xl bg-gradient-to-br from-[#FFFDF9] to-[#F7EED9] dark:from-[#181B26] dark:to-[#1F2332] p-4 border border-[#C99B48]/30 shadow-xs space-y-3">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <span className="text-[10px] font-bold tracking-wider uppercase text-[#8C5D19] dark:text-[#D4A348]">
+                          שטר הסכם שותפות מהודר
+                        </span>
+                        <h4 className="text-base font-bold text-slate-900 dark:text-white mt-0.5 font-serif">
+                          הסכם שותפות קבע — כולל אברכים מצטיינים
+                        </h4>
+                      </div>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                        פעיל ומאושר
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-2.5 pt-1">
+                      <div className="p-2.5 rounded-lg bg-white/80 dark:bg-slate-800/60 border border-slate-200/60 dark:border-white/5">
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400">אברך מוקצה</div>
+                        <div className="text-xs font-bold text-slate-900 dark:text-slate-100">הרב ישראל כהן</div>
+                      </div>
+                      <div className="p-2.5 rounded-lg bg-white/80 dark:bg-slate-800/60 border border-slate-200/60 dark:border-white/5">
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400">מסכת נלמדת</div>
+                        <div className="text-xs font-bold text-slate-900 dark:text-slate-100">בבא בתרא</div>
+                      </div>
+                      <div className="p-2.5 rounded-lg bg-white/80 dark:bg-slate-800/60 border border-slate-200/60 dark:border-white/5">
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400">תעודת PDF</div>
+                        <div className="text-xs font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1">
+                          הורד חתום
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Mock Site Data Strip */}
+                  <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pt-1 px-1">
+                    <span className="flex items-center gap-1.5 font-medium">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      סנכרון תרומות חי במסד הנתונים
+                    </span>
+                    <span className="font-mono text-[11px] text-slate-400">Next.js 15 • Supabase Realtime</span>
                   </div>
                 </div>
               </div>
+
+              {/* Floating Mobile Device Mockup */}
+              <div className="absolute -bottom-8 -right-4 sm:-bottom-10 sm:-right-6 w-44 sm:w-52 rounded-[28px] bg-slate-900 p-2 shadow-2xl border-4 border-slate-800/90 transition-transform duration-300 hover:-translate-y-1">
+                {/* Phone Notch */}
+                <div className="w-20 h-3.5 bg-slate-800 mx-auto rounded-b-xl mb-2" />
+                
+                {/* Mobile Screen Content */}
+                <div className="rounded-[20px] bg-[#FFFDF9] dark:bg-[#151824] p-3 space-y-2.5 select-none overflow-hidden">
+                  <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-1.5">
+                    <div className="flex items-center gap-1">
+                      <div className="w-4 h-4 rounded bg-[#C99B48] text-slate-950 font-bold text-[9px] flex items-center justify-center">
+                        ע
+                      </div>
+                      <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200">פורטל מובייל</span>
+                    </div>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  </div>
+
+                  <div className="rounded-lg bg-amber-50/80 dark:bg-amber-950/30 p-2 border border-amber-300/40 text-center">
+                    <div className="text-[9px] font-bold text-amber-800 dark:text-amber-300">שטר דיגיטלי מוכן</div>
+                    <div className="text-[11px] font-bold text-slate-900 dark:text-white mt-0.5">יששכר וזבולון</div>
+                    <div className="mt-1.5 py-1 px-2 rounded bg-amber-600 text-white text-[9px] font-semibold">
+                      צפייה בשטר
+                    </div>
+                  </div>
+
+                  <div className="text-[8px] text-slate-400 text-center font-mono">
+                    100% רספונסיבי למכשירים
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
+
         </div>
       </div>
     </section>

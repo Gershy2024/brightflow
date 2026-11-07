@@ -1,31 +1,31 @@
 "use client";
 
 import * as React from "react";
-import { ChevronDown, HelpCircle, Sparkles } from "lucide-react";
+import { ChevronDown, HelpCircle } from "lucide-react";
 
 export function FaqSection() {
   const [openIndex, setOpenIndex] = React.useState<number | null>(0);
 
   const faqs = [
     {
-      q: "How quickly can BrightFlow automate our daily operations?",
-      a: "Most bespoke pipelines—such as lead-to-cash invoicing, WhatsApp notifications, CRM data vaults, and SignalWire call screening—are architected, tested, and live within 3 to 7 business days, with zero downtime for your existing business.",
+      q: "How long does a typical project take from start to launch?",
+      a: "Most custom websites and specialized web applications are engineered and launched within 2 to 4 weeks. We work in agile weekly milestones, giving you interactive staging links to review progress at every stage.",
     },
     {
-      q: "Do we need to replace our existing software or spreadsheets?",
-      a: "No! We do not force you into rigid third-party software. BrightFlow connects seamlessly to your existing workflows, databases, webhooks, and mobile apps, acting as the intelligent glue that automates the friction away.",
+      q: "Do you use off-the-shelf templates or generic WordPress themes?",
+      a: "No. Everything we build is 100% custom-coded using modern standards: Next.js, React, TypeScript, and Tailwind CSS. This ensures your project is ultra-fast, completely unique to your brand, secure, and free from bloated plugins that break over time.",
     },
     {
-      q: "Are there expensive monthly voice or AI subscription fees for telephony?",
-      a: "No. Unlike agencies that resell expensive paid TTS subscriptions (like ElevenLabs), we engineer telephony using free, zero-cost high-fidelity Edge Neural engines and standard SignalWire trunks, keeping your telephony costs near zero.",
+      q: "Will our website and client portal work seamlessly on mobile phones?",
+      a: "Yes. Every application and page is built mobile-first. Your platform will feel like a native app on mobile screens while taking full advantage of wide desktop monitors.",
     },
     {
-      q: "What happens if our operational workflow changes in the future?",
-      a: "All systems built by BrightFlow are clean, modular, and extensible. Updating an invoice template, adding a new approval step, or onboarding new staff takes minutes without breaking existing workflows.",
+      q: "Can you connect our website to our existing databases, telephony, or payments?",
+      a: "Yes. We frequently integrate custom Supabase and Postgres databases, SignalWire cloud telephony, automated PDF billing, and third-party APIs into clean, unified portals.",
     },
     {
-      q: "How is our sensitive client and financial data protected?",
-      a: "Security is non-negotiable. Every system runs with Row Level Security (RLS) on enterprise Postgres databases, secure serverless functions, encrypted API keys, and regular automated cloud backups.",
+      q: "Who do I speak to when I need updates or have questions?",
+      a: "You communicate directly with the engineer building your system. No account managers, no ticket queues, and no outsourced junior developers.",
     },
   ];
 
@@ -34,48 +34,46 @@ export function FaqSection() {
   };
 
   return (
-    <section id="faq" className="py-24 bg-slate-50/50 dark:bg-[#0E111D] relative border-t border-slate-200/60 dark:border-white/5">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <section id="faq" className="py-24 bg-[#FAFAFA] dark:bg-[#0B0E14] border-b border-slate-200/70 dark:border-white/5 transition-colors">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
+        
         {/* Header */}
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800/40 text-blue-700 dark:text-cyan-400 text-xs font-bold uppercase tracking-wider">
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/50 border border-blue-200/80 dark:border-blue-900/60 text-blue-600 dark:text-blue-400 text-xs font-semibold uppercase tracking-wider">
             <HelpCircle className="h-3.5 w-3.5" />
             <span>Common Questions</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white">
-            Everything You Need To Know About{" "}
-            <span className="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 bg-clip-text text-transparent">
-              BrightFlow
-            </span>
+            Frequently Asked Questions
           </h2>
 
-          <p className="text-sm text-slate-600 dark:text-slate-300">
-            Clear, transparent answers on how we transform manual friction into effortless flow.
+          <p className="text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+            Clear, transparent answers about our engineering process, deliverables, and technology.
           </p>
         </div>
 
         {/* Accordion list */}
-        <div className="space-y-3.5">
+        <div className="space-y-3">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
                 key={faq.q}
-                className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#141724] overflow-hidden transition-all shadow-xs"
+                className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#121520] overflow-hidden transition-all shadow-xs"
               >
                 <button
                   type="button"
                   onClick={() => toggle(idx)}
                   className="w-full px-6 py-5 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/[0.02] transition-colors"
                 >
-                  <span className="text-sm font-bold text-slate-900 dark:text-white">
+                  <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
                     {faq.q}
                   </span>
                   <div
                     className={`h-7 w-7 rounded-full flex items-center justify-center shrink-0 transition-transform duration-200 ${
                       isOpen
-                        ? "rotate-180 bg-indigo-600 text-white"
+                        ? "rotate-180 bg-blue-600 text-white"
                         : "bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300"
                     }`}
                   >
@@ -84,7 +82,7 @@ export function FaqSection() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-5 pt-1 text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-white/5 animate-in fade-in duration-200">
+                  <div className="px-6 pb-5 pt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-white/5 animate-in fade-in duration-200">
                     {faq.a}
                   </div>
                 )}

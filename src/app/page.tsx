@@ -3,13 +3,10 @@
 import * as React from "react";
 import { PublicNavbar } from "@/components/public/PublicNavbar";
 import { HeroSection } from "@/components/public/HeroSection";
-import { SpeedRaceSection } from "@/components/public/SpeedRaceSection";
-import { BeforeAfterSection } from "@/components/public/BeforeAfterSection";
-import { PipelineSimulatorSection } from "@/components/public/PipelineSimulatorSection";
-import { TelephonySimulator } from "@/components/public/TelephonySimulator";
-import { RoiCalculatorSection } from "@/components/public/RoiCalculatorSection";
-import { SolutionsBento } from "@/components/public/SolutionsBento";
-import { AutomationQuiz } from "@/components/public/AutomationQuiz";
+import { WorkSection } from "@/components/public/WorkSection";
+import { ServicesSection } from "@/components/public/ServicesSection";
+import { ProcessSection } from "@/components/public/ProcessSection";
+import { TestimonialsSection } from "@/components/public/TestimonialsSection";
 import { FaqSection } from "@/components/public/FaqSection";
 import { InquirySection } from "@/components/public/InquirySection";
 import { PublicFooter } from "@/components/public/PublicFooter";
@@ -44,53 +41,44 @@ export default function BrightFlowPublicWebsite() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] dark:bg-[#0B0E17]">
-        <div className="h-8 w-8 rounded-full border-2 border-indigo-600 border-t-transparent animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-[#FAFAFA] dark:bg-[#0B0E14]">
+        <div className="h-7 w-7 rounded-full border-2 border-blue-600 border-t-transparent animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B0E17] text-slate-900 dark:text-slate-100 selection:bg-indigo-500/20 selection:text-indigo-600 font-sans transition-colors duration-200">
-      {/* 1. Sticky Navigation (Admin Portal hidden from regular visitors) */}
+    <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#0B0E14] text-slate-900 dark:text-slate-100 selection:bg-blue-600/15 selection:text-blue-600 font-sans transition-colors duration-200">
+      {/* 1. Clean Navigation Bar: Work • Services • Process • Contact */}
       <PublicNavbar
         darkMode={darkMode}
         onToggleDarkMode={handleToggleDarkMode}
       />
 
       <main className="flex flex-col">
-        {/* 2. Hero Section with Live Micro-Automation Sandbox */}
+        {/* 2. Hero Section: "Custom websites. Built around your business." with Desktop + Mobile mockup */}
         <HeroSection />
 
-        {/* 3. Live Benchmark Speed Race (Human vs. BrightFlow Engine) */}
-        <SpeedRaceSection />
+        {/* 3. Featured Portfolio: 3 Large Projects (Amudei HaOlam, MB Management, Shekel HaKodesh) */}
+        <WorkSection />
 
-        {/* 4. Reality Check: Before vs. After Interactive Comparison */}
-        <BeforeAfterSection />
+        {/* 4. Core Services: Bespoke Web Apps, High-Converting Sites, Telephony & Pipelines */}
+        <ServicesSection />
 
-        {/* 5. Interactive Live Visual Pipeline Simulator */}
-        <PipelineSimulatorSection />
+        {/* 5. Process: 3-Step Transparent Methodology */}
+        <ProcessSection />
 
-        {/* 6. Interactive Smartphone Telephony & Call Screening Simulator */}
-        <TelephonySimulator />
+        {/* 6. Testimonials: Authentic Client Quotes */}
+        <TestimonialsSection />
 
-        {/* 7. Interactive ROI & Time-Saved Calculator */}
-        <RoiCalculatorSection />
-
-        {/* 8. Core Solutions Bento Grid */}
-        <SolutionsBento />
-
-        {/* 9. 60-Second Automation Health Score Diagnostic Quiz */}
-        <AutomationQuiz />
-
-        {/* 10. Frequently Asked Questions Accordion */}
+        {/* 7. FAQ: Clear Answers on Timing, Tech Stack & Mobile Responsiveness */}
         <FaqSection />
 
-        {/* 11. Live Inquiry & Automation Discovery Form */}
+        {/* 8. Shortened Contact Form: Name, Email, Project Type, Notes */}
         <InquirySection />
       </main>
 
-      {/* 12. Footer with Discreet Security & Architecture Focus */}
+      {/* 9. Minimal Studio Footer */}
       <PublicFooter />
     </div>
   );
