@@ -11,17 +11,33 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: [
-          '"Arial Rounded MT Bold"',
-          '"Rubik"',
-          '"Heebo"',
-          '"Segoe UI"',
+          '"Plus Jakarta Sans"',
           'system-ui',
-          'sans-serif'
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          'sans-serif',
+        ],
+        serif: [
+          '"Newsreader"',
+          'Georgia',
+          'Cambria',
+          '"Times New Roman"',
+          'serif',
         ],
       },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        studio: {
+          ivory: "#FAF8F5",
+          "ivory-card": "#FFFFFF",
+          ink: "#121316",
+          "ink-muted": "#52545A",
+          cobalt: "#1D4ED8",
+          "cobalt-hover": "#1E40AF",
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -63,4 +79,5 @@ const config: Config = {
   },
   plugins: [],
 };
+
 export default config;

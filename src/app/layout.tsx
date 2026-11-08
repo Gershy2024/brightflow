@@ -4,9 +4,9 @@ import { AuthProvider } from "@/lib/authContext";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
-  title: "BrightFlow | Intelligent Business Automation & Client Hub",
+  title: "BrightFlow — Digital Studio | Custom Websites & Web Applications",
   description:
-    "Put your business on autopilot. Bespoke workflow automation, CRM pipelines, instant quote-to-cash invoicing, and smart telephony.",
+    "Independent digital studio designing and building custom websites, member portals, and business platforms for growing organizations.",
   other: {
     google: "notranslate",
   },
@@ -19,7 +19,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" dir="ltr" translate="no" className="notranslate" suppressHydrationWarning>
-      <body className="antialiased font-sans">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="antialiased font-sans text-[#121316] bg-[#FAF8F5] dark:text-[#F3F3F5] dark:bg-[#0E1015]">
         <AuthProvider>
           {children}
           <Toaster richColors position="top-center" closeButton />

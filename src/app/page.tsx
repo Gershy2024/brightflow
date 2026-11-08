@@ -4,14 +4,13 @@ import * as React from "react";
 import { PublicNavbar } from "@/components/public/PublicNavbar";
 import { HeroSection } from "@/components/public/HeroSection";
 import { WorkSection } from "@/components/public/WorkSection";
-import { ServicesSection } from "@/components/public/ServicesSection";
-import { ProcessSection } from "@/components/public/ProcessSection";
-import { TestimonialsSection } from "@/components/public/TestimonialsSection";
+import { AboutSection } from "@/components/public/AboutSection";
+import { ServicesAndProcessSection } from "@/components/public/ServicesAndProcessSection";
 import { FaqSection } from "@/components/public/FaqSection";
 import { InquirySection } from "@/components/public/InquirySection";
 import { PublicFooter } from "@/components/public/PublicFooter";
 
-export default function BrightFlowPublicWebsite() {
+export default function BrightFlowStudioHome() {
   const [darkMode, setDarkMode] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
 
@@ -41,44 +40,41 @@ export default function BrightFlowPublicWebsite() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#FAFAFA] dark:bg-[#0B0E14]">
-        <div className="h-7 w-7 rounded-full border-2 border-blue-600 border-t-transparent animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-[#FAF8F5] dark:bg-[#0E1015]">
+        <div className="h-6 w-6 rounded-full border-2 border-[#1D4ED8] border-t-transparent animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#0B0E14] text-slate-900 dark:text-slate-100 selection:bg-blue-600/15 selection:text-blue-600 font-sans transition-colors duration-200">
-      {/* 1. Clean Navigation Bar: Work • Services • Process • Contact */}
+    <div className="min-h-screen bg-[#FAF8F5] dark:bg-[#0E1015] text-[#121316] dark:text-[#F3F3F5] selection:bg-blue-600/15 selection:text-blue-600 font-sans transition-colors duration-200">
+      {/* 1. Header Navigation */}
       <PublicNavbar
         darkMode={darkMode}
         onToggleDarkMode={handleToggleDarkMode}
       />
 
       <main className="flex flex-col">
-        {/* 2. Hero Section: "Custom websites. Built around your business." with Desktop + Mobile mockup */}
+        {/* 2. Hero: Headline + Wide Featured Work */}
         <HeroSection />
 
-        {/* 3. Featured Portfolio: 3 Large Projects (Amudei HaOlam, MB Management, Shekel HaKodesh) */}
+        {/* 3. Selected Work: Flagship Full Width + 2 Secondary Projects */}
         <WorkSection />
 
-        {/* 4. Core Services: Bespoke Web Apps, High-Converting Sites, Telephony & Pipelines */}
-        <ServicesSection />
+        {/* 4. About: Short, honest, personal studio introduction */}
+        <AboutSection />
 
-        {/* 5. Process: 3-Step Transparent Methodology */}
-        <ProcessSection />
+        {/* 5. Services & Process: Asymmetrical, concise, no repetitive 3-column cards */}
+        <ServicesAndProcessSection />
 
-        {/* 6. Testimonials: Authentic Client Quotes */}
-        <TestimonialsSection />
-
-        {/* 7. FAQ: Clear Answers on Timing, Tech Stack & Mobile Responsiveness */}
+        {/* 6. FAQ: Compact, clean accordion */}
         <FaqSection />
 
-        {/* 8. Shortened Contact Form: Name, Email, Project Type, Notes */}
+        {/* 7. Contact: Grounded inquiry form */}
         <InquirySection />
       </main>
 
-      {/* 9. Minimal Studio Footer */}
+      {/* 8. Clean Studio Footer */}
       <PublicFooter />
     </div>
   );
