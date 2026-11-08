@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { ArrowUpRight, Check, X, Building2, PhoneCall, Layers } from "lucide-react";
+import { ArrowUpRight, Check, X, Building2, PhoneCall, Scroll, Download, ShieldCheck } from "lucide-react";
 
 interface ProjectDetail {
   id: string;
@@ -20,16 +20,16 @@ export function WorkSection() {
   const projects: Record<string, ProjectDetail> = {
     amudei: {
       id: "amudei",
-      title: "Amudei HaOlam (עמודי העולם)",
-      category: "Philanthropy & Community Platform",
+      title: "עמודי העולם — Amudei HaOlam",
+      category: "Philanthropy & Donor Experience",
       summary:
-        "A luxury donor portal and automated Hebrew covenant generator for an international Torah institution.",
+        "A luxury donor portal and dynamic covenant generator designed for an international Torah institution.",
       problemSolved:
-        "The organization previously spent hours creating personalized donor certificates manually on graphics software. Donors lacked a secure personal area to track their monthly pledges.",
+        "The institution previously created individual donor certificates manually on desktop graphics programs, taking hours per donor. Donors had no dedicated personal portal to review their pledges or view their assigned scholar's progress.",
       whatWeBuilt: [
-        "Dynamic SVG/PDF covenant (Shtar) generator with traditional gold borders",
-        "Private VIP donor portal with pledge status and payment receipts",
-        "Interactive directory of over 100 scholars with dedication matching",
+        "Dynamic SVG/PDF covenant (Shtar) generator with traditional gold borders and authentic seals",
+        "Private VIP donor portal with live pledge statuses and monthly receipts",
+        "Scholar directory of over 100 scholars with dedication matching",
         "Fast global edge hosting with secure database permissions",
       ],
       techStack: ["Next.js", "Supabase Postgres", "Tailwind CSS", "PDF Engine", "Hebrew RTL"],
@@ -41,7 +41,7 @@ export function WorkSection() {
       summary:
         "A centralized operations platform replacing spreadsheets with automated tenant rent tracking and maintenance dispatching.",
       problemSolved:
-        "Managing dozens of multi-family units across separate chat threads caused delayed maintenance responses, missed rent notices, and confusing monthly ledgers.",
+        "Managing multi-family units across scattered spreadsheets and messaging apps led to delayed maintenance responses, missed rent notices, and confusing monthly ledgers.",
       whatWeBuilt: [
         "Property and multi-unit directory with live occupancy overview",
         "Tenant payment ledger with 1-click rent receipt generation",
@@ -52,12 +52,12 @@ export function WorkSection() {
     },
     telephony: {
       id: "telephony",
-      title: "Campaign Telephony & Call Screening",
+      title: "Campaign Telephony & IVR Engine",
       category: "Cloud Communications System",
       summary:
         "An intelligent cloud telephony system that screens calls, routes donor inquiries, and eliminates missed connections in real time.",
       problemSolved:
-        "Campaign call centers were losing critical calls to personal representative voicemails, with zero visibility into which IVR menus callers actually navigated.",
+        "Campaign call centers were losing high-value calls to personal representative voicemails, with zero visibility into which IVR menus callers actually navigated.",
       whatWeBuilt: [
         "SignalWire-powered call screening ('press 1 to accept') preventing voicemail traps",
         "Real-time DTMF button tracking logging the caller's navigation journey",
@@ -68,7 +68,6 @@ export function WorkSection() {
     },
   };
 
-  // Keyboard escape to close modal
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -81,7 +80,7 @@ export function WorkSection() {
 
   return (
     <section id="work" className="py-24 border-b border-black/[0.06] dark:border-white/[0.08]">
-      <div className="max-w-6xl mx-auto px-6 sm:px-8 space-y-16">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 space-y-20">
         
         {/* Section Header */}
         <div className="max-w-2xl space-y-3 text-left">
@@ -92,73 +91,130 @@ export function WorkSection() {
             Featured projects.
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 font-normal">
-            Real systems designed and built for actual organizations — focused on clarity, usability, and speed.
+            Real software systems designed and built for actual organizations — focused on clarity, usability, and speed.
           </p>
         </div>
 
-        {/* 1. Flagship Project (Full Width) */}
-        <div className="space-y-4">
-          <div className="relative rounded-2xl overflow-hidden border border-black/[0.08] dark:border-white/[0.08] bg-[#F7F4EE] dark:bg-[#151824] shadow-sm hover:shadow-md transition-shadow">
+        {/* 1. Flagship Showcase: Amudei HaOlam (Actual Software Screens) */}
+        <div className="space-y-6">
+          <div className="rounded-2xl overflow-hidden border border-black/[0.08] dark:border-white/[0.08] bg-[#FAF7F0] dark:bg-[#121520] shadow-sm">
             
-            <div className="p-8 sm:p-12 lg:p-14 relative overflow-hidden">
-              <div
-                className="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none"
-                style={{ backgroundImage: "url('/projects/amudei/pillars-hero-bg.jpg')" }}
-              />
+            {/* Real Application Window Top Bar */}
+            <div className="px-5 py-3.5 bg-[#F0EBE0] dark:bg-black/30 border-b border-black/[0.06] dark:border-white/5 flex items-center justify-between text-xs font-mono">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-black/20 dark:bg-white/20" />
+                <span className="w-2.5 h-2.5 rounded-full bg-black/20 dark:bg-white/20" />
+                <span className="w-2.5 h-2.5 rounded-full bg-black/20 dark:bg-white/20" />
+                <span className="ml-2 text-slate-600 dark:text-slate-400 hidden sm:inline">
+                  amudei-haolam.com/portal
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <span>Production Environment</span>
+              </div>
+            </div>
 
-              <div className="relative z-10 flex flex-col justify-between min-h-[380px] space-y-8">
+            {/* Real Interface: Donor Portal & Shtar Viewer */}
+            <div className="p-6 sm:p-10 space-y-6 text-right font-sans select-none" dir="rtl">
+              
+              {/* App Internal Nav */}
+              <div className="flex items-center justify-between border-b border-amber-900/10 dark:border-white/5 pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-lg bg-[#C99B48] flex items-center justify-center text-slate-950 font-serif font-bold text-base shadow-xs">
+                    ע
+                  </div>
+                  <div>
+                    <span className="font-serif font-bold text-base text-amber-950 dark:text-amber-200">
+                      עמודי העולם
+                    </span>
+                    <span className="text-[11px] block text-slate-500 font-normal">
+                      סביבת תורם VIP • הוראת קבע פעילה
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 rounded bg-amber-900/5 dark:bg-amber-400/10 text-amber-900 dark:text-amber-300 text-xs font-medium border border-amber-900/10">
+                    שטר מס׳ SKV-5787
+                  </span>
+                </div>
+              </div>
+
+              {/* Two Screen Split: Real Shtar Certificate + Real Donor Ledger */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch text-right">
                 
-                {/* Brand Header */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 relative">
-                      <Image
-                        src="/projects/amudei/amudei-gold-emblem.svg"
-                        alt="Amudei Gold Emblem"
-                        width={40}
-                        height={40}
-                        className="object-contain"
-                      />
+                {/* Screen A: The Real Shtar Parchment Certificate */}
+                <div className="lg:col-span-7 rounded-xl bg-[#FFFDF9] dark:bg-[#181C28] p-6 sm:p-7 border border-[#C99B48]/30 shadow-xs flex flex-col justify-between space-y-4">
+                  <div className="flex items-center justify-between border-b border-[#C99B48]/20 pb-3">
+                    <span className="text-xs font-serif font-bold text-[#8C6514] dark:text-[#D4A348]">
+                      שטר שותפות יששכר וזבולון • נוסח מהודר
+                    </span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-bold">
+                      מאושר וחתום
+                    </span>
+                  </div>
+
+                  <div className="space-y-3 py-2">
+                    <h4 className="font-serif text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-relaxed">
+                      הסכם שותפות קבע בהחזקת תלמיד חכם
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-normal leading-relaxed">
+                      הרינו מאשרים כי נחתם הסכם יששכר וזבולון כדת וכהלכה, והתורם נוטל על עצמו החזקת אברך בכולל עיון, וזכות לימוד התורה עומדת לו ולזרעו.
+                    </p>
+                  </div>
+
+                  {/* Signatures & Seal Bar */}
+                  <div className="pt-3 border-t border-[#C99B48]/20 flex items-center justify-between text-xs text-slate-500">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 relative shrink-0">
+                        <Image
+                          src="/projects/amudei/engraved-gold-seal.svg"
+                          alt="Seal"
+                          width={24}
+                          height={24}
+                          className="object-contain"
+                        />
+                      </div>
+                      <span className="text-[11px] font-serif font-semibold text-amber-900 dark:text-amber-200">
+                        חתימת הנהלת הכולל מאושרת
+                      </span>
                     </div>
-                    <div>
-                      <span className="font-serif font-bold text-lg text-amber-950 dark:text-amber-200">
-                        עמודי העולם
-                      </span>
-                      <span className="text-[11px] block font-mono text-amber-900/60 dark:text-amber-400/60">
-                        Luxury Donor Experience
-                      </span>
+
+                    <span className="text-[10px] font-mono text-slate-400">
+                      אימות SHA-256
+                    </span>
+                  </div>
+                </div>
+
+                {/* Screen B: Donor Portal Action Ledger */}
+                <div className="lg:col-span-5 rounded-xl bg-white dark:bg-[#181C28] p-5 sm:p-6 border border-black/[0.06] dark:border-white/5 shadow-xs flex flex-col justify-between space-y-4">
+                  <div className="space-y-3">
+                    <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block">
+                      פרטי השותפות במערכת
+                    </span>
+
+                    <div className="p-3 rounded-lg bg-[#FAF8F5] dark:bg-[#121520] border border-black/[0.04] dark:border-white/5 space-y-1">
+                      <span className="text-[10px] text-slate-400 block">מסכת נלמדת בכולל</span>
+                      <span className="text-xs font-bold text-slate-900 dark:text-white">בבא בתרא • כולל עיון מעמיק</span>
+                    </div>
+
+                    <div className="p-3 rounded-lg bg-[#FAF8F5] dark:bg-[#121520] border border-black/[0.04] dark:border-white/5 space-y-1">
+                      <span className="text-[10px] text-slate-400 block">מחזור תרומה חודשי</span>
+                      <span className="text-xs font-bold text-emerald-600">$360.00 / חודש — אוטומטי</span>
                     </div>
                   </div>
 
-                  <span className="text-xs font-mono px-3 py-1 rounded bg-amber-950/5 dark:bg-amber-400/10 text-amber-900 dark:text-amber-300">
-                    Live Platform
-                  </span>
-                </div>
-
-                {/* Center Showcase Mockup */}
-                <div className="rounded-xl bg-white/90 dark:bg-[#1A1D2B]/90 backdrop-blur-sm p-6 sm:p-8 border border-amber-900/10 dark:border-white/5 max-w-2xl ml-auto text-right space-y-3">
-                  <span className="text-xs font-serif font-bold text-amber-800 dark:text-amber-300">
-                    הסכם שותפות יששכר וזבולון
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 dark:text-white">
-                    מחולל שטרות דיגיטליים וסביבת תומכים אישית
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-normal leading-relaxed">
-                    מערכת ייעודית המאפשרת הפקת שטרות שותפות מהודרים בהתאמה אישית, חתימות הנהלה, ומעקב תרומות שקוף בזמן אמת.
-                  </p>
-                </div>
-
-                {/* Bottom details link */}
-                <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-amber-900/10 dark:border-white/5">
-                  <span className="font-mono text-[11px]">Next.js • Supabase • Dynamic SVG/PDF</span>
-                  <button
-                    type="button"
-                    onClick={() => setActiveProject(projects.amudei)}
-                    className="inline-flex items-center gap-1 font-medium text-[#1D4ED8] dark:text-blue-400 hover:underline cursor-pointer"
-                  >
-                    <span>Explore project</span>
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </button>
+                  {/* Action Button inside system */}
+                  <div className="pt-2">
+                    <div className="w-full py-2.5 px-3 rounded-lg bg-[#FAF8F5] dark:bg-[#121520] border border-amber-900/20 text-[#8C6514] dark:text-[#D4A348] text-xs font-medium flex items-center justify-between">
+                      <span className="flex items-center gap-1.5">
+                        <Download className="h-3.5 w-3.5" />
+                        <span>הורדת שטר חתום דיגיטלית (PDF)</span>
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-400">1.8 MB</span>
+                    </div>
+                  </div>
                 </div>
 
               </div>
@@ -166,158 +222,169 @@ export function WorkSection() {
 
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 px-1">
-            <div className="flex items-baseline gap-2">
-              <h3 className="font-serif text-xl font-bold text-[#121316] dark:text-[#F3F3F5]">
-                Amudei HaOlam (עמודי העולם)
-              </h3>
-              <span className="text-slate-400">•</span>
-              <span className="text-xs text-slate-500 font-normal">
-                Philanthropy & Community Platform
-              </span>
+          {/* Under-Image Metadata: Spacious, properly separated, no awkward breaks */}
+          <div className="pt-2 text-left space-y-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-black/[0.06] dark:border-white/5">
+              <div>
+                <h3 className="font-serif text-2xl font-bold text-[#121316] dark:text-[#F3F3F5]">
+                  עמודי העולם — Amudei HaOlam
+                </h3>
+                <span className="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mt-0.5 block">
+                  Philanthropy & Donor Portal Platform
+                </span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setActiveProject(projects.amudei)}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-xs font-medium text-[#121316] dark:text-white transition-colors cursor-pointer self-start sm:self-auto"
+              >
+                <span>Explore Project Details</span>
+                <ArrowUpRight className="h-3.5 w-3.5 text-[#1D4ED8]" />
+              </button>
             </div>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-normal">
-              A luxury donor portal and dynamic covenant generator designed for an international Torah institution.
+
+            <p className="text-sm text-slate-600 dark:text-slate-400 font-normal leading-relaxed max-w-3xl">
+              A bespoke digital donor platform that generates illuminated Hebrew covenant certificates (Shtarot), provides private VIP donor accounts, and tracks recurring pledges in real time.
             </p>
           </div>
         </div>
 
-        {/* 2. Secondary Projects (2-Column Grid) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-12">
+        {/* 2. Secondary Showcases: MB Management & Telephony Engine */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-14 pt-4">
           
           {/* Project 2: MB Management */}
-          <div className="space-y-4">
-            <div className="relative rounded-2xl overflow-hidden border border-black/[0.08] dark:border-white/[0.08] bg-[#F5F7FA] dark:bg-[#141724] shadow-sm hover:shadow-md transition-shadow">
-              <div className="p-7 sm:p-8 flex flex-col justify-between min-h-[340px] space-y-6">
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs">
-                      MB
-                    </div>
-                    <div>
-                      <div className="font-bold text-sm text-slate-900 dark:text-white">
-                        MB Management
-                      </div>
-                      <div className="text-[10px] font-mono text-slate-500">
-                        Property Operations
-                      </div>
-                    </div>
-                  </div>
-                  <span className="text-[11px] font-mono px-2.5 py-0.5 rounded bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300">
-                    Live Platform
-                  </span>
-                </div>
-
-                <div className="rounded-xl bg-white dark:bg-[#1A1D2B] p-5 border border-black/[0.06] dark:border-white/5 space-y-3">
-                  <div className="flex items-center justify-between text-xs text-slate-500 pb-2 border-b border-black/[0.05] dark:border-white/5">
-                    <span className="font-medium text-slate-800 dark:text-slate-200">Portfolio Dashboard</span>
-                    <span className="text-emerald-600 font-medium">48/49 Occupied</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div>
-                      <span className="text-[10px] text-slate-400 block">Monthly Collections</span>
-                      <span className="text-sm font-bold text-slate-900 dark:text-white">$94,200</span>
-                    </div>
-                    <div>
-                      <span className="text-[10px] text-slate-400 block">Maintenance Tickets</span>
-                      <span className="text-sm font-bold text-blue-600 dark:text-blue-400">2 Resolved Today</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-black/[0.05] dark:border-white/5">
-                  <span className="font-mono text-[11px]">Operations & Tenant Portal</span>
-                  <button
-                    type="button"
-                    onClick={() => setActiveProject(projects.mb)}
-                    className="inline-flex items-center gap-1 font-medium text-[#1D4ED8] dark:text-blue-400 hover:underline cursor-pointer"
-                  >
-                    <span>Explore project</span>
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </button>
-                </div>
-
+          <div className="space-y-5 text-left">
+            <div className="rounded-2xl overflow-hidden border border-black/[0.08] dark:border-white/[0.08] bg-[#F5F7FA] dark:bg-[#131622] shadow-sm">
+              
+              {/* App Bar */}
+              <div className="px-4 py-3 bg-[#EAEFF5] dark:bg-black/30 border-b border-black/[0.05] dark:border-white/5 flex items-center justify-between text-xs font-mono">
+                <span className="font-bold text-slate-800 dark:text-slate-200">
+                  MB Management Console
+                </span>
+                <span className="text-emerald-700 dark:text-emerald-400 font-medium">
+                  Live Operations
+                </span>
               </div>
+
+              {/* Real Dashboard Screen View */}
+              <div className="p-6 sm:p-7 space-y-4 select-none">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="p-4 rounded-xl bg-white dark:bg-[#1A1D2B] border border-black/[0.06] dark:border-white/5 space-y-1">
+                    <span className="text-[10px] text-slate-400 font-mono uppercase block">Occupancy Rate</span>
+                    <span className="text-2xl font-bold text-slate-900 dark:text-white">98.0%</span>
+                    <span className="text-[11px] text-emerald-600 block">48 of 49 Units Active</span>
+                  </div>
+                  <div className="p-4 rounded-xl bg-white dark:bg-[#1A1D2B] border border-black/[0.06] dark:border-white/5 space-y-1">
+                    <span className="text-[10px] text-slate-400 font-mono uppercase block">Monthly Ledger</span>
+                    <span className="text-2xl font-bold text-slate-900 dark:text-white">$94,200</span>
+                    <span className="text-[11px] text-slate-500 block">Automated Receipts</span>
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-white dark:bg-[#1A1D2B] border border-black/[0.06] dark:border-white/5 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-blue-600" />
+                    <span className="font-medium text-slate-800 dark:text-slate-200">Unit 4B — Annual Renewal</span>
+                  </div>
+                  <span className="text-slate-400 font-mono text-[11px]">PDF Dispatched</span>
+                </div>
+              </div>
+
             </div>
 
-            <div className="space-y-1 px-1">
-              <div className="flex items-baseline gap-2">
-                <h4 className="font-serif text-lg font-bold text-[#121316] dark:text-[#F3F3F5]">
-                  MB Management
-                </h4>
-                <span className="text-slate-400">•</span>
-                <span className="text-xs text-slate-500 font-normal">Real Estate Operations</span>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between pb-1.5 border-b border-black/[0.06] dark:border-white/5">
+                <div>
+                  <h4 className="font-serif text-xl font-bold text-[#121316] dark:text-[#F3F3F5]">
+                    MB Management
+                  </h4>
+                  <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block mt-0.5">
+                    Real Estate Operations Platform
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveProject(projects.mb)}
+                  className="inline-flex items-center gap-1 text-xs font-medium text-[#1D4ED8] hover:underline cursor-pointer"
+                >
+                  <span>Explore</span>
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </button>
               </div>
-              <p className="text-xs text-slate-600 dark:text-slate-400 font-normal">
-                An operational web platform replacing spreadsheets with automated tenant rent tracking and maintenance dispatch.
+
+              <p className="text-sm text-slate-600 dark:text-slate-400 font-normal leading-relaxed">
+                A centralized operations system replacing scattered spreadsheets with automated tenant rent tracking and maintenance ticket dispatch.
               </p>
             </div>
           </div>
 
           {/* Project 3: Telephony & IVR */}
-          <div className="space-y-4">
-            <div className="relative rounded-2xl overflow-hidden border border-black/[0.08] dark:border-white/[0.08] bg-[#F5F8F6] dark:bg-[#13191F] shadow-sm hover:shadow-md transition-shadow">
-              <div className="p-7 sm:p-8 flex flex-col justify-between min-h-[340px] space-y-6">
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center">
-                      <PhoneCall className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-sm text-slate-900 dark:text-white">
-                        Telephony & IVR Engine
-                      </div>
-                      <div className="text-[10px] font-mono text-slate-500">
-                        SignalWire Trunk Integration
-                      </div>
-                    </div>
-                  </div>
-                  <span className="text-[11px] font-mono px-2.5 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300">
-                    Live System
-                  </span>
-                </div>
-
-                <div className="rounded-xl bg-white dark:bg-[#1A1D2B] p-5 border border-black/[0.06] dark:border-white/5 space-y-3">
-                  <div className="flex items-center justify-between text-xs text-slate-500 pb-2 border-b border-black/[0.05] dark:border-white/5">
-                    <span className="font-medium text-slate-800 dark:text-slate-200">Active Representative Trunk</span>
-                    <span className="text-emerald-600 font-medium flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      Screening Active
-                    </span>
-                  </div>
-                  <div className="text-xs text-slate-600 dark:text-slate-300 font-mono space-y-1">
-                    <div>Route: Main Menu ➔ Press 1 ➔ Ext 104</div>
-                    <div className="text-[11px] text-slate-400">Caller screening: verified representative connect</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-black/[0.05] dark:border-white/5">
-                  <span className="font-mono text-[11px]">SignalWire & Real-Time Sync</span>
-                  <button
-                    type="button"
-                    onClick={() => setActiveProject(projects.telephony)}
-                    className="inline-flex items-center gap-1 font-medium text-[#1D4ED8] dark:text-blue-400 hover:underline cursor-pointer"
-                  >
-                    <span>Explore project</span>
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </button>
-                </div>
-
+          <div className="space-y-5 text-left">
+            <div className="rounded-2xl overflow-hidden border border-black/[0.08] dark:border-white/[0.08] bg-[#F5F8F6] dark:bg-[#12181F] shadow-sm">
+              
+              {/* App Bar */}
+              <div className="px-4 py-3 bg-[#EAF2ED] dark:bg-black/30 border-b border-black/[0.05] dark:border-white/5 flex items-center justify-between text-xs font-mono">
+                <span className="font-bold text-slate-800 dark:text-slate-200">
+                  SignalWire Telephony Router
+                </span>
+                <span className="text-emerald-700 dark:text-emerald-400 font-medium flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Trunk Connected
+                </span>
               </div>
+
+              {/* Real Telephony Routing Screen View */}
+              <div className="p-6 sm:p-7 space-y-4 select-none">
+                <div className="p-4 rounded-xl bg-white dark:bg-[#1A1D2B] border border-black/[0.06] dark:border-white/5 space-y-2">
+                  <div className="flex items-center justify-between text-xs font-mono">
+                    <span className="font-bold text-slate-900 dark:text-white">+1 (845) 555-0192</span>
+                    <span className="text-slate-400">Duration: 04:12</span>
+                  </div>
+                  <div className="text-xs text-slate-600 dark:text-slate-300 font-normal">
+                    IVR Journey: Main Menu ➔ Pressed 1 ➔ Screened & Forwarded to Rep 104
+                  </div>
+                  <div className="pt-2 flex items-center gap-1.5 h-5">
+                    {[40, 65, 30, 85, 95, 45, 60, 80, 50, 70, 90, 40, 65, 80, 55, 35, 75, 45].map((h, i) => (
+                      <div
+                        key={i}
+                        style={{ height: `${h}%` }}
+                        className="w-1.5 bg-[#1D4ED8]/70 rounded-full"
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-white dark:bg-[#1A1D2B] border border-black/[0.06] dark:border-white/5 flex items-center justify-between text-xs">
+                  <span className="text-slate-600 dark:text-slate-300">Call Screening: "Press 1 to Connect"</span>
+                  <span className="text-emerald-600 font-medium font-mono text-[11px]">Voicemail Blocked</span>
+                </div>
+              </div>
+
             </div>
 
-            <div className="space-y-1 px-1">
-              <div className="flex items-baseline gap-2">
-                <h4 className="font-serif text-lg font-bold text-[#121316] dark:text-[#F3F3F5]">
-                  Campaign Telephony & IVR
-                </h4>
-                <span className="text-slate-400">•</span>
-                <span className="text-xs text-slate-500 font-normal">Cloud Communications</span>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between pb-1.5 border-b border-black/[0.06] dark:border-white/5">
+                <div>
+                  <h4 className="font-serif text-xl font-bold text-[#121316] dark:text-[#F3F3F5]">
+                    Campaign Telephony & IVR
+                  </h4>
+                  <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block mt-0.5">
+                    Cloud Communications System
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveProject(projects.telephony)}
+                  className="inline-flex items-center gap-1 text-xs font-medium text-[#1D4ED8] hover:underline cursor-pointer"
+                >
+                  <span>Explore</span>
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </button>
               </div>
-              <p className="text-xs text-slate-600 dark:text-slate-400 font-normal">
-                An intelligent cloud telephony system that screens calls, routes donor inquiries, and eliminates missed connections.
+
+              <p className="text-sm text-slate-600 dark:text-slate-400 font-normal leading-relaxed">
+                An intelligent cloud telephony system that screens calls, routes donor inquiries, and eliminates missed connections in real time.
               </p>
             </div>
           </div>
